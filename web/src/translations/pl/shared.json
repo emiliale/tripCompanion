@@ -1,0 +1,76 @@
+{
+  "actions": {
+    "add": "Dodaj",
+    "edit": "Edytuj",
+    "export": "Eksportuj",
+    "exportCsv": "Eksportuj jako CSV",
+    "filter": "Filtruj",
+    "search": "Szukaj",
+    "enterToSearch": "Wciśnij Enter, aby przeszukać"
+  },
+  "buttons": {
+    "delete": "Usuń",
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "share": "Udostępnij",
+    "clear": "Wyczyść",
+    "continue": "Kontynuuj"
+  },
+  "common": {
+    "yes": "Tak",
+    "no": "Nie",
+    "created": "Utworzono",
+    "name": "Nazwa",
+    "label": "Etykieta",
+    "type": "Rodzaj",
+    "date": "Data",
+    "time": "Czas",
+    "description": "Opis",
+    "reason": "Przyczyna",
+    "status": "Status",
+    "frequency": "Częstotliwość",
+    "comment": "Komentarz",
+    "settings": "Ustawienia",
+    "success": "Sukces!",
+    "required": "Wymagane",
+    "user": "Użytkownik",
+    "unit": "Jednostka",
+    "none": "Brak",
+    "fileSize": "Rozmiar pliku"
+  },
+  "confirm": {
+    "modifiedContent": "Ostrzeżenie: zmieniona treść",
+    "discardChanges": "Czy na pewno chcesz porzucić niezapisane zmiany?",
+    "delete": "Czy na pewno chcesz usunąć?",
+    "yesClose": "Tak, zamknij"
+  },
+  "errors": {
+    "warning": "Ostrzeżenie: ",
+    "error": "Błąd: ",
+    "noPermission": "Nie masz uprawnień do tej czynności!",
+    "connection": "Błąd połączenia z serwerem"
+  },
+  "muiTable": {
+    "noRecords": "Brak pozycji do wyświetlenia",
+    "deleteConfirmText": "Czy na pewno usunąć ten rząd?",
+    "actions": "Czynności",
+    "displayedRowsNo": "{from}-{to} z {count}",
+    "rows": "rzędów",
+    "rowsPerPage": "Rzędów na stronę: ",
+    "firstPage": "Pierwsza strona",
+    "previousPage": "Poprzednia strona",
+    "nextPage": "Następna strona",
+    "lastPage": "Ostatnia strona",
+    "addRemoveColumns": "Dodaj lub usuń kolumny",
+    "rowsSelected": "Wybranych rzędów: {0}",
+    "showColumns": "Pokaż kolumny"
+  },
+  "listBuilder": {
+    "elementOptions": "Opcje elementu",
+    "addWithButton": "Dodaj nową przyciskiem lub klawiszem Enter"
+  },
+  "notAllowed": {
+    "error": "Błąd uprawnień",
+    "noPermission": "Nie masz uprawnień, aby wyświetlić tę stronę."
+  }
+}

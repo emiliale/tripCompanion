@@ -1,0 +1,76 @@
+{
+  "actions": {
+    "add": "Add",
+    "edit": "Edit",
+    "export": "Export",
+    "exportCsv": "Export as CSV",
+    "filter": "Filter",
+    "search": "Search",
+    "enterToSearch": "Press Enter to search"
+  },
+  "buttons": {
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "share": "Share",
+    "clear": "Clear",
+    "continue": "Continue"
+  },
+  "common": {
+    "yes": "Yes",
+    "no": "No",
+    "created": "Created",
+    "name": "Name",
+    "label": "Label",
+    "type": "Type",
+    "date": "Date",
+    "time": "Time",
+    "description": "Description",
+    "reason": "Reason",
+    "status": "Status",
+    "comment": "Comment",
+    "frequency": "Frequency",
+    "settings": "Settings",
+    "success": "Success!",
+    "required": "Required",
+    "user": "User",
+    "unit": "Unit",
+    "none": "None",
+    "fileSize": "File size"
+  },
+  "confirm": {
+    "modifiedContent": "Modified Content Warning",
+    "discardChanges": "Are you sure you want to discard unsaved changes?",
+    "delete": "Are you sure you want to delete?",
+    "yesClose": "Yes, close"
+  },
+  "errors": {
+    "warning": "Warning: ",
+    "error": "Error: ",
+    "noPermission": "You do not have permissions for this action!",
+    "connection": "Connection Error"
+  },
+  "muiTable": {
+    "noRecords": "No records to display",
+    "deleteConfirmText": "Are you sure you want to delete this row?",
+    "actions": "Actions",
+    "displayedRowsNo": "{from}-{to} of {count}",
+    "rows": "rows",
+    "rowsPerPage": "Rows per page: ",
+    "firstPage": "First Page",
+    "previousPage": "Previous Page",
+    "nextPage": "Next Page",
+    "lastPage": "Last Page",
+    "addRemoveColumns": "Add or remove columns",
+    "rowsSelected": "{0} row(s) selected",
+    "showColumns": "Show Columns"
+  },
+  "listBuilder": {
+    "elementOptions": "Element Options",
+    "addWithButton": "add new option with button or Enter key"
+  },
+  "notAllowed": {
+    "error": "Permission Error",
+    "noPermission": "You do not have permissions to see this page."
+  }
+}
