@@ -1,0 +1,15 @@
+.ant-menu.ant-menu-light .ant-menu-item-selected,
+.ant-menu.ant-menu-light .ant-menu-item:hover,
+.ant-menu.ant-menu-light .ant-menu-submenu:hover,
+.ant-menu.ant-menu-light .ant-menu-item-active,
+.ant-menu.ant-menu-light .ant-menu-item-open,
+.ant-menu.ant-menu-light .ant-menu-submenu-open,
+.ant-menu.ant-menu-light .ant-menu-submenu-selected,
+.ant-menu.ant-menu-light .ant-menu-submenu-active
+  {
+    border-bottom-color: #4a235a;
+  }
+
+  .link {
+      color:red;
+  }

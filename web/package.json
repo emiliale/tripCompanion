@@ -13,8 +13,12 @@
     "ant-design-pro": "^2.3.2",
     "antd": "^4.6.5",
     "axios": "^0.20.0",
+    "enquire-js": "^0.2.1",
     "material-ui": "^0.20.2",
     "password-validator": "^5.1.0",
+    "rc-queue-anim": "^1.8.5",
+    "rc-scroll-anim": "^2.7.4",
+    "rc-tween-one": "^2.7.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",
@@ -22,6 +26,7 @@
     "react-scripts": "3.4.3",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "styled-components": "^5.2.0",
     "validator": "^13.1.17"
   },
   "scripts": {

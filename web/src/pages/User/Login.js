@@ -2,7 +2,7 @@
 import React from 'react';
 import { Form, Input, Button, Spin } from 'antd';
 import { connect } from 'react-redux';
-import * as actions from '../store/actions/auth';
+import * as actions from '../../store/actions/auth';
 import { LoadingOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 
 

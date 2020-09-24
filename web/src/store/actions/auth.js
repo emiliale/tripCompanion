@@ -72,6 +72,29 @@ export const authLogin = (username, password) => {
     }
 }
 
+export const authSignup = (username, email, password1, password2) => {
+    return dispatch => {
+        dispatch(authStart());
+        axios.post('http://127.0.0.1:8000/rest-auth/registration/', {
+            username: username,
+            email: email,
+            password1: password1,
+            password2: password2
+        })
+        .then(res => {
+            const token = res.data.key;
+            const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+            localStorage.setItem('token', token);
+            localStorage.setItem('expirationDate', expirationDate);
+            dispatch(authSuccess(token));
+            dispatch(checkAuthTimeout(3600));
+        })
+        .catch(err => {
+            dispatch(authFail(err))
+        })
+    }
+}
+
 
 export const authChangePassword = ( newpassword, confirm, password) => {
     return dispatch => {
@@ -100,63 +123,6 @@ export const authChangePassword = ( newpassword, confirm, password) => {
         })
     }
 }
-
-export const authVote = ( code, rate_content, rate_presentation) => {
-    return dispatch => {
-        dispatch(authStart());
-        axios.post(`${serverUrl}/apiVote/create/`, {
-          lecture: code,
-          content_vote: rate_content,
-          presentation_vote: rate_presentation
-          },{
-            headers: { Authorization: "Token " + localStorage.getItem('token')}
-          })
-        .then( () =>
-            window.location.replace('/voteApproved'))
-        .catch(err => {
-                console.log(err.message);
-                switch (err.message) {
-                  case "Request failed with status code 500":
-                    window.alert("Oceniono już te prelekcję!");
-                    break;
-                  case "Request failed with status code 400":
-                    window.alert("Niewypełniono wszystkich pól lub niepoprawny kod prelekcji!");
-                    break;
-                  default:
-                    window.alert("Nastąpił błąd-głos nie oddany");
-                    break;
-                }
-                dispatch(authFail(err))
-        })
-    }
-
-
-}
-
-
-export const authVoteUpdate = ( code, rate_content, rate_presentation, id) => {
-    return dispatch => {
-        dispatch(authStart());
-        console.log(code);
-        console.log(rate_content);
-        console.log(rate_presentation);
-        console.log(id);
-        console.log(`${serverUrl}/apiVote/${id}/update/`);
-        console.log(localStorage.getItem('token'));
-
-        axios.put(`${serverUrl}/apiVote/${id}/update/`, {
-            lecture: code,
-            content_vote: rate_content,
-            presentation_vote: rate_presentation
-          },{
-            headers: { Authorization: "Token " + localStorage.getItem('token')}
-          })
-        .catch(err => {
-                dispatch(authFail(err))
-        })
-    }
-}
-
 
 export const authCheckState = () => {
     return dispatch => {
