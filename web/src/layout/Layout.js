@@ -40,13 +40,13 @@ class CustomLayout extends React.Component {
                         {this.props.isAuthenticated ? (
                             <>
                                 <Menu.Item key="3">
-                                    <Link to="/">Podróże</Link>
+                                    <Link to="/trips/">Podróże</Link>
                                 </Menu.Item>
                                 <Menu.Item key="4">
-                                    <Link to="/">CityToury</Link>
+                                    <Link to="/city_tours/">CityToury</Link>
                                 </Menu.Item>
                                 <Menu.Item key="5">
-                                    <Link to="/">Mapa</Link>
+                                    <Link to="/map/">Mapa</Link>
                                 </Menu.Item>
                                 <Menu.Item key="6">
                                     <Link to="/">Kalkulator kosztów</Link>
@@ -61,7 +61,7 @@ class CustomLayout extends React.Component {
                                         </span>
                                     }
                                 >
-                                    <Menu.Item key="7" ><Link to="/" >Zmień hasło</Link></Menu.Item>
+                                    <Menu.Item key="7" ><Link to="/change_password/" >Zmień hasło</Link></Menu.Item>
                                     <Menu.Item key="9" onClick={this.props.logout}>Wyloguj</Menu.Item>
                                 </SubMenu>
                             </>

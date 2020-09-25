@@ -90,16 +90,6 @@ class RegistrationForm extends React.Component {
                     >
                         <Input.Password prefix={<LockOutlined />} placeholder="Confirm password" />
                     </Form.Item>
-                    {/* <FormItem
-                    name='confirm'
-                    rules={[{
-                        required: true, message: 'Please confirm your password!',
-                    }, {
-                        validator: this.compareToFirstPassword,
-                    }]}
-                >
-                    <Input prefix={<LockOutlined />} type="password" placeholder="Password" onBlur={this.handleConfirmBlur} />
-                </FormItem> */}
                     <FormItem>
                         <Button type="primary" htmlType="submit" style={{ marginRight: '10px' }}>
                             Signup
