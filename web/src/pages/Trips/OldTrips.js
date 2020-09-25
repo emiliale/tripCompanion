@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from "react-router-dom"
 import { List, Card } from 'antd';
 
 const listData = [];
@@ -30,7 +31,9 @@ class OldTrips extends React.Component {
                 }}
                 dataSource={listData}
                 renderItem={item => (
-                    <List.Item>
+                    <List.Item
+                    onClick={item => {this.props.history.push("/trips/"+ item.key + "/")}}
+                    >
                         <Card title={item.title}>Card content</Card>
                     </List.Item>
                 )}
@@ -38,4 +41,4 @@ class OldTrips extends React.Component {
         )}
 }
 
-    export default OldTrips;
+    export default withRouter(OldTrips);

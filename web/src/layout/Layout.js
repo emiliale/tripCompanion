@@ -49,7 +49,7 @@ class CustomLayout extends React.Component {
                                     <Link to="/map/">Mapa</Link>
                                 </Menu.Item>
                                 <Menu.Item key="6">
-                                    <Link to="/">Kalkulator kosztów</Link>
+                                    <Link to="/calculator/">Kalkulator kosztów</Link>
                                 </Menu.Item>
 
                                 <SubMenu style={{ float: 'right' }}
@@ -72,11 +72,11 @@ class CustomLayout extends React.Component {
                                     </Menu.Item>
 
                                     <Menu.Item style={{ float: 'right' }} key="11"  >
-                                        <Link to="/login">Zaloguj się</Link>
+                                        <Link to="/login/">Zaloguj się</Link>
                                     </Menu.Item>
 
                                     <Menu.Item style={{ float: 'right' }} key="12"  >
-                                        <Link to="/signup">Zarejestruj</Link>
+                                        <Link to="/signup/">Zarejestruj</Link>
                                     </Menu.Item>
                                 </>
                             )}

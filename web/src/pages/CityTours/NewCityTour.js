@@ -29,7 +29,7 @@ class NewCityTour extends React.Component {
                             </div>
                         ) : (
                                 <div>
-                                    <Button type="primary"><Link to="/city_tours/new/" style={{ textDecoration: 'none' }}>Dodaj do podróży</Link></Button>
+                                    <Button type="primary"><Link to="/city_tours_new/" style={{ textDecoration: 'none' }}>Dodaj do podróży</Link></Button>
                                 </div>
                             )}
                     </Col>
@@ -43,7 +43,7 @@ class NewCityTour extends React.Component {
                         <MarkersList />
                     </Col>
                 </Row>
-                <Button type="primary" style={{ float: 'right', marginBottom:'20px' }}><Link to="/city_tours/new/" style={{ textDecoration: 'none' }}>Stwórz City Tour</Link></Button>
+                <Button type="primary" style={{ float: 'right', marginBottom:'20px' }}><Link to="/city_tours_new/" style={{ textDecoration: 'none' }}>Stwórz City Tour</Link></Button>
             </div>
         );
     }

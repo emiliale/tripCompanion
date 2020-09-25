@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, Divider } from 'antd';
-import NewTrip from './NewTrip';
+import MainTripPanel from './MainTripPanel';
 import OldTrips from './OldTrips';
 
 
@@ -10,7 +10,7 @@ class AboutApp extends React.Component {
     render() {
         return (
             <div>
-                <NewTrip />
+                <MainTripPanel />
                 <Divider />
                 <Title style={{ textAlign: 'center' }}>Twoje podróże</Title>
                 <OldTrips />

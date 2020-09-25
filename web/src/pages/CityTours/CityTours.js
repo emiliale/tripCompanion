@@ -75,7 +75,7 @@ class CityTours extends React.Component {
     return (
       <div>
         <Space style={{ marginBottom: 16 }}>
-        <Button style={{float: 'right'}}><Link to="/city_tours/new/" style={{ textDecoration: 'none'}}><PlusOutlined  /></Link></Button>
+        <Button style={{float: 'right'}}><Link to="/city_tours_new/" style={{ textDecoration: 'none'}}><PlusOutlined  /></Link></Button>
         </Space>
         <Table columns={columns} dataSource={data} />
       </div>
