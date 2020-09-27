@@ -34,7 +34,7 @@ class OldTrips extends React.Component {
                     <List.Item
                     onClick={item => {this.props.history.push("/trips/"+ item.key + "/")}}
                     >
-                        <Card title={item.title}>Card content</Card>
+                        <Card hoverable title={item.title}>Card content</Card>
                     </List.Item>
                 )}
                 />

@@ -1,9 +1,11 @@
 import React from 'react';
-import { Typography, Row, Col, Divider, Button, Space, Table } from 'antd';
+import { Typography, Row, Col, Divider, Button, Space, Table, Form, Input, DatePicker } from 'antd';
 import { Link } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
+import { FormInstance } from 'antd/lib/form';
 
 const { Title, Paragraph } = Typography;
+const { RangePicker } = DatePicker;
 
 const columns = [
     {
@@ -57,9 +59,26 @@ const data = [
 ];
 
 class NewCityTour extends React.Component {
+
+    formRef = React.createRef();
+
+    state = {
+        editable: false,
+    }
+
+    onFinish = values => {
+        console.log(values)
+        console.log(values.date[0]._d)
+        this.setState({
+          visible: false,
+        });
+        this.formRef.current.resetFields()
+        this.setState({ editable: false })
+      }
+
     render() {
         return (
-            <div >
+            <div style={{ paddingRight: '5%', paddingLeft: '5%' }}>
                 <Title>{this.props.trip ? this.props.trip.name : "Podróż"}</Title>
                 <Divider />
                 <Row align="middle">
@@ -73,23 +92,57 @@ class NewCityTour extends React.Component {
                         />
                     </Col>
                     <Col span={12} >
-                        <div>
-                            <Paragraph>
-                                {"Nazwa podróży: "}
-                                <b>{this.props.trip ? this.props.trip.name : "nazwa"}</b>
-                            </Paragraph>
-                            <Paragraph>
-                                {"Od: "}
-                                <b>{this.props.trip ? this.props.trip.name : "01-02-2020 \t"}</b>
-                                {"Do: "}
-                                <b>{this.props.trip ? this.props.trip.name : "09-02-2020"}</b>
-                            </Paragraph>
-                            <Paragraph>
-                                {"Koszt: "}
-                                <b>{this.props.trip ? this.props.trip.price + "zł" : "0 zł"}</b>
-                            </Paragraph>
-                        </div>
+                        {this.state.editable ? (
+                            <div>
+                                <Form 
+                                ref={this.formRef} 
+                                id='category-editor-form' 
+                                onFinish={this.onFinish}
+                                >
+                                    <Form.Item name='name' rules={[{ required: true, message: 'Please input name!' }]}>
+                                        <Input placeholder="Name" defaultValue={this.props.trip ? this.props.trip.name : null}/>
+                                    </Form.Item>
+                                    <Form.Item name='location' rules={[{ required: true, message: 'Please input location!' }]}>
+                                        <Input placeholder="Location" defaultValue={this.props.trip ? this.props.trip.location : null}/>
+                                    </Form.Item>
+                                    <Form.Item name='date' rules={[{ required: true, message: 'Please input date!' }]}>
+                                        <RangePicker   
+                                        defaultValue={this.props.trip ? [this.props.trip.date_from, this.props.trip.date_to] : null}
+                                        />
+                                    </Form.Item>
+                                    <Button type="primary" htmlType="submit" style={{ marginRight: '10px' }}>
+                                        Save
+                                    </Button>
+                                </Form>
+                            </div>
+                        )
+                            : (
+                                <div>
+                                    <Paragraph>
+                                        {"Nazwa podróży: "}
+                                        <b>{this.props.trip ? this.props.trip.name : "nazwa"}</b>
+                                    </Paragraph>
+                                    <Paragraph>
+                                        {"Lokalizacja: "}
+                                        <b>{this.props.trip ? this.props.trip.location : "lokalizacja"}</b>
+                                    </Paragraph>
+                                    <Paragraph>
+                                        {"Od: "}
+                                        <b>{this.props.trip ? this.props.trip.name : "01-02-2020 \t"}</b>
+                                        {"Do: "}
+                                        <b>{this.props.trip ? this.props.trip.name : "09-02-2020"}</b>
+                                    </Paragraph>
+                                    <Paragraph>
+                                        {"Koszt: "}
+                                        <b>{this.props.trip ? this.props.trip.price + "zł" : "0 zł"}</b>
+                                    </Paragraph>
+                                </div>
+                            )}
                     </Col>
+                    {!this.state.editable ? (
+                        <Button style={{ float: 'right' }} onClick={() => this.setState({ editable: true })}>Edytuj</Button>
+                    ) : null}
+
                 </Row>
                 <Divider />
                 <Title level={2}>Kalkulator kosztów</Title>

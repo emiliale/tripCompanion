@@ -1,11 +1,15 @@
 import React from 'react';
 import { Typography, Row, Col, Button } from 'antd';
 import { Link } from 'react-router-dom';
-
+import NewTrip from './NewTrip'
 
 const { Title } = Typography;
 
 class MainTripPanel extends React.Component {
+    state ={
+        modalOpen: false,
+    }
+
     render() {
         return (
             <div>
@@ -23,9 +27,16 @@ class MainTripPanel extends React.Component {
                         <Title>
                             Zaplanuj kolejną podróż!
                         </Title>
-                        <Button style={{ backgroundColor: "#f5b642", marginRight: "5%" }}><Link to="/trips_new/" style={{ textDecoration: 'none' }}>Nowa podróż</Link></Button>
+                        <Button 
+                        style={{ backgroundColor: "#f5b642", marginRight: "5%" }} 
+                        onClick={() => this.setState({modalOpen: true})}
+                        >Nowa podróż</Button>
                     </Col>
                 </Row>
+                <NewTrip 
+                open={this.state.modalOpen}
+                afterClose={() => this.setState({ modalOpen: false })}
+                />
             </div>
         );
     }
