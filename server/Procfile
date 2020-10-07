@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn OMatKo.wsgi --log-file -
+web: gunicorn tripCompanion.wsgi --log-file -
