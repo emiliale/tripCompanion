@@ -150,7 +150,6 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
-    'https://trip-companion.herokuapp.com/'
 )
 
 CORS_ORIGIN_ALLOW_ALL= True
