@@ -5,11 +5,10 @@
 .ant-menu.ant-menu-light .ant-menu-item-open,
 .ant-menu.ant-menu-light .ant-menu-submenu-open,
 .ant-menu.ant-menu-light .ant-menu-submenu-selected,
-.ant-menu.ant-menu-light .ant-menu-submenu-active
-  {
-    border-bottom-color: #4a235a;
-  }
+.ant-menu.ant-menu-light .ant-menu-submenu-active {
+  border-bottom-color: #4a235a;
+}
 
-  .link {
-      color:red;
-  }
+.link {
+  color: red;
+}

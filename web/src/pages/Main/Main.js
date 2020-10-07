@@ -1,7 +1,7 @@
-import React from 'react';
-import { Divider } from 'antd';
-import AboutApp from './AboutApp'
-import AboutFunctions from './AboutFunctions'
+import React from "react";
+import { Divider } from "antd";
+import AboutApp from "./AboutApp";
+import AboutFunctions from "./AboutFunctions";
 
 class Main extends React.Component {
   render() {
