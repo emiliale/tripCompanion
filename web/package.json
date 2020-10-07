@@ -30,7 +30,8 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.2.0",
-    "validator": "^13.1.17"
+    "validator": "^13.1.17",
+    "ws-heartbeat": "^1.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
