@@ -2,7 +2,7 @@ import axios from "axios";
 import * as actionTypes from "./actionTypes";
 
 const env = process.env.NODE_ENV || "development";
-const serverUrl = env === "development" ? "http://127.0.0.1:8000" : "";
+const serverUrl = env === "development" ? "http://127.0.0.1:8000" : "https://trip-companion-server.herokuapp.com";
 
 export const authStart = () => {
   return {
@@ -70,6 +70,7 @@ export const authLogin = (username, password) => {
 };
 
 export const authSignup = (username, email, password1, password2) => {
+  console.log(env)
   return (dispatch) => {
     dispatch(authStart());
     axios
