@@ -42,6 +42,8 @@ export const checkAuthTimeout = (expirationTime) => {
 };
 
 export const authLogin = (username, password) => {
+  console.log(serverUrl)
+  console.log(env)
   return (dispatch) => {
     dispatch(authStart());
     axios
