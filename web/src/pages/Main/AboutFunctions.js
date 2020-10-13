@@ -17,8 +17,8 @@ class AboutFunctions extends React.Component {
             <Row>
               <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
                 <img
-                  width={100}
-                  height={100}
+                  width={150}
+                  height={105}
                   alt="logo"
                   src="/img/map.png"
                   size={"100%"}
@@ -31,30 +31,29 @@ class AboutFunctions extends React.Component {
               </Col>
               <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
                 <img
-                  width={100}
-                  height={100}
+                  width={150}
+                  height={105}
                   alt="logo"
-                  src="/img/wallet.png"
+                  src="/img/suitcase.png"
                   size={"100%"}
                 />
-                <Title level={3}>Skorzystaj z kalkulatora kosztów</Title>
+                <Title level={3}>Dziel podróże ze znajomymi</Title>
                 <Paragraph>
-                  W wygodny sposób podlicz koszty podróży. Dowiedz się, ile
-                  potrzebujesz pieniędzy, aby zrealizować swoje plany.
+                  Zaproś znajomych, z kótrymi podróżujesz i dziel się z nimi trasami oraz stworzonymi notatkami do nich.
                 </Paragraph>
               </Col>
               <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
                 <img
-                  width={100}
-                  height={100}
+                  width={150}
+                  height={105}
                   alt="logo"
-                  src="/img/suitcase.png"
+                  src="/img/wallet.png"
                   size={"100%"}
                 />
                 <Title level={3}>Przechowuj historię swoich podóży</Title>
                 <Paragraph>
                   Sprawdź na mapie, jakie miejsca udało Ci się odwiedić
-                  dotychcza oraz przyjrzyj się statystyką z Twoich wypraw
+                  dotychcza oraz przyjrzyj się statystyką z Twoich wypraw.
                 </Paragraph>
               </Col>
             </Row>

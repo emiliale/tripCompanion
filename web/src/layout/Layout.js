@@ -51,9 +51,6 @@ class CustomLayout extends React.Component {
                 <Menu.Item key="5">
                   <Link to="/map/">Mapa</Link>
                 </Menu.Item>
-                <Menu.Item key="6">
-                  <Link to="/calculator/">Kalkulator kosztów</Link>
-                </Menu.Item>
 
                 <SubMenu
                   style={{ float: "right" }}

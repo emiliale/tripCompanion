@@ -50,7 +50,6 @@ INSTALLED_APPS = [
 
     'trip',
     'cityTour',
-    'calculator'
 ]
 
 SITE_ID = 1

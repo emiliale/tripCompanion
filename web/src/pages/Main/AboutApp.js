@@ -43,9 +43,8 @@ class AboutApp extends React.Component {
           <Col span={12} style={{ textAlign: "center" }}>
             <Title>Zaplanuj podróż z Trip Companion!</Title>
             <Paragraph>
-              Wybierz atrakcje, które chcesz odwiedzić, stwórz trasę pomiędzy
-              nimi, a następnie podlicz koszty, wliczając bielty wstępu, noclegi
-              oraz transport!
+              Wybierz atrakcje, które chcesz odwiedzić i stwórz trasę pomiędzy
+              nimi. Dodawaj notatki do atrakcji oraz dziel się tym wszytskim ze znajomymi! 
             </Paragraph>
             <Button style={{ backgroundColor: "#f5b642", marginRight: "5%" }}>
               <Link to="/signup/" style={{ textDecoration: "none" }}>
