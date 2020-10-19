@@ -51,6 +51,9 @@ INSTALLED_APPS = [
     'trip',
     'cityTour',
     'friendship',
+    'logger',
+    'administration',
+    'place',
 ]
 
 SITE_ID = 1

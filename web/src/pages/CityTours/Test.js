@@ -4,6 +4,10 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import mapboxgl from 'mapbox-gl';
 //import style from "./map.css"
+import { Marker } from "react-map-gl";
+
+
+
 const { Header, Content, Footer } = Layout;
 
 const { Title, Paragraph } = Typography;
@@ -27,36 +31,47 @@ class Test extends React.Component {
 
     componentDidMount() {
 
-        const map = new mapboxgl.Map({
+        // const map = new mapboxgl.Map({
+        //     container: this.mapContainer,
+        //     style: 'mapbox://styles/mapbox/streets-v11',
+        //     center: [this.state.lng, this.state.lat],
+        //     zoom: this.state.zoom
+        // });
+
+        // map.on('load', function () {
+        //     map.addSource('points', {
+        //         'type': 'vector',
+        //         'tiles': [
+        //             'https://api.opentripmap.com/0.1/en/tiles/heat/10/5/5.pbf?kinds=interesting_places&rate=1&apikey=5ae2e3f221c38a28845f05b66dd041008f502f976c4cd76d927351d3',
+        //         ],
+        //         'maxzoom': 14
+        //     })
+        //     map.addLayer({
+        //         'id': 'data-points',
+        //         'type': 'heatmap',
+        //         'source': 'points',
+        //         'source-layer': 'heat',
+        //     });
+        // })
+
+        // map.on('move', () => {
+        //     this.setState({
+        //         lng: map.getCenter().lng.toFixed(4),
+        //         lat: map.getCenter().lat.toFixed(4),
+        //         zoom: map.getZoom().toFixed(2)
+        //     });
+        // });
+
+        let map = new mapboxgl.Map({
             container: this.mapContainer,
             style: 'mapbox://styles/mapbox/streets-v11',
-            center: [this.state.lng, this.state.lat],
-            zoom: this.state.zoom
+            center: [12.550343, 55.665957],
+            zoom: 8
         });
 
-        map.on('load', function () {
-            map.addSource('points', {
-                'type': 'vector',
-                'tiles': [
-                    'https://api.opentripmap.com/0.1/en/tiles/heat/10/5/5.pbf?kinds=interesting_places&rate=1&apikey=5ae2e3f221c38a28845f05b66dd041008f502f976c4cd76d927351d3',
-                ],
-                'maxzoom': 14
-            })
-            map.addLayer({
-                'id': 'data-points',
-                'type': 'heatmap',
-                'source': 'points',
-                'source-layer': 'heat', 
-            });
-        })
-
-        map.on('move', () => {
-            this.setState({
-                lng: map.getCenter().lng.toFixed(4),
-                lat: map.getCenter().lat.toFixed(4),
-                zoom: map.getZoom().toFixed(2)
-            });
-        });
+        var marker = new mapboxgl.Marker()
+            .setLngLat([12.550343, 55.665957])
+            .addTo(map);
     }
 
     render() {
