@@ -7,5 +7,4 @@ class Trip(models.Model):
     location = models.CharField(max_length=255)
     start_date = models.DateField()
     end_date = models.DateField()
-    users = models.ManyToManyField(User, related_name="users_cityTours", blank=True, null=True)
-
+    users = models.ManyToManyField(User, related_name="users_Trips", blank=True)

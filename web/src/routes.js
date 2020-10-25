@@ -13,6 +13,7 @@ import NewCityTour from "./pages/CityTours/NewCityTour";
 import Trip from "./pages/Trips/Trip";
 import NewTrip from "./pages/Trips/NewTrip";
 import Test from "./pages/CityTours/Test";
+import PlaceAutocomplete from "./pages/CityTours/PlaceAutocompleteComponent";
 
 const BaseRouter = () => (
   <div>
@@ -28,6 +29,8 @@ const BaseRouter = () => (
     <Route exact path="/city_tours/" component={CityTours} />{" "}
     <Route exact path="/city_tours_new/" component={NewCityTour} />{" "}
     <Route exact path="/test/" component={Test} />{" "}
+    <Route exact path="/place/" component={PlaceAutocomplete} />{" "}
+
 
   </div>
 );
