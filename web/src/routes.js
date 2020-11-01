@@ -11,9 +11,6 @@ import Map from "./pages/Map/Map";
 import CityTours from "./pages/CityTours/CityTours";
 import NewCityTour from "./pages/CityTours/NewCityTour";
 import Trip from "./pages/Trips/Trip";
-import NewTrip from "./pages/Trips/NewTrip";
-import Test from "./pages/CityTours/Test";
-import PlaceAutocomplete from "./pages/CityTours/PlaceAutocompleteComponent";
 
 const BaseRouter = () => (
   <div>
@@ -23,14 +20,10 @@ const BaseRouter = () => (
     <Route exact path="/change_password/" component={ChangePassword} />{" "}
     <Route exact path="/functions/" component={Functions} />{" "}
     <Route exact path="/trips/" component={Trips} />{" "}
-    <Route exact path="/trips_new/" component={NewTrip} />{" "}
     <Route exact path="/trips/:id/" component={Trip} />{" "}
     <Route exact path="/map/" component={Map} />{" "}
     <Route exact path="/city_tours/" component={CityTours} />{" "}
     <Route exact path="/city_tours_new/" component={NewCityTour} />{" "}
-    <Route exact path="/test/" component={Test} />{" "}
-    <Route exact path="/place/" component={PlaceAutocomplete} />{" "}
-
 
   </div>
 );

@@ -1,22 +1,40 @@
 import React from "react";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { List, Card } from "antd";
+import { List, Card, Row, Col, Divider } from "antd";
+import { getTrips } from "../../store/actions/trips"
 
-const listData = [];
-for (let i = 0; i < 23; i++) {
-  listData.push({
-    href: "https://ant.design",
-    title: `ant design part ${i}`,
-    avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-    description:
-      "Ant Design, a design language for background applications, is refined by Ant UED Team.",
-    content:
-      "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.",
-  });
-}
 
 class OldTrips extends React.Component {
+
+  state = {
+    trips: [],
+  }
+
+  componentDidMount() {
+    this.props.getTrips()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.trips !== prevProps.trips) {
+      let list = []
+      this.props.trips.map(
+        trip => {
+          list.push({
+            id: `${trip.id}`,
+            title: `${trip.name}`,
+            location: `${trip.location}`,
+            start: `${trip.start_date}`,
+            end: `${trip.end_date}`
+          })
+        }
+      )
+      this.setState({ trips: list })
+    }
+  }
+
   render() {
+    console.log(this.props.trips)
     return (
       <List
         itemLayout="horizontal"
@@ -28,15 +46,40 @@ class OldTrips extends React.Component {
           },
           pageSize: 4,
         }}
-        dataSource={listData}
+        dataSource={this.state.trips}
         renderItem={(item) => (
           <List.Item
-            onClick={(item) => {
-              this.props.history.push("/trips/" + item.key + "/");
+            onClick={() => {
+              this.props.history.push("/trips/" + item.id + "/");
             }}
           >
             <Card hoverable title={item.title}>
-              Card content
+            <Row gutter={16}>
+                <Col span={10}>
+                  <div><p><b>Location:</b></p></div>
+                </Col>
+                <Col span={14}>
+                  <div>{item.location}</div>
+                </Col>
+              </Row>
+              <Divider style={{marginTop: "1px"}}/>
+              <Row gutter={16}>
+                <Col span={10}>
+                  <div><p><b>Start:</b></p></div>
+                </Col>
+                <Col span={14}>
+                  <div>{item.start}</div>
+                </Col>
+              </Row>
+              <Row gutter={16}>
+                <Col span={10}>
+                  <div><p><b>End:</b></p></div>
+                </Col>
+                <Col span={14}>
+                  <div>{item.end}</div>
+                </Col>
+              </Row>
+            
             </Card>
           </List.Item>
         )}
@@ -45,4 +88,14 @@ class OldTrips extends React.Component {
   }
 }
 
-export default withRouter(OldTrips);
+const mapStateToProps = (state) => {
+  return {
+    trips: state.trips,
+  };
+};
+
+const mapDispatchToProps = {
+  getTrips,
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OldTrips));

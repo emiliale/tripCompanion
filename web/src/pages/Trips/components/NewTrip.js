@@ -1,9 +1,15 @@
 import React from "react";
+import axios from "axios";
 import { connect } from "react-redux";
 import { Modal, Form, Input, DatePicker } from "antd";
 import { FormInstance } from "antd/lib/form";
+import { newTrip } from "../../../store/actions/trips"
+import { format } from 'date-fns'
 
 const { RangePicker } = DatePicker;
+
+const env = process.env.NODE_ENV || "development";
+const serverUrl = env === "development" ? "http://127.0.0.1:8000" : "https://trip-companion-server.herokuapp.com";
 
 class _Modal extends React.Component {
   state = {
@@ -18,9 +24,29 @@ class _Modal extends React.Component {
     }
   }
 
+  getUser(username) {
+    axios.get(`${serverUrl}/administration/users/?username=${username}`).then(res => {
+      res.data.map(user => user.id)
+      console.log(res.data.map(user => user.id))
+      return res.data
+    });
+  }
+
   onFinish = (values) => {
-    console.log(values);
-    console.log(values.date[0]._d);
+    let username = localStorage.getItem('username')
+    console.log(username)
+    axios.get(`${serverUrl}/administration/users/?username=${username}`).then(res => {
+      console.log(res.data)
+      let users = res.data.map(user => user.id)
+      console.log(users)
+      this.props.newTrip(
+        values.name,
+        values.location,
+        format(values.date[0]._d, "yyyy-MM-dd"),
+        format(values.date[1]._d, "yyyy-MM-dd"),
+        users,
+      )
+    });
     this.setState({
       visible: false,
     });
@@ -83,6 +109,12 @@ class _Modal extends React.Component {
   };
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => {
+};
 
-export default connect(mapStateToProps)(_Modal);
+const mapDispatchToProps = {
+  newTrip,
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(_Modal);

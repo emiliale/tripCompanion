@@ -8,5 +8,7 @@ urlpatterns = [
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
     path('friendship/', include('friendship.urls')),
     path('place/', include('place.urls')),
-    path('api/', include('cityTour.urls')),
+    path('trip/', include('trip.urls')),
+    path('cityTour/', include('cityTour.urls')),
+    path('administration/', include('administration.urls')),
 ]

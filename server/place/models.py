@@ -4,6 +4,10 @@ from django.db import models
 class Place(models.Model):
     xid = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
-    point = models.CharField(max_length=255)
-    description = models.TextField()
+    lng = models.FloatField(default=0)
+    lat = models.FloatField(default=0)
+    duration = models.IntegerField(default=0)
+    distance = models.FloatField(default=0)
+    order = models.IntegerField(default=0)
+
 

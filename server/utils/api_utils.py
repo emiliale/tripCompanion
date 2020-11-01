@@ -76,47 +76,46 @@ def get_view_set(param, _class, _app_name):
 
             return queryset
 
-        def perform_create(self, serializer):
-            serializer.save(created_by=self.request.user)
-            if isinstance(serializer.data, list):
-                log(
-                    level="CRUD",
-                    system=self.app_name,
-                    message="Creating {}: {}".format(
-                        self.view_name, ",".join(" {}".format(item["id"]) for item in serializer.data)
-                    ),
-                    user=self.request.user,
-                )
-            else:
-                log(
-                    level="CRUD",
-                    system=self.app_name,
-                    message="Creating {}: {}".format(
-                        self.view_name, ",".join(" {}={}".format(key, item) for key, item in serializer.data.items())
-                    ),
-                    user=self.request.user,
-                )
+        # def perform_create(self, serializer):
+            # if isinstance(serializer.data, list):
+            #     log(
+            #         level="CRUD",
+            #         system=self.app_name,
+            #         message="Creating {}: {}".format(
+            #             self.view_name, ",".join(" {}".format(item["id"]) for item in serializer.data)
+            #         ),
+            #         user=self.request.user,
+            #     )
+            # else:
+            #     log(
+            #         level="CRUD",
+            #         system=self.app_name,
+            #         message="Creating {}: {}".format(
+            #             self.view_name, ",".join(" {}={}".format(key, item) for key, item in serializer.data.items())
+            #         ),
+            #         user=self.request.user,
+            #     )
 
-        def update(self, request, *args, **kwargs):
-            log(
-                level="CRUD",
-                system=self.app_name,
-                message="Modifying {}: {}".format(
-                    self.view_name, ",".join(" {}={}".format(key, item) for key, item in request.data.items())
-                ),
-                user=self.request.user,
-            )
-            return super(GenericViewSet, self).update(request, *args, **kwargs)
-
-        def destroy(self, request, *args, **kwargs):
-            _id = kwargs.get("pk", "error_reading_PK")
-            log(
-                level="CRUD",
-                system=self.app_name,
-                message="Deleting {}: {}".format(self.view_name, _id),
-                user=self.request.user,
-            )
-            return super(GenericViewSet, self).destroy(request, *args, **kwargs)
+        # def update(self, request, *args, **kwargs):
+        #     log(
+        #         level="CRUD",
+        #         system=self.app_name,
+        #         message="Modifying {}: {}".format(
+        #             self.view_name, ",".join(" {}={}".format(key, item) for key, item in request.data.items())
+        #         ),
+        #         user=self.request.user,
+        #     )
+        #     return super(GenericViewSet, self).update(request, *args, **kwargs)
+        #
+        # def destroy(self, request, *args, **kwargs):
+        #     _id = kwargs.get("pk", "error_reading_PK")
+        #     log(
+        #         level="CRUD",
+        #         system=self.app_name,
+        #         message="Deleting {}: {}".format(self.view_name, _id),
+        #         user=self.request.user,
+        #     )
+        #     return super(GenericViewSet, self).destroy(request, *args, **kwargs)
 
     return GenericViewSet
 

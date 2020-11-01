@@ -11,6 +11,8 @@ const { Header, Content, Footer } = Layout;
 
 class CustomLayout extends React.Component {
   render() {
+    console.log(this.props)
+    let isAuth = localStorage.getItem("token");
     return (
       <Layout className="layout" style={{ backgroundColor: "#fffceb" }}>
         <Header style={{ backgroundColor: "#ffffff" }}>
@@ -40,7 +42,7 @@ class CustomLayout extends React.Component {
                 <Typography>Trip Companion</Typography>
               </Link>
             </Menu.Item>
-            {this.props.isAuthenticated ? (
+            {isAuth ? (
               <>
                 <Menu.Item key="3">
                   <Link to="/trips/">Podróże</Link>
@@ -65,26 +67,30 @@ class CustomLayout extends React.Component {
                   <Menu.Item key="7">
                     <Link to="/change_password/">Zmień hasło</Link>
                   </Menu.Item>
-                  <Menu.Item key="9" onClick={this.props.logout}>
+                  <Menu.Item key="9" onClick={() => {
+                    this.props.logout()
+                    this.forceUpdate()
+                  }
+                  }>
                     Wyloguj
                   </Menu.Item>
                 </SubMenu>
               </>
             ) : (
-              <>
-                <Menu.Item key="10">
-                  <Link to="/functions/">Funkcje</Link>
-                </Menu.Item>
+                <>
+                  <Menu.Item key="10">
+                    <Link to="/functions/">Funkcje</Link>
+                  </Menu.Item>
 
-                <Menu.Item style={{ float: "right" }} key="11">
-                  <Link to="/login/">Zaloguj się</Link>
-                </Menu.Item>
+                  <Menu.Item style={{ float: "right" }} key="11">
+                    <Link to="/login/">Zaloguj się</Link>
+                  </Menu.Item>
 
-                <Menu.Item style={{ float: "right" }} key="12">
-                  <Link to="/signup/">Zarejestruj</Link>
-                </Menu.Item>
-              </>
-            )}
+                  <Menu.Item style={{ float: "right" }} key="12">
+                    <Link to="/signup/">Zarejestruj</Link>
+                  </Menu.Item>
+                </>
+              )}
           </Menu>
         </Header>
         <Content style={{ padding: "0 50px" }}>

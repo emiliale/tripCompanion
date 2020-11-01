@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import {
   Typography,
   Row,
@@ -11,9 +12,13 @@ import {
   Input,
   DatePicker,
 } from "antd";
+import moment from 'moment';
 import { Link } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
 import { FormInstance } from "antd/lib/form";
+import { getTrips, updateTrip, deleteTrip } from "../../store/actions/trips"
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { Popconfirm, message } from 'antd';
 
 const { Title, Paragraph } = Typography;
 const { RangePicker } = DatePicker;
@@ -69,22 +74,41 @@ const data = [
   },
 ];
 
-class NewCityTour extends React.Component {
+class Trip extends React.Component {
   formRef = React.createRef();
 
   state = {
     editable: false,
   };
 
+  componentDidMount() {
+    this.props.getTrips()
+  }
+
   onFinish = (values) => {
     console.log(values);
-    console.log(values.date[0]._d);
+    this.props.updateTrip(
+      this.props.trip.id,
+      values.name,
+      values.location,
+      moment(values.date[0]._d).format('YYYY-MM-DD'),
+      moment(values.date[1]._d).format('YYYY-MM-DD'),
+      this.props.trip.users,
+    )
     this.setState({
       visible: false,
     });
     this.formRef.current.resetFields();
     this.setState({ editable: false });
   };
+
+  deleteTrip() {
+    this.props.deleteTrip(
+      this.props.trip.id
+    )
+    this.props.history.push('/trips');
+    window.location.reload(false);
+  }
 
   render() {
     return (
@@ -108,16 +132,19 @@ class NewCityTour extends React.Component {
                   ref={this.formRef}
                   id="category-editor-form"
                   onFinish={this.onFinish}
+                  initialValues={{
+                    ["name"]: this.props.trip ? this.props.trip.name : null,
+                    ["location"]: this.props.trip ? this.props.trip.location : null,
+                    ["date"]: this.props.trip ? [moment(this.props.trip.start_date), moment(this.props.trip.end_date)] : null,
+                  }}
                 >
                   <Form.Item
                     name="name"
                     rules={[{ required: true, message: "Please input name!" }]}
                   >
                     <Input
+                      name="name"
                       placeholder="Name"
-                      defaultValue={
-                        this.props.trip ? this.props.trip.name : null
-                      }
                     />
                   </Form.Item>
                   <Form.Item
@@ -127,10 +154,8 @@ class NewCityTour extends React.Component {
                     ]}
                   >
                     <Input
+                      name="location"
                       placeholder="Location"
-                      defaultValue={
-                        this.props.trip ? this.props.trip.location : null
-                      }
                     />
                   </Form.Item>
                   <Form.Item
@@ -138,11 +163,8 @@ class NewCityTour extends React.Component {
                     rules={[{ required: true, message: "Please input date!" }]}
                   >
                     <RangePicker
-                      defaultValue={
-                        this.props.trip
-                          ? [this.props.trip.date_from, this.props.trip.date_to]
-                          : null
-                      }
+                      name="date"
+
                     />
                   </Form.Item>
                   <Button
@@ -152,65 +174,77 @@ class NewCityTour extends React.Component {
                   >
                     Save
                   </Button>
+                  <Button
+                    type="default"
+                    onClick={() => this.setState({ editable: false })}
+                    style={{ marginRight: "10px" }}
+                  >
+                    Cancel
+                  </Button>
                 </Form>
               </div>
             ) : (
-              <div>
-                <Paragraph>
-                  {"Nazwa podróży: "}
-                  <b>{this.props.trip ? this.props.trip.name : "nazwa"}</b>
-                </Paragraph>
-                <Paragraph>
-                  {"Lokalizacja: "}
-                  <b>
-                    {this.props.trip ? this.props.trip.location : "lokalizacja"}
-                  </b>
-                </Paragraph>
-                <Paragraph>
-                  {"Od: "}
-                  <b>
-                    {this.props.trip ? this.props.trip.name : "01-02-2020 \t"}
-                  </b>
-                  {"Do: "}
-                  <b>{this.props.trip ? this.props.trip.name : "09-02-2020"}</b>
-                </Paragraph>
-                <Paragraph>
-                  {"Koszt: "}
-                  <b>
-                    {this.props.trip ? this.props.trip.price + "zł" : "0 zł"}
-                  </b>
-                </Paragraph>
-              </div>
-            )}
+                <div>
+                  <Row gutter={16}>
+                    <Col span={24}>
+                      <Popconfirm
+                        title="Are you sure delete this task?"
+                        onConfirm={() => this.deleteTrip()}
+                        onCancel={() => console.log("cancel")}
+                        okText="Yes"
+                        cancelText="No"
+                      >
+                        <Button
+                          style={{ float: "right" }}
+                          icon={<DeleteOutlined />}
+                        >
+                        </Button>
+                      </Popconfirm>
+                      <Button
+                        style={{ float: "right" }}
+                        onClick={() => this.setState({ editable: true })}
+                        icon={<EditOutlined />}
+                      >
+                      </Button>
+                    </Col>
+                  </Row>
+                  <Row gutter={16}>
+                    <Col span={10}>
+                      <div><p><b>Name:</b></p></div>
+                    </Col>
+                    <Col span={14}>
+                      <div>{this.props.trip ? this.props.trip.name : ""}</div>
+                    </Col>
+                  </Row>
+                  <Row gutter={16}>
+                    <Col span={10}>
+                      <div><p><b>Location:</b></p></div>
+                    </Col>
+                    <Col span={14}>
+                      <div>{this.props.trip ? this.props.trip.location : ""}</div>
+                    </Col>
+                  </Row>
+                  <Divider style={{ marginTop: "1px" }} />
+                  <Row gutter={16}>
+                    <Col span={10}>
+                      <div><p><b>Start:</b></p></div>
+                    </Col>
+                    <Col span={14}>
+                      <div>{this.props.trip ? this.props.trip.start_date : ""}</div>
+                    </Col>
+                  </Row>
+                  <Row gutter={16}>
+                    <Col span={10}>
+                      <div><p><b>End:</b></p></div>
+                    </Col>
+                    <Col span={14}>
+                      <div>{this.props.trip ? this.props.trip.end_date : ""}</div>
+                    </Col>
+                  </Row>
+                </div>
+              )}
           </Col>
-          {!this.state.editable ? (
-            <Button
-              style={{ float: "right" }}
-              onClick={() => this.setState({ editable: true })}
-            >
-              Edytuj
-            </Button>
-          ) : null}
         </Row>
-        <Divider />
-        <Title level={2}>Kalkulator kosztów</Title>
-        <Paragraph>
-          {"Transport: "}
-          <b>{this.props.trip ? this.props.trip.name : "0 zł"}</b>
-        </Paragraph>
-        <Paragraph>
-          {"Nocleg: "}
-          <b>{this.props.trip ? this.props.trip.name : "0 zł"}</b>
-        </Paragraph>
-        <Paragraph>
-          {"Bilety wstępu: "}
-          <b>{this.props.trip ? this.props.trip.name : "0 zł"}</b>
-        </Paragraph>
-        <Button style={{ marginBottom: "20px" }}>
-          <Link to="/city_tours_new/" style={{ textDecoration: "none" }}>
-            Edytuj koszt podróży
-          </Link>
-        </Button>
         <Divider />
         <Title level={2}>City Toury</Title>
         <Space style={{ marginBottom: 16 }}>
@@ -226,4 +260,17 @@ class NewCityTour extends React.Component {
   }
 }
 
-export default NewCityTour;
+const mapStateToProps = (state, ownProps) => {
+  const tripId = parseInt(ownProps.match.params.id);
+  return {
+    trip: state.trips.find((x) => x.id === tripId),
+  };
+};
+
+const mapDispatchToProps = {
+  getTrips,
+  updateTrip,
+  deleteTrip,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Trip);
