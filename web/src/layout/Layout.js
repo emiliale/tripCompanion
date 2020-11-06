@@ -33,7 +33,7 @@ class CustomLayout extends React.Component {
                   width={60}
                   height={50}
                   alt="logo"
-                  src="https://www.iconsdb.com/icons/preview/orange/briefcase-xxl.png"
+                  src="/img/briefcase-xxl.png"
                 />
               </Link>
             </Menu.Item>

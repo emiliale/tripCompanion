@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Typography, Row, Col, Button, Layout, Card, Divider, Image } from "antd";
 import { Table, Tag, Space } from 'antd';
 import axios from 'axios';
@@ -6,9 +7,13 @@ import mapboxgl from 'mapbox-gl';
 import PlaceAutocompleteComponent from "./components/PlaceAutocompleteComponent"
 import * as turf from '@turf/helpers'
 import { Link } from "react-router-dom";
+import { getPlaces, addPlace } from "../../store/actions/places"
+import { newCityTour } from "../../store/actions/cityTours"
+import NewCityTourModal from "./components/NewCityTourModal"
 
 const { Header, Content, Footer } = Layout;
-
+const env = process.env.NODE_ENV || "development";
+const serverUrl = env === "development" ? "http://127.0.0.1:8000" : "https://trip-companion-server.herokuapp.com";
 const { Title, Paragraph } = Typography;
 const mapStyles = {
   //position: "absolute",
@@ -26,25 +31,29 @@ class CityTour extends React.Component {
     geojson: {},
     uploaded: false,
     openMap: false,
-    popUp: true,
     image: {},
     name: "",
     idx: "",
     description: "",
     placeCoordinates: [],
     routePlaces: [],
-    routeJson: {},
     placesTable: [],
     map: {},
     done: false,
+    overallDistance: 0,
+    openModal: false,
   };
+
+  componentDidMount() {
+    this.props.getPlaces()
+  }
 
   componentDidUpdate(prevProps, prevState) {
 
     if (!this.state.uploaded && this.state.openMap) {
       this.getAttractions()
     }
-    if (this.state.geojson !== prevState && !this.state.uploaded && this.state.openMap) {
+    if (this.state.geojson !== prevState.geojson && !this.state.uploaded && this.state.openMap) {
       this.setState({ uploaded: true })
       let mapVar = new mapboxgl.Map({
         container: this.mapContainer,
@@ -133,14 +142,16 @@ class CityTour extends React.Component {
           }
         }, 'waterway-label');
       });
-
-
     }
   }
 
   getDescription = (xid, isDeleted) => {
     axios.get(
-      `https://api.opentripmap.com/0.1/en/places/xid/${xid}?apikey=5ae2e3f221c38a28845f05b66dd041008f502f976c4cd76d927351d3`)
+      `https://api.opentripmap.com/0.1/en/places/xid/${xid}?apikey=5ae2e3f221c38a28845f05b66dd041008f502f976c4cd76d927351d3`,
+      {
+        headers: { "Content-Language": "en-US" },
+      }
+    )
       .then((res) => {
         this.setState({
           image: res.data.preview.source,
@@ -255,9 +266,6 @@ class CityTour extends React.Component {
 
   render() {
 
-    console.log(this.state.routePlaces)
-    console.log(this.state.placesTable)
-
     const columns = [
       {
         title: "Place name",
@@ -327,13 +335,11 @@ class CityTour extends React.Component {
           </Col>
           <Col span={2}>
             <div>
-              <Button type="primary">
-                <Link
-                  to="/city_tours_new/"
-                  style={{ textDecoration: "none" }}
-                >
-                  ZAPISZ
-                  </Link>
+              <Button
+                type="primary"
+                onClick={() => this.setState({ openModal: true })}
+              >
+                Save
               </Button>
             </div>
 
@@ -389,10 +395,31 @@ class CityTour extends React.Component {
         {this.state.placesTable.length > 0 ? (
           <Table columns={columns} dataSource={this.state.placesTable} />
         ) : null}
+        {this.state.openModal ? (
+          <NewCityTourModal
+            open={this.state.openModal}
+            afterClose={() => this.setState({ openModal: false })}
+            placesTable={this.state.placesTable}
+            trip={this.state.trip ? this.state.trip : null}
+        />
+
+        ): null}
 
       </div >
     );
   }
 }
 
-export default CityTour;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    places: state.places,
+  };
+};
+
+const mapDispatchToProps = {
+  getPlaces,
+  addPlace,
+  newCityTour,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CityTour);

@@ -16,7 +16,7 @@ export function receivePlaces(data) {
     };
 }
 
-function addPlace(data) {
+export function addPlace(data) {
     return {
         type: ADD_PLACE,
         place: data,
@@ -48,7 +48,7 @@ export function getPlaces(level) {
     };
 }
 
-export function newPlace(xid, name, lng, lat, duration, distance, order) {
+export function newPlace(xid, name, lng, lat, duration, distance) {
     return (dispatch) => {
         axios
             .post(`${serverUrl}/place/places/`, {
@@ -58,7 +58,6 @@ export function newPlace(xid, name, lng, lat, duration, distance, order) {
                 lat: lat,
                 duration: duration,
                 distance: distance,
-                order: order,
             })
             .then((res) => {
                 dispatch(addPlace(res.data));
@@ -70,7 +69,7 @@ export function newPlace(xid, name, lng, lat, duration, distance, order) {
     };
 }
 
-export function updatePlace(placeId, xid, name, lng, lat, duration, distance, order) {
+export function updatePlace(placeId, xid, name, lng, lat, duration, distance) {
     return (dispatch) => {
         axios
             .put(`${serverUrl}/place/places/` + placeId + "/", {
@@ -80,7 +79,6 @@ export function updatePlace(placeId, xid, name, lng, lat, duration, distance, or
                 lat: lat,
                 duration: duration,
                 distance: distance,
-                order: order,
             })
             .then((res) => {
                 dispatch(editPlace(res.data));

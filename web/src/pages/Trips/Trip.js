@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
 import { FormInstance } from "antd/lib/form";
 import { getTrips, updateTrip, deleteTrip } from "../../store/actions/trips"
+import { getCityTours, deleteCityTour } from "../../store/actions/cityTours"
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Popconfirm, message } from 'antd';
 
@@ -83,10 +84,10 @@ class Trip extends React.Component {
 
   componentDidMount() {
     this.props.getTrips()
+    this.props.getCityTours()
   }
 
   onFinish = (values) => {
-    console.log(values);
     this.props.updateTrip(
       this.props.trip.id,
       values.name,
@@ -111,6 +112,7 @@ class Trip extends React.Component {
   }
 
   render() {
+    console.log(this.props.cityTours)
     return (
       <div style={{ paddingRight: "5%", paddingLeft: "5%" }}>
         <Title>{this.props.trip ? this.props.trip.name : "Podróż"}</Title>
@@ -254,7 +256,7 @@ class Trip extends React.Component {
             </Link>
           </Button>
         </Space>
-        <Table columns={columns} dataSource={data} />
+        <Table columns={columns} dataSource={this.props.cityTours} />
       </div>
     );
   }
@@ -264,6 +266,7 @@ const mapStateToProps = (state, ownProps) => {
   const tripId = parseInt(ownProps.match.params.id);
   return {
     trip: state.trips.find((x) => x.id === tripId),
+    cityTours: state.cityTours.filter(tour => tour.trip.indexOf(tripId)!==-1),
   };
 };
 
@@ -271,6 +274,8 @@ const mapDispatchToProps = {
   getTrips,
   updateTrip,
   deleteTrip,
+  getCityTours,
+  deleteCityTour,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Trip);
