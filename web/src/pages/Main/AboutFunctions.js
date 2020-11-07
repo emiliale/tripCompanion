@@ -39,7 +39,8 @@ class AboutFunctions extends React.Component {
                 />
                 <Title level={3}>Dziel podróże ze znajomymi</Title>
                 <Paragraph>
-                  Zaproś znajomych, z kótrymi podróżujesz i dziel się z nimi trasami oraz stworzonymi notatkami do nich.
+                  Zaproś znajomych, z kótrymi podróżujesz i dziel się z nimi
+                  trasami oraz stworzonymi notatkami do nich.
                 </Paragraph>
               </Col>
               <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>

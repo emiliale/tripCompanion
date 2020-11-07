@@ -3,15 +3,20 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { Modal, Form, Input, DatePicker } from "antd";
 import { FormInstance } from "antd/lib/form";
-import { newTrip } from "../../../store/actions/trips"
-import { format } from 'date-fns'
-import { getPlaces, addPlace } from "../../../store/actions/places"
-import { newCityTour } from "../../../store/actions/cityTours"
+import { newTrip } from "../../../store/actions/trips";
+import { format } from "date-fns";
+import { getPlaces, addPlace } from "../../../store/actions/places";
+import { newCityTour } from "../../../store/actions/cityTours";
+import { getTrips } from "../../../store/actions/trips";
+import AutocompleteTrip from "./AutocompleteTrip";
 
 const { RangePicker } = DatePicker;
 
 const env = process.env.NODE_ENV || "development";
-const serverUrl = env === "development" ? "http://127.0.0.1:8000" : "https://trip-companion-server.herokuapp.com";
+const serverUrl =
+  env === "development"
+    ? "http://127.0.0.1:8000"
+    : "https://trip-companion-server.herokuapp.com";
 
 class NewCityTourModal extends React.Component {
   state = {
@@ -19,79 +24,77 @@ class NewCityTourModal extends React.Component {
     places: [],
     placesOverall: 0,
     name: "",
+    trip: {},
   };
 
   formRef = React.createRef();
 
   componentDidUpdate(prevProps, prevState) {
-    
-
-    if (this.state.places.length === this.state.placesOverall && this.state.places.length !== 0) {
-      this.saveCityTour()
-      console.log(this.state.places)
+    if (
+      this.state.places.length === this.state.placesOverall &&
+      this.state.places.length !== 0
+    ) {
+      this.saveCityTour();
+      console.log(this.state.places);
     }
 
     if (this.props.open !== prevProps.open) {
-      console.log("halo")
       this.setState({ visible: this.props.open });
     }
-
   }
 
-  getUser(username) {
-    axios.get(`${serverUrl}/administration/users/?username=${username}`).then(res => {
-      res.data.map(user => user.id)
-      console.log(res.data.map(user => user.id))
-      return res.data
-    });
-  }
+  setTrip = (trip) => {
+    this.setState({ trip: trip });
+  };
 
   saveCityTour = () => {
-    let username = localStorage.getItem('username')
-    axios.get(`${serverUrl}/administration/users/?username=${username}`).then(res => {
-      console.log(res.data)
-      let users = res.data.map(user => user.id)
-      console.log(users)
-      this.props.newCityTour(
-        this.state.name,
-        this.state.trip ? this.state.trip : null,
-        this.state.trip ? this.state.trip.users : users,
-        this.state.places,
-      )
-    });
-  }
+    let username = localStorage.getItem("username");
+    axios
+      .get(`${serverUrl}/administration/users/?username=${username}`)
+      .then((res) => {
+        console.log(res.data);
+        let users = res.data.map((user) => user.id);
+        console.log(users);
+        this.props.newCityTour(
+          this.state.name,
+          this.state.trip ? this.state.trip.id : null,
+          this.state.trip ? this.state.trip.users : users,
+          this.state.places
+        );
+      });
+  };
 
   savePlaces = () => {
-    let distance = 0
-    let places = []
-    let placeId = null
-    let toAdd = []
-    let isIncluded = false
-    this.props.placesTable.map(place => distance += place.distance)
-    this.props.placesTable.map(place => {
+    let distance = 0;
+    let places = [];
+    let placeId = null;
+    let toAdd = [];
+    let isIncluded = false;
+    this.props.placesTable.map((place) => (distance += place.distance));
+    this.props.placesTable.map((place) => {
       for (let i = 0; i < this.props.places.length; i++) {
         if (this.props.places[i].xid === place.idx) {
-          placeId = this.props.places[i].id
-          isIncluded = true
+          placeId = this.props.places[i].id;
+          isIncluded = true;
           break;
         }
       }
       if (!isIncluded) {
-        toAdd.push(place)
+        toAdd.push(place);
       } else {
-        isIncluded = false
-        places.push(placeId)
+        isIncluded = false;
+        places.push(placeId);
       }
-    })
-    console.log(places)
-    console.log(toAdd)
-    this.setState({ placesOverall: toAdd.length + places.length })
-    this.setState({ places: places })
-    toAdd.map(place => this.addPlace(place))
-  }
+    });
+    console.log(places);
+    console.log(toAdd);
+    this.setState({ placesOverall: toAdd.length + places.length });
+    this.setState({ places: places });
+    toAdd.map((place) => this.addPlace(place));
+  };
 
   addPlace = (place) => {
-    console.log(place)
+    console.log(place);
     axios
       .post(`${serverUrl}/place/places/`, {
         xid: place.idx,
@@ -103,25 +106,25 @@ class NewCityTourModal extends React.Component {
       })
       .then((res) => {
         this.props.addPlace(res.data);
-        console.log(res.data)
-        console.log(this.state.places)
-        this.setState(prevState => {
-          const newPlaces = [...prevState.places, res.data.id]
+        console.log(res.data);
+        console.log(this.state.places);
+        this.setState((prevState) => {
+          const newPlaces = [...prevState.places, res.data.id];
           return {
-            places: newPlaces
+            places: newPlaces,
           };
-        })
-        console.log(this.state.places)
+        });
+        console.log(this.state.places);
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
       });
-  }
+  };
 
   onFinish = (values) => {
-   console.log(values)
-   this.setState({name : values.name})
-   this.savePlaces()
+    console.log(values);
+    this.setState({ name: values.name });
+    this.savePlaces();
     this.setState({
       visible: false,
     });
@@ -143,6 +146,7 @@ class NewCityTourModal extends React.Component {
   };
 
   render = () => {
+    console.log(this.state.trip);
     return (
       <Modal
         afterClose={this.props.afterClose}
@@ -166,6 +170,7 @@ class NewCityTourModal extends React.Component {
           >
             <Input placeholder="Name" />
           </Form.Item>
+          <AutocompleteTrip setTrip={(trip) => this.setTrip(trip)} />
         </Form>
       </Modal>
     );
@@ -183,6 +188,5 @@ const mapDispatchToProps = {
   addPlace,
   newCityTour,
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewCityTourModal);

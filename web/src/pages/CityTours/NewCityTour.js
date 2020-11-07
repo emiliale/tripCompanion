@@ -1,19 +1,31 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Typography, Row, Col, Button, Layout, Card, Divider, Image } from "antd";
-import { Table, Tag, Space } from 'antd';
-import axios from 'axios';
-import mapboxgl from 'mapbox-gl';
-import PlaceAutocompleteComponent from "./components/PlaceAutocompleteComponent"
-import * as turf from '@turf/helpers'
+import {
+  Typography,
+  Row,
+  Col,
+  Button,
+  Layout,
+  Card,
+  Divider,
+  Image,
+} from "antd";
+import { Table, Tag, Space } from "antd";
+import axios from "axios";
+import mapboxgl from "mapbox-gl";
+import PlaceAutocompleteComponent from "./components/PlaceAutocompleteComponent";
+import * as turf from "@turf/helpers";
 import { Link } from "react-router-dom";
-import { getPlaces, addPlace } from "../../store/actions/places"
-import { newCityTour } from "../../store/actions/cityTours"
-import NewCityTourModal from "./components/NewCityTourModal"
+import { getPlaces, addPlace } from "../../store/actions/places";
+import { newCityTour } from "../../store/actions/cityTours";
+import NewCityTourModal from "./components/NewCityTourModal";
 
 const { Header, Content, Footer } = Layout;
 const env = process.env.NODE_ENV || "development";
-const serverUrl = env === "development" ? "http://127.0.0.1:8000" : "https://trip-companion-server.herokuapp.com";
+const serverUrl =
+  env === "development"
+    ? "http://127.0.0.1:8000"
+    : "https://trip-companion-server.herokuapp.com";
 const { Title, Paragraph } = Typography;
 const mapStyles = {
   //position: "absolute",
@@ -21,7 +33,8 @@ const mapStyles = {
   height: "90%",
 };
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiZW5lbWlsYSIsImEiOiJja2diMXZscDEwMmkzMnlwOHY4MDE4cG12In0.8beJYbEq_SkImugp6WejTA'
+mapboxgl.accessToken =
+  "pk.eyJ1IjoiZW5lbWlsYSIsImEiOiJja2diMXZscDEwMmkzMnlwOHY4MDE4cG12In0.8beJYbEq_SkImugp6WejTA";
 
 class CityTour extends React.Component {
   state = {
@@ -45,227 +58,252 @@ class CityTour extends React.Component {
   };
 
   componentDidMount() {
-    this.props.getPlaces()
+    this.props.getPlaces();
   }
 
   componentDidUpdate(prevProps, prevState) {
-
     if (!this.state.uploaded && this.state.openMap) {
-      this.getAttractions()
+      this.getAttractions();
     }
-    if (this.state.geojson !== prevState.geojson && !this.state.uploaded && this.state.openMap) {
-      this.setState({ uploaded: true })
+    if (
+      this.state.geojson !== prevState.geojson &&
+      !this.state.uploaded &&
+      this.state.openMap
+    ) {
+      this.setState({ uploaded: true });
       let mapVar = new mapboxgl.Map({
         container: this.mapContainer,
-        style: 'mapbox://styles/mapbox/streets-v11',
+        style: "mapbox://styles/mapbox/streets-v11",
         center: [this.state.lng, this.state.lat],
         zoom: this.state.zoom,
       });
-      this.setState({ map: mapVar })
-
+      this.setState({ map: mapVar });
     }
 
-    if (this.state.map !== prevState && this.state.uploaded && !this.state.done) {
-      this.setState({ done: true })
+    if (
+      this.state.map !== prevState &&
+      this.state.uploaded &&
+      !this.state.done
+    ) {
+      this.setState({ done: true });
 
-      this.state.map.on('load', () => {
+      this.state.map.on("load", () => {
         this.state.map.loadImage(
-          'https://img.icons8.com/color/48/000000/marker.png',
+          "https://img.icons8.com/color/48/000000/marker.png",
           (error, image) => {
             if (error) throw error;
-            this.state.map.addImage('marker', image);
+            this.state.map.addImage("marker", image);
             this.state.map.addSource("places", {
               type: "geojson",
               data: this.state.geojson,
             });
             this.state.map.addLayer({
-              'id': 'places',
-              'type': 'symbol',
-              'source': 'places',
-              'layout': {
-                'icon-image': 'marker',
-                'icon-size': 0.45
-              }
+              id: "places",
+              type: "symbol",
+              source: "places",
+              layout: {
+                "icon-image": "marker",
+                "icon-size": 0.45,
+              },
             });
           }
         );
       });
 
-      this.state.map.on('click', 'places', e => {
-        this.getDescription(e.features[0].properties.xid)
-        this.setState({ idx: e.features[0].properties.xid })
+      this.state.map.on("click", "places", (e) => {
+        this.getDescription(e.features[0].properties.xid);
+        this.setState({ idx: e.features[0].properties.xid });
       });
 
-
-      this.state.map.on('mouseenter', 'places', () => {
-        this.state.map.getCanvas().style.cursor = 'pointer';
+      this.state.map.on("mouseenter", "places", () => {
+        this.state.map.getCanvas().style.cursor = "pointer";
       });
 
-      this.state.map.on('mouseleave', 'places', () => {
-        this.state.map.getCanvas().style.cursor = '';
+      this.state.map.on("mouseleave", "places", () => {
+        this.state.map.getCanvas().style.cursor = "";
       });
 
-      this.state.map.on('move', () => {
+      this.state.map.on("move", () => {
         this.setState({
           lng: this.state.map.getCenter().lng.toFixed(4),
           lat: this.state.map.getCenter().lat.toFixed(4),
-          zoom: this.state.map.getZoom().toFixed(2)
+          zoom: this.state.map.getZoom().toFixed(2),
         });
       });
 
       let nothing = turf.featureCollection([]);
 
-
-      this.state.map.on('load', () => {
-        this.state.map.addSource('route', {
-          type: 'geojson',
+      this.state.map.on("load", () => {
+        this.state.map.addSource("route", {
+          type: "geojson",
           data: nothing,
         });
 
-        this.state.map.addLayer({
-          id: 'routeline-active',
-          type: 'line',
-          source: 'route',
-          layout: {
-            'line-join': 'round',
-            'line-cap': 'round'
+        this.state.map.addLayer(
+          {
+            id: "routeline-active",
+            type: "line",
+            source: "route",
+            layout: {
+              "line-join": "round",
+              "line-cap": "round",
+            },
+            paint: {
+              "line-color": "#3887be",
+              "line-width": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                12,
+                3,
+                22,
+                12,
+              ],
+            },
           },
-          paint: {
-            'line-color': '#3887be',
-            'line-width': [
-              "interpolate",
-              ["linear"],
-              ["zoom"],
-              12, 3,
-              22, 12
-            ]
-          }
-        }, 'waterway-label');
+          "waterway-label"
+        );
       });
     }
   }
 
   getDescription = (xid, isDeleted) => {
-    axios.get(
-      `https://api.opentripmap.com/0.1/en/places/xid/${xid}?apikey=5ae2e3f221c38a28845f05b66dd041008f502f976c4cd76d927351d3`,
-      {
-        headers: { "Content-Language": "en-US" },
-      }
-    )
+    axios
+      .get(
+        `https://api.opentripmap.com/0.1/en/places/xid/${xid}?apikey=5ae2e3f221c38a28845f05b66dd041008f502f976c4cd76d927351d3`,
+        {
+          headers: { "Content-Language": "en-US" },
+        }
+      )
       .then((res) => {
         this.setState({
           image: res.data.preview.source,
           name: res.data.name,
           description: res.data.wikipedia_extracts.text,
-          placeCoordinates: [res.data.point.lon, res.data.point.lat]
-        })
-        isDeleted ? this.deletePlaceFromRoute(xid) : console.log()
+          placeCoordinates: [res.data.point.lon, res.data.point.lat],
+        });
+        isDeleted ? this.deletePlaceFromRoute(xid) : console.log();
       })
       .catch((err) => {
-        console.log(err)
-      });
-  }
-
-  getAttractions = () => {
-    axios.get(
-      `https://api.opentripmap.com/0.1/en/places/radius?radius=3000&lon=${this.state.lng}&lat=${this.state.lat}&src_attr=osm&kinds=cultural%2Carchitecture&rate=3&format=geojson&limit=50000&apikey=5ae2e3f221c38a28845f05b66dd041008f502f976c4cd76d927351d3`)
-      .then((res) => {
-        this.setState({ geojson: res.data })
-      })
-      .catch((err) => {
-        console.log(err)
+        console.log(err);
       });
   };
 
+  getAttractions = () => {
+    axios
+      .get(
+        `https://api.opentripmap.com/0.1/en/places/radius?radius=3000&lon=${this.state.lng}&lat=${this.state.lat}&src_attr=osm&kinds=cultural%2Carchitecture&rate=3&format=geojson&limit=50000&apikey=5ae2e3f221c38a28845f05b66dd041008f502f976c4cd76d927351d3`
+      )
+      .then((res) => {
+        this.setState({ geojson: res.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   setCoordinates = (lat, lng) => {
-    this.setState({ lat: lat, lng: lng, uploaded: false })
-  }
+    this.setState({ lat: lat, lng: lng, uploaded: false });
+  };
 
   openMap = () => {
-    this.setState({ openMap: true })
-  }
+    this.setState({ openMap: true });
+  };
 
   getRoute = (newCoords, add, idx) => {
-
-    let point = { idx: this.state.idx, name: this.state.name, lng: 0, lat: 0, order: 0, distance: 0, duration: 0 }
-    let newplacesTable = this.state.placesTable
+    let point = {
+      idx: this.state.idx,
+      name: this.state.name,
+      lng: 0,
+      lat: 0,
+      order: 0,
+      distance: 0,
+      duration: 0,
+    };
+    let newplacesTable = this.state.placesTable;
     if (add) {
-      newplacesTable.push(point)
+      newplacesTable.push(point);
     } else {
-      newplacesTable = newplacesTable.filter(place => place.idx !== idx)
+      newplacesTable = newplacesTable.filter((place) => place.idx !== idx);
     }
-    let coords = newCoords.join(";")
+    let coords = newCoords.join(";");
     let routeGeoJSON = turf.featureCollection();
 
-    axios.get(
-      `https://api.mapbox.com/optimized-trips/v1/mapbox/walking/${coords}?geometries=geojson&access_token=pk.eyJ1IjoiZW5lbWlsYSIsImEiOiJja2diMXZscDEwMmkzMnlwOHY4MDE4cG12In0.8beJYbEq_SkImugp6WejTA`)
+    axios
+      .get(
+        `https://api.mapbox.com/optimized-trips/v1/mapbox/walking/${coords}?geometries=geojson&access_token=pk.eyJ1IjoiZW5lbWlsYSIsImEiOiJja2diMXZscDEwMmkzMnlwOHY4MDE4cG12In0.8beJYbEq_SkImugp6WejTA`
+      )
       .then((res) => {
         for (let i = 0; i < res.data.waypoints.length; i++) {
-          newplacesTable[i].lng = res.data.waypoints[i].location[0]
-          newplacesTable[i].lat = res.data.waypoints[i].location[1]
+          newplacesTable[i].lng = res.data.waypoints[i].location[0];
+          newplacesTable[i].lat = res.data.waypoints[i].location[1];
         }
-        newplacesTable = newplacesTable.map(place => {
-          let order = place.order
-          for (let i = 0; i < res.data.trips[0].geometry.coordinates.length; i++) {
-            if (place.lng == res.data.trips[0].geometry.coordinates[i][0]
-              && place.lat == res.data.trips[0].geometry.coordinates[i][1]) {
+        newplacesTable = newplacesTable.map((place) => {
+          let order = place.order;
+          for (
+            let i = 0;
+            i < res.data.trips[0].geometry.coordinates.length;
+            i++
+          ) {
+            if (
+              place.lng == res.data.trips[0].geometry.coordinates[i][0] &&
+              place.lat == res.data.trips[0].geometry.coordinates[i][1]
+            ) {
               order = i;
               break;
             }
           }
-          return { ...place, order: order }
-        })
+          return { ...place, order: order };
+        });
 
         newplacesTable.sort(function (a, b) {
-          return a.order - b.order
+          return a.order - b.order;
         });
 
         for (let i = 0; i < res.data.trips[0].legs.length; i++) {
-          newplacesTable[i].distance = res.data.trips[0].legs[i].distance
-          newplacesTable[i].duration = Math.floor(res.data.trips[0].legs[i].duration / 60)
+          newplacesTable[i].distance = res.data.trips[0].legs[i].distance;
+          newplacesTable[i].duration = Math.floor(
+            res.data.trips[0].legs[i].duration / 60
+          );
         }
 
-        this.setState({ placesTable: newplacesTable })
+        this.setState({ placesTable: newplacesTable });
 
-        routeGeoJSON = turf.featureCollection([turf.feature(res.data.trips[0].geometry)]);
-        this.setState({ routeJson: routeGeoJSON })
-        this.state.map.getSource('route')
-          .setData(routeGeoJSON);
-
+        routeGeoJSON = turf.featureCollection([
+          turf.feature(res.data.trips[0].geometry),
+        ]);
+        this.setState({ routeJson: routeGeoJSON });
+        this.state.map.getSource("route").setData(routeGeoJSON);
       })
       .catch((err) => {
         let nothing = turf.featureCollection([]);
-        this.state.map.getSource('route')
-          .setData(nothing);
-        this.setState({ placesTable: newplacesTable })
-        console.log(err)
+        this.state.map.getSource("route").setData(nothing);
+        this.setState({ placesTable: newplacesTable });
+        console.log(err);
       });
   };
 
   addToRoute = () => {
-    let coords = this.state.placeCoordinates.join([","])
-    let newRoutePlaces = this.state.routePlaces
-    newRoutePlaces.push(coords)
-    this.setState({ routePlaces: newRoutePlaces })
-    this.getRoute(newRoutePlaces, true, this.state.idx)
-  }
+    let coords = this.state.placeCoordinates.join([","]);
+    let newRoutePlaces = this.state.routePlaces;
+    newRoutePlaces.push(coords);
+    this.setState({ routePlaces: newRoutePlaces });
+    this.getRoute(newRoutePlaces, true, this.state.idx);
+  };
 
   deletePlaceFromRoute = (idx) => {
-    let newRoutePlaces = this.state.routePlaces
-    let coords = this.state.placeCoordinates.join([","])
-    let index = newRoutePlaces.indexOf(coords)
+    let newRoutePlaces = this.state.routePlaces;
+    let coords = this.state.placeCoordinates.join([","]);
+    let index = newRoutePlaces.indexOf(coords);
     if (index > -1) {
       newRoutePlaces.splice(index, 1);
     }
     idx
       ? this.getRoute(newRoutePlaces, false, idx)
-      : this.getRoute(newRoutePlaces, false, this.state.idx)
-  }
-
+      : this.getRoute(newRoutePlaces, false, this.state.idx);
+  };
 
   render() {
-
     const columns = [
       {
         title: "Place name",
@@ -290,7 +328,7 @@ class CityTour extends React.Component {
           <Space
             size="middle"
             onClick={() => {
-              this.getDescription(record.idx, true)
+              this.getDescription(record.idx, true);
             }}
           >
             <a>Delete</a>
@@ -300,61 +338,33 @@ class CityTour extends React.Component {
     ];
 
     return (
-      <div style={{ paddingRight: "5%", paddingLeft: "5%" }} style={mapStyles} >
+      <div style={{ paddingRight: "5%", paddingLeft: "5%" }} style={mapStyles}>
         <Title>Zaplanuj trasę</Title>
         <Divider />
-        <Row align="middle">
-          <Col span={22}>
-            {this.props.trip ? (
-              <div>
-                <Paragraph>
-                  {"Nazwa podróży: "}
-                  <b>{this.props.trip ? this.props.trip.name : "nazwa"}</b>
-                </Paragraph>
-                <Paragraph>
-                  {"Od: "}
-                  <b>
-                    {this.props.trip ? this.props.trip.name : "01-02-2020 \t"}
-                  </b>
-                  {"Do: "}
-                  <b>{this.props.trip ? this.props.trip.name : "09-02-2020"}</b>
-                </Paragraph>
-              </div>
-            ) : (
-                <div>
-                  <Button type="primary">
-                    <Link
-                      to="/city_tours_new/"
-                      style={{ textDecoration: "none" }}
-                    >
-                      DODAJ DO PODRÓŻY
-                  </Link>
-                  </Button>
-                </div>
-              )}
-          </Col>
-          <Col span={2}>
-            <div>
-              <Button
-                type="primary"
-                onClick={() => this.setState({ openModal: true })}
-              >
-                Save
-              </Button>
-            </div>
-
-          </Col>
-        </Row>
+        <Button
+          style={{ float: "right", marginRight: "20px", marginBottom: "20px" }}
+          type="primary"
+          onClick={() => this.setState({ openModal: true })}
+        >
+          Save
+        </Button>
         <Divider />
         <PlaceAutocompleteComponent
           setCoordinates={(lat, lng) => this.setCoordinates(lat, lng)}
-          openMap={() => this.openMap()} />
+          openMap={() => this.openMap()}
+        />
         <Row>
           <Col span={14}>
             {this.state.openMap ? (
-              <div>Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom: {this.state.zoom}
-                <Content style={{ padding: '0 50px', height: "800px" }}>
-                  <div ref={el => this.mapContainer = el} className="mapContainer" style={mapStyles} />
+              <div>
+                Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom:{" "}
+                {this.state.zoom}
+                <Content style={{ padding: "0 50px", height: "800px" }}>
+                  <div
+                    ref={(el) => (this.mapContainer = el)}
+                    className="mapContainer"
+                    style={mapStyles}
+                  />
                 </Content>
               </div>
             ) : null}
@@ -370,24 +380,22 @@ class CityTour extends React.Component {
                   src={this.state.image}
                 />
                 <Divider />
-                <Title >{this.state.name}</Title>
+                <Title>{this.state.name}</Title>
                 <Divider />
                 <div style={{ height: "250px" }}>
                   <Paragraph>{this.state.description}</Paragraph>
                 </div>
                 <Divider />
                 <Row>
-
-                  <Col span={3}><Button
-                    onClick={() => this.addToRoute()}
-
-                  >Add</Button></Col>
-                  <Col span={21}><Button
-                    onClick={() => this.deletePlaceFromRoute(null)}
-
-                  >DELETE</Button></Col>
+                  <Col span={3}>
+                    <Button onClick={() => this.addToRoute()}>Add</Button>
+                  </Col>
+                  <Col span={21}>
+                    <Button onClick={() => this.deletePlaceFromRoute(null)}>
+                      DELETE
+                    </Button>
+                  </Col>
                 </Row>
-
               </div>
             ) : null}
           </Col>
@@ -401,11 +409,9 @@ class CityTour extends React.Component {
             afterClose={() => this.setState({ openModal: false })}
             placesTable={this.state.placesTable}
             trip={this.state.trip ? this.state.trip : null}
-        />
-
-        ): null}
-
-      </div >
+          />
+        ) : null}
+      </div>
     );
   }
 }
