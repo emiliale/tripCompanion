@@ -15,65 +15,13 @@ import {
 import moment from "moment";
 import { Link } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
-import { FormInstance } from "antd/lib/form";
 import { getTrips, updateTrip, deleteTrip } from "../../store/actions/trips";
 import { getCityTours, deleteCityTour } from "../../store/actions/cityTours";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Popconfirm, message } from "antd";
+import { Popconfirm } from "antd";
 
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 const { RangePicker } = DatePicker;
-
-const columns = [
-  {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: "Date",
-    dataIndex: "date",
-    key: "date",
-  },
-  {
-    title: "City",
-    dataIndex: "city",
-    key: "city",
-  },
-  {
-    title: "Distance",
-    dataIndex: "distance",
-    key: "distance",
-  },
-  {
-    title: "Action",
-    key: "action",
-    render: (text, record) => (
-      <Space size="middle">
-        <a>Edit</a>
-        <a>Delete</a>
-      </Space>
-    ),
-  },
-];
-
-const data = [
-  {
-    key: "1",
-    name: "New York first day",
-    date: "01-02-2019",
-    city: "New York",
-    distance: "10km",
-  },
-  {
-    key: "2",
-    name: "New York second day",
-    date: "02-02-2019",
-    city: "New York",
-    distance: "12km",
-  },
-];
 
 class Trip extends React.Component {
   formRef = React.createRef();
@@ -91,7 +39,6 @@ class Trip extends React.Component {
     this.props.updateTrip(
       this.props.trip.id,
       values.name,
-      values.location,
       moment(values.date[0]._d).format("YYYY-MM-DD"),
       moment(values.date[1]._d).format("YYYY-MM-DD"),
       this.props.trip.users
@@ -110,7 +57,56 @@ class Trip extends React.Component {
   }
 
   render() {
-    console.log(this.props.cityTours);
+    const columns = [
+      {
+        title: "Name",
+        dataIndex: "name",
+        key: "name",
+        render: (text, record) => <Button
+          type="link"
+          onClick={() => this.props.history.push("/city_tours/" + record.id + "/")}
+        > <a>{text}</a>
+        </Button>
+        ,
+      },
+      {
+        title: "Date",
+        dataIndex: "date",
+        key: "date",
+      },
+      {
+        title: "City",
+        dataIndex: "city",
+        key: "city",
+      },
+      {
+        title: "Distance",
+        dataIndex: "distance",
+        key: "distance",
+      },
+      {
+        title: "Action",
+        key: "action",
+        render: (text, record) => (
+          <Space size="middle">
+            <Button
+              onClick={() => this.props.history.push("/city_tours/" + record.id + "/")}
+            > <a>Edit</a>
+            </Button>
+            <Popconfirm
+              title="Are you sure delete this tour?"
+              onConfirm={() => this.props.deleteCityTour(record.id)}
+              onCancel={() => console.log("cancel")}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button><a>Delete</a></Button>
+            </Popconfirm>
+
+          </Space>
+        ),
+      },
+    ];
     return (
       <div style={{ paddingRight: "5%", paddingLeft: "5%" }}>
         <Title>{this.props.trip ? this.props.trip.name : "Podróż"}</Title>
@@ -134,9 +130,6 @@ class Trip extends React.Component {
                   onFinish={this.onFinish}
                   initialValues={{
                     ["name"]: this.props.trip ? this.props.trip.name : null,
-                    ["location"]: this.props.trip
-                      ? this.props.trip.location
-                      : null,
                     ["date"]: this.props.trip
                       ? [
                           moment(this.props.trip.start_date),
@@ -150,14 +143,6 @@ class Trip extends React.Component {
                     rules={[{ required: true, message: "Please input name!" }]}
                   >
                     <Input name="name" placeholder="Name" />
-                  </Form.Item>
-                  <Form.Item
-                    name="location"
-                    rules={[
-                      { required: true, message: "Please input location!" },
-                    ]}
-                  >
-                    <Input name="location" placeholder="Location" />
                   </Form.Item>
                   <Form.Item
                     name="date"
@@ -186,7 +171,7 @@ class Trip extends React.Component {
                 <Row gutter={16}>
                   <Col span={24}>
                     <Popconfirm
-                      title="Are you sure delete this task?"
+                      title="Are you sure delete this trip?"
                       onConfirm={() => this.deleteTrip()}
                       onCancel={() => console.log("cancel")}
                       okText="Yes"
@@ -214,18 +199,6 @@ class Trip extends React.Component {
                   </Col>
                   <Col span={14}>
                     <div>{this.props.trip ? this.props.trip.name : ""}</div>
-                  </Col>
-                </Row>
-                <Row gutter={16}>
-                  <Col span={10}>
-                    <div>
-                      <p>
-                        <b>Location:</b>
-                      </p>
-                    </div>
-                  </Col>
-                  <Col span={14}>
-                    <div>{this.props.trip ? this.props.trip.location : ""}</div>
                   </Col>
                 </Row>
                 <Divider style={{ marginTop: "1px" }} />
@@ -279,7 +252,9 @@ const mapStateToProps = (state, ownProps) => {
   return {
     trip: state.trips.find((x) => x.id === tripId),
     cityTours: state.cityTours.filter(
-      (tour) => tour.trip.indexOf(tripId) !== -1
+      (tour) => {
+        return tour.trip ? tour.trip === tripId : false
+      }
     ),
   };
 };

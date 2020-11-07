@@ -48,12 +48,11 @@ export function getTrips(level) {
     };
 }
 
-export function newTrip(name, location, start_date, end_date, users) {
+export function newTrip(name, start_date, end_date, users) {
     return (dispatch) => {
         axios
             .post(`${serverUrl}/trip/trips/`, {
                 name: name,
-                location: location,
                 start_date: start_date,
                 end_date: end_date,
                 users: users,
@@ -68,12 +67,11 @@ export function newTrip(name, location, start_date, end_date, users) {
     };
 }
 
-export function updateTrip(tripId, name, location, start_date, end_date, users) {
+export function updateTrip(tripId, name, start_date, end_date, users) {
     return (dispatch) => {
         axios
             .put(`${serverUrl}/trip/trips/` + tripId + "/", {
                 name: name,
-                location: location,
                 start_date: start_date,
                 end_date: end_date,
                 users: users,

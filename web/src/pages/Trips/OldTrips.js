@@ -20,7 +20,6 @@ class OldTrips extends React.Component {
         list.push({
           id: `${trip.id}`,
           title: `${trip.name}`,
-          location: `${trip.location}`,
           start: `${trip.start_date}`,
           end: `${trip.end_date}`,
         });
@@ -50,18 +49,6 @@ class OldTrips extends React.Component {
             }}
           >
             <Card hoverable title={item.title}>
-              <Row gutter={16}>
-                <Col span={10}>
-                  <div>
-                    <p>
-                      <b>Location:</b>
-                    </p>
-                  </div>
-                </Col>
-                <Col span={14}>
-                  <div>{item.location}</div>
-                </Col>
-              </Row>
               <Divider style={{ marginTop: "1px" }} />
               <Row gutter={16}>
                 <Col span={10}>

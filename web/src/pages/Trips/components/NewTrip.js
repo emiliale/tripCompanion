@@ -2,7 +2,6 @@ import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { Modal, Form, Input, DatePicker } from "antd";
-import { FormInstance } from "antd/lib/form";
 import { newTrip } from "../../../store/actions/trips";
 import { format } from "date-fns";
 
@@ -38,22 +37,13 @@ class _Modal extends React.Component {
   }
 
   onFinish = (values) => {
-    let username = localStorage.getItem("username");
-    console.log(username);
-    axios
-      .get(`${serverUrl}/administration/users/?username=${username}`)
-      .then((res) => {
-        console.log(res.data);
-        let users = res.data.map((user) => user.id);
-        console.log(users);
-        this.props.newTrip(
-          values.name,
-          values.location,
-          format(values.date[0]._d, "yyyy-MM-dd"),
-          format(values.date[1]._d, "yyyy-MM-dd"),
-          users
-        );
-      });
+    let users = [parseInt(localStorage.getItem("userId"))];
+    this.props.newTrip(
+      values.name,
+      format(values.date[0]._d, "yyyy-MM-dd"),
+      format(values.date[1]._d, "yyyy-MM-dd"),
+      users
+    );  
     this.setState({
       visible: false,
     });
@@ -97,12 +87,6 @@ class _Modal extends React.Component {
             rules={[{ required: true, message: "Please input name!" }]}
           >
             <Input placeholder="Name" />
-          </Form.Item>
-          <Form.Item
-            name="location"
-            rules={[{ required: true, message: "Please input location!" }]}
-          >
-            <Input placeholder="Location" />
           </Form.Item>
           <Form.Item
             name="date"

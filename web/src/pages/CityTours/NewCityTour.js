@@ -6,26 +6,20 @@ import {
   Col,
   Button,
   Layout,
-  Card,
   Divider,
   Image,
 } from "antd";
-import { Table, Tag, Space } from "antd";
+import { Table, Space } from "antd";
 import axios from "axios";
 import mapboxgl from "mapbox-gl";
 import PlaceAutocompleteComponent from "./components/PlaceAutocompleteComponent";
 import * as turf from "@turf/helpers";
-import { Link } from "react-router-dom";
 import { getPlaces, addPlace } from "../../store/actions/places";
 import { newCityTour } from "../../store/actions/cityTours";
 import NewCityTourModal from "./components/NewCityTourModal";
 
-const { Header, Content, Footer } = Layout;
-const env = process.env.NODE_ENV || "development";
-const serverUrl =
-  env === "development"
-    ? "http://127.0.0.1:8000"
-    : "https://trip-companion-server.herokuapp.com";
+const { Content } = Layout;
+
 const { Title, Paragraph } = Typography;
 const mapStyles = {
   //position: "absolute",
@@ -36,7 +30,7 @@ const mapStyles = {
 mapboxgl.accessToken =
   "pk.eyJ1IjoiZW5lbWlsYSIsImEiOiJja2diMXZscDEwMmkzMnlwOHY4MDE4cG12In0.8beJYbEq_SkImugp6WejTA";
 
-class CityTour extends React.Component {
+class NewCityTour extends React.Component {
   state = {
     lng: 17.0369,
     lat: 51.1075,
@@ -55,6 +49,7 @@ class CityTour extends React.Component {
     done: false,
     overallDistance: 0,
     openModal: false,
+    city: "",
   };
 
   componentDidMount() {
@@ -167,6 +162,10 @@ class CityTour extends React.Component {
     }
   }
 
+  setCity(city) {
+    this.setState({ city: city })
+  }
+
   getDescription = (xid, isDeleted) => {
     axios
       .get(
@@ -261,7 +260,7 @@ class CityTour extends React.Component {
         });
 
         for (let i = 0; i < res.data.trips[0].legs.length; i++) {
-          newplacesTable[i].distance = res.data.trips[0].legs[i].distance;
+          newplacesTable[i].distance = Math.floor(res.data.trips[0].legs[i].distance);
           newplacesTable[i].duration = Math.floor(
             res.data.trips[0].legs[i].duration / 60
           );
@@ -350,6 +349,7 @@ class CityTour extends React.Component {
         </Button>
         <Divider />
         <PlaceAutocompleteComponent
+          setCity={(city) => this.setCity(city)}
           setCoordinates={(lat, lng) => this.setCoordinates(lat, lng)}
           openMap={() => this.openMap()}
         />
@@ -409,6 +409,14 @@ class CityTour extends React.Component {
             afterClose={() => this.setState({ openModal: false })}
             placesTable={this.state.placesTable}
             trip={this.state.trip ? this.state.trip : null}
+            city={this.state.city}
+            distance={() => {
+              let distance = 0;
+              this.state.placesTable.map(place => distance += place.distance)
+              return distance
+            }
+            }
+
           />
         ) : null}
       </div>
@@ -428,4 +436,4 @@ const mapDispatchToProps = {
   newCityTour,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CityTour);
+export default connect(mapStateToProps, mapDispatchToProps)(NewCityTour);

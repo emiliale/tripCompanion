@@ -26,18 +26,13 @@ const Complete = (props) => {
   }, []);
 
   const onSearch = (searchText) => {
-    let username = localStorage.getItem("username");
-    axios
-      .get(`${serverUrl}/administration/users/?username=${username}`)
-      .then((res) => {
-        let userId = res.data[0].id;
-        let options = props.trips;
-        options = options.filter((trip) => trip.users.indexOf(userId) !== -1);
-        options = options.map((trip) => {
-          return { value: trip.name };
-        });
-        setOptions(!searchText ? [] : options);
-      });
+    let userId = parseInt(localStorage.getItem("userId"));
+    let options = props.trips;
+    options = options.filter((trip) => trip.users.indexOf(userId) != -1);
+    options = options.map((trip) => {
+      return { value: trip.name };
+    });
+    setOptions(!searchText ? [] : options);
   };
 
   const onSelect = (data) => {

@@ -10,7 +10,6 @@ import { newCityTour } from "../../../store/actions/cityTours";
 import { getTrips } from "../../../store/actions/trips";
 import AutocompleteTrip from "./AutocompleteTrip";
 
-const { RangePicker } = DatePicker;
 
 const env = process.env.NODE_ENV || "development";
 const serverUrl =
@@ -25,6 +24,9 @@ class NewCityTourModal extends React.Component {
     placesOverall: 0,
     name: "",
     trip: {},
+    date: "",
+    dsitance: 0,
+    city: "",
   };
 
   formRef = React.createRef();
@@ -35,7 +37,6 @@ class NewCityTourModal extends React.Component {
       this.state.places.length !== 0
     ) {
       this.saveCityTour();
-      console.log(this.state.places);
     }
 
     if (this.props.open !== prevProps.open) {
@@ -48,20 +49,16 @@ class NewCityTourModal extends React.Component {
   };
 
   saveCityTour = () => {
-    let username = localStorage.getItem("username");
-    axios
-      .get(`${serverUrl}/administration/users/?username=${username}`)
-      .then((res) => {
-        console.log(res.data);
-        let users = res.data.map((user) => user.id);
-        console.log(users);
-        this.props.newCityTour(
-          this.state.name,
-          this.state.trip ? this.state.trip.id : null,
-          this.state.trip ? this.state.trip.users : users,
-          this.state.places
-        );
-      });
+    let users = [parseInt(localStorage.getItem("userId"))];
+    this.props.newCityTour(
+      this.state.name,
+      this.state.city,
+      this.state.distance,
+      this.state.date,
+      this.state.trip ? this.state.trip.id : null,
+      this.state.trip ? this.state.trip.users : users,
+      this.state.places
+    );
   };
 
   savePlaces = () => {
@@ -86,15 +83,12 @@ class NewCityTourModal extends React.Component {
         places.push(placeId);
       }
     });
-    console.log(places);
-    console.log(toAdd);
     this.setState({ placesOverall: toAdd.length + places.length });
     this.setState({ places: places });
     toAdd.map((place) => this.addPlace(place));
   };
 
   addPlace = (place) => {
-    console.log(place);
     axios
       .post(`${serverUrl}/place/places/`, {
         xid: place.idx,
@@ -106,15 +100,12 @@ class NewCityTourModal extends React.Component {
       })
       .then((res) => {
         this.props.addPlace(res.data);
-        console.log(res.data);
-        console.log(this.state.places);
         this.setState((prevState) => {
           const newPlaces = [...prevState.places, res.data.id];
           return {
             places: newPlaces,
           };
         });
-        console.log(this.state.places);
       })
       .catch((err) => {
         console.log(err);
@@ -122,8 +113,8 @@ class NewCityTourModal extends React.Component {
   };
 
   onFinish = (values) => {
-    console.log(values);
-    this.setState({ name: values.name });
+    const distance = this.props.distance()
+    this.setState({ name: values.name, date:   format(values.date._d, "yyyy-MM-dd"), distance: distance, city: this.props.city });
     this.savePlaces();
     this.setState({
       visible: false,
@@ -146,7 +137,6 @@ class NewCityTourModal extends React.Component {
   };
 
   render = () => {
-    console.log(this.state.trip);
     return (
       <Modal
         afterClose={this.props.afterClose}
@@ -170,7 +160,15 @@ class NewCityTourModal extends React.Component {
           >
             <Input placeholder="Name" />
           </Form.Item>
-          <AutocompleteTrip setTrip={(trip) => this.setTrip(trip)} />
+          <Form.Item
+            name="date"
+            rules={[{ required: true, message: "Please input date!" }]}
+          >
+            <DatePicker />
+          </Form.Item>
+          <AutocompleteTrip
+            rules={[{ required: true, message: "Please input trip!" }]}
+           setTrip={(trip) => this.setTrip(trip)} />
         </Form>
       </Modal>
     );

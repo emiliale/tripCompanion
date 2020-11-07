@@ -20,6 +20,7 @@ function PlacesAutocompleteComponent(props) {
     setCoordinates(latLng);
     setIsDisabled(true);
     props.setCoordinates(latLng.lat, latLng.lng);
+    props.setCity(value)
     props.openMap();
   };
 

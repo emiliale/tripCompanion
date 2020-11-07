@@ -48,11 +48,14 @@ export function getCityTours(level) {
     };
 }
 
-export function newCityTour(name, trip, users, places) {
+export function newCityTour(name, city, distance, date, trip, users, places) {
     return (dispatch) => {
         axios
             .post(`${serverUrl}/cityTour/cityTours/`, {
                 name: name,
+                city: city,
+                distance: distance,
+                date:  date,
                 trip: trip,
                 users: users,
                 places: places,
@@ -67,11 +70,14 @@ export function newCityTour(name, trip, users, places) {
     };
 }
 
-export function updateCityTour(cityTourId, name, trip, users, places) {
+export function updateCityTour(cityTourId, name, city, distance, date, trip, users, places) {
     return (dispatch) => {
         axios
             .put(`${serverUrl}/cityTour/cityTours/` + cityTourId + "/", {
                 name: name,
+                city: city,
+                distance: distance,
+                date:  date,
                 trip: trip,
                 users: users,
                 places: places,
@@ -91,7 +97,7 @@ export function deleteCityTour(cityTourId) {
         axios
             .delete(`${serverUrl}/cityTour/cityTours/` + cityTourId + "/")
             .then((res) => {
-                dispatch(removeCityTour(res.data));
+                dispatch(removeCityTour(cityTourId));
                 dispatch(finishRequest());
             })
             .catch((err) => {

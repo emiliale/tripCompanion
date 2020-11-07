@@ -28,6 +28,7 @@ export const logout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("expirationDate");
   localStorage.removeItem("username");
+  localStorage.removeItem("userId");
   return {
     type: actionTypes.AUTH_LOGOUT,
   };
@@ -53,6 +54,11 @@ export const authLogin = (username, password) => {
       })
       .then((res) => {
         window.location.replace("/");
+        axios
+          .get(`${serverUrl}/administration/users/?username=${username}`)
+          .then((res) => {
+            localStorage.setItem("userId", res.data[0].id);
+          });
         const token = res.data.key;
         const usrname = username;
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
@@ -83,6 +89,11 @@ export const authSignup = (username, email, password1, password2) => {
         password2: password2,
       })
       .then((res) => {
+        axios
+        .get(`${serverUrl}/administration/users/?username=${username}`)
+        .then((res) => {
+          localStorage.setItem("userId", res.data[0].id);
+        });
         const token = res.data.key;
         const usrname = username;
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);

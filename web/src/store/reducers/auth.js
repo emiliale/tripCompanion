@@ -80,7 +80,7 @@ function tripsReducer(state = [], action) {
     case EDIT_TRIP:
       return state.map((trip) => (trip.id === action.trip.id ? action.trip : trip));
     case REMOVE_TRIP:
-      return state.filter((trip) => trip.id !== action.trip);
+      return state.filter((trip) => trip.id !== action.tripId);
     default:
       return state;
   }
@@ -95,7 +95,8 @@ function cityToursReducer(state = [], action) {
     case EDIT_CITY_TOUR:
       return state.map((cityTour) => (cityTour.id === action.cityTour.id ? action.cityTour : cityTour));
     case REMOVE_CITY_TOUR:
-      return state.filter((cityTour) => cityTour.id !== action.cityTour);
+      console.log(action.cityTourId)
+      return state.filter((cityTour) => cityTour.id !== action.cityTourId);
     default:
       return state;
   }
@@ -110,7 +111,7 @@ function placesReducer(state = [], action) {
     case EDIT_PLACE:
       return state.map((place) => (place.id === action.place.id ? action.place : place));
     case REMOVE_PLACE:
-      return state.filter((place) => place.id !== action.place);
+      return state.filter((place) => place.id !== action.placeId);
     default:
       return state;
   }
