@@ -1,21 +1,12 @@
 import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import {
-  Modal,
-  Form,
-  Input,
-  DatePicker,
-  Row,
-  Col,
-  Button,
-  notification,
-} from "antd";
+import { Modal, Form, Input, DatePicker, Row, Col, Button } from "antd";
 import { FormInstance } from "antd/lib/form";
 import { newTrip } from "../../../store/actions/trips";
 import { format } from "date-fns";
 import { getPlaces, addPlace } from "../../../store/actions/places";
-import { newCityTour, updateCityTour } from "../../../store/actions/cityTours";
+import { newCityTour } from "../../../store/actions/cityTours";
 import { getTrips } from "../../../store/actions/trips";
 import AutocompleteTrip from "./AutocompleteTrip";
 import moment from "moment";
@@ -37,19 +28,21 @@ class NewCityTourModal extends React.Component {
     date: "",
     dsitance: 0,
     city: "",
-    send: false,
+    editable: false,
   };
 
   formRef = React.createRef();
 
+  componentDidMount() {
+    this.props.getTrips();
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (
       this.state.places.length === this.state.placesOverall &&
-      this.state.places.length !== 0 &&
-      !this.state.send
+      this.state.places.length !== 0
     ) {
-      this.setState({ send: true });
-      this.props.id ? this.updateCityTour() : this.saveCityTour();
+      this.saveCityTour();
     }
 
     if (this.props.open !== prevProps.open) {
@@ -72,37 +65,6 @@ class NewCityTourModal extends React.Component {
       this.state.trip ? this.state.trip.users : users,
       this.state.places
     );
-    notification.open({
-      message: "Saved City Tour",
-      description: "City Tour has been saved successfully",
-      onClick: () => {
-        console.log("Notification Clicked!");
-      },
-    });
-    setTimeout(function () {
-      window.location.replace("/city_tours");
-    }, 1000);
-  };
-
-  updateCityTour = () => {
-    let users = [parseInt(localStorage.getItem("userId"))];
-    this.props.updateCityTour(
-      this.props.id,
-      this.state.name,
-      this.state.city,
-      this.state.distance,
-      this.state.date,
-      this.state.trip ? this.state.trip.id : null,
-      this.state.trip ? this.state.trip.users : users,
-      this.state.places
-    );
-    notification.open({
-      message: "Saved City Tour",
-      description: "City Tour has been saved successfully",
-      onClick: () => {
-        console.log("Notification Clicked!");
-      },
-    });
   };
 
   savePlaces = () => {
@@ -157,7 +119,7 @@ class NewCityTourModal extends React.Component {
   };
 
   onFinish = (values) => {
-    this.setState({ send: false });
+    console.log("save");
     const distance = this.props.distance();
     this.setState({
       name: values.name,
@@ -187,7 +149,7 @@ class NewCityTourModal extends React.Component {
   };
 
   render = () => {
-    console.log(this.props.id);
+    console.log(this.props.tripObject[0] ? this.props.tripObject[0].name : "");
     return (
       <Modal
         afterClose={this.props.afterClose}
@@ -210,7 +172,7 @@ class NewCityTourModal extends React.Component {
           }}
         >
           {this.props.trip && !this.state.editable ? (
-            <Row gutter={16} style={{ marginBottom: "25px" }}>
+            <Row gutter={16}>
               <Col span={3}>
                 <div>
                   <p>
@@ -238,14 +200,12 @@ class NewCityTourModal extends React.Component {
               </Col>
             </Row>
           ) : (
-            <div style={{ marginBottom: "25px" }}>
-              <AutocompleteTrip
-                rules={[{ required: true, message: "Please input trip!" }]}
-                setTrip={(trip) => this.setTrip(trip)}
-              />
-              <br />
-            </div>
+            <AutocompleteTrip
+              rules={[{ required: true, message: "Please input trip!" }]}
+              setTrip={(trip) => this.setTrip(trip)}
+            />
           )}
+
           <Form.Item
             name="name"
             rules={[{ required: true, message: "Please input name!" }]}
@@ -265,6 +225,7 @@ class NewCityTourModal extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  console.log(ownProps.trip);
   return {
     places: state.places,
     tripObject: state.trips.filter((trip) => trip.id === ownProps.trip),
@@ -276,7 +237,6 @@ const mapDispatchToProps = {
   getPlaces,
   addPlace,
   newCityTour,
-  updateCityTour,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewCityTourModal);

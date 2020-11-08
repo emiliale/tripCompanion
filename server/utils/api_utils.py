@@ -62,7 +62,11 @@ def get_view_set(param, _class, _app_name):
 
             queryset = queryset.filter(**init_filter)
 
-            fltrs = [(key, item) for (key, item) in request_params if key.split("__")[0] in _model_fields]
+            fltrs = [
+                (key, item)
+                for (key, item) in request_params
+                if key.split("__")[0] in _model_fields
+            ]
 
             filter_dictionary = {}
             for key, item in fltrs:
@@ -77,24 +81,24 @@ def get_view_set(param, _class, _app_name):
             return queryset
 
         # def perform_create(self, serializer):
-            # if isinstance(serializer.data, list):
-            #     log(
-            #         level="CRUD",
-            #         system=self.app_name,
-            #         message="Creating {}: {}".format(
-            #             self.view_name, ",".join(" {}".format(item["id"]) for item in serializer.data)
-            #         ),
-            #         user=self.request.user,
-            #     )
-            # else:
-            #     log(
-            #         level="CRUD",
-            #         system=self.app_name,
-            #         message="Creating {}: {}".format(
-            #             self.view_name, ",".join(" {}={}".format(key, item) for key, item in serializer.data.items())
-            #         ),
-            #         user=self.request.user,
-            #     )
+        # if isinstance(serializer.data, list):
+        #     log(
+        #         level="CRUD",
+        #         system=self.app_name,
+        #         message="Creating {}: {}".format(
+        #             self.view_name, ",".join(" {}".format(item["id"]) for item in serializer.data)
+        #         ),
+        #         user=self.request.user,
+        #     )
+        # else:
+        #     log(
+        #         level="CRUD",
+        #         system=self.app_name,
+        #         message="Creating {}: {}".format(
+        #             self.view_name, ",".join(" {}={}".format(key, item) for key, item in serializer.data.items())
+        #         ),
+        #         user=self.request.user,
+        #     )
 
         # def update(self, request, *args, **kwargs):
         #     log(
@@ -175,13 +179,19 @@ def get_functionality_view_set(function, _class, _app_name, endpoint_name=None):
                 if self.stripped_name:
                     response_data = func(serialized=True, request=request)
                 else:
-                    response_data = func(**self.__unwrap_request_data(request.data), serialized=True, request=request)
+                    response_data = func(
+                        **self.__unwrap_request_data(request.data),
+                        serialized=True,
+                        request=request
+                    )
                 if isinstance(response_data, HttpResponse):
                     return response_data
                 else:
                     return Response(data=response_data, status=status.HTTP_200_OK)
             except TypeError as e:
-                return Response(data={"error": e.args[0]}, status=status.HTTP_400_BAD_REQUEST)
+                return Response(
+                    data={"error": e.args[0]}, status=status.HTTP_400_BAD_REQUEST
+                )
 
         def get(self, request):
             if not self.stripped_name:
@@ -195,7 +205,9 @@ def get_functionality_view_set(function, _class, _app_name, endpoint_name=None):
                 else:
                     return Response(data=response_data, status=status.HTTP_200_OK)
             except TypeError as e:
-                return Response(data={"error": e.args[0]}, status=status.HTTP_400_BAD_REQUEST)
+                return Response(
+                    data={"error": e.args[0]}, status=status.HTTP_400_BAD_REQUEST
+                )
 
         def delete(self, request, **kwargs):
             if not self.stripped_name:
@@ -209,7 +221,9 @@ def get_functionality_view_set(function, _class, _app_name, endpoint_name=None):
                 else:
                     return Response(data=response_data, status=status.HTTP_200_OK)
             except TypeError as e:
-                return Response(data={"error": e.args[0]}, status=status.HTTP_400_BAD_REQUEST)
+                return Response(
+                    data={"error": e.args[0]}, status=status.HTTP_400_BAD_REQUEST
+                )
 
         def put(self, request, **kwargs):
             if not self.stripped_name:
@@ -223,7 +237,9 @@ def get_functionality_view_set(function, _class, _app_name, endpoint_name=None):
                 else:
                     return Response(data=response_data, status=status.HTTP_200_OK)
             except TypeError as e:
-                return Response(data={"error": e.args[0]}, status=status.HTTP_400_BAD_REQUEST)
+                return Response(
+                    data={"error": e.args[0]}, status=status.HTTP_400_BAD_REQUEST
+                )
 
     return FunctionApiViewSet
 
@@ -241,20 +257,27 @@ def get_functionality_paths(_class, _app_name):
                 functionality.append(
                     path(
                         r"{}/<int:id>/".format(function_name),
-                        get_functionality_view_set(function_name, _class, _app_name, function_name).as_view(),
+                        get_functionality_view_set(
+                            function_name, _class, _app_name, function_name
+                        ).as_view(),
                     )
                 )
             else:
                 functionality.append(
                     path(
                         r"{}/".format(function_name),
-                        get_functionality_view_set(function_name, _class, _app_name, function_name).as_view(),
+                        get_functionality_view_set(
+                            function_name, _class, _app_name, function_name
+                        ).as_view(),
                     )
                 )
 
         elif function[0] != "_":
             functionality.append(
-                path(r"{}/".format(function), get_functionality_view_set(function, _class, _app_name).as_view())
+                path(
+                    r"{}/".format(function),
+                    get_functionality_view_set(function, _class, _app_name).as_view(),
+                )
             )
 
     return functionality

@@ -4,5 +4,5 @@ from trip.api import App
 
 urlpatterns = [
     path("", include(get_router(App, "trip").urls)),
-    *get_functionality_paths(App, "trip")
+    *get_functionality_paths(App, "trip"),
 ]

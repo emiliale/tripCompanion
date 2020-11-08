@@ -4,5 +4,5 @@ from administration.api import App
 
 urlpatterns = [
     path("", include(get_router(App, "administration").urls)),
-    *get_functionality_paths(App, "administration")
+    *get_functionality_paths(App, "administration"),
 ]

@@ -43,7 +43,7 @@ class _Modal extends React.Component {
       format(values.date[0]._d, "yyyy-MM-dd"),
       format(values.date[1]._d, "yyyy-MM-dd"),
       users
-    );  
+    );
     this.setState({
       visible: false,
     });

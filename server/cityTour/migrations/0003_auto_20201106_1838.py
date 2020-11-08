@@ -7,18 +7,24 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('trip', '0001_initial'),
-        ('cityTour', '0002_auto_20201022_0840'),
+        ("trip", "0001_initial"),
+        ("cityTour", "0002_auto_20201022_0840"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='citytour',
-            name='trip',
+            model_name="citytour",
+            name="trip",
         ),
         migrations.AddField(
-            model_name='citytour',
-            name='trip',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='trips_cityTours', to='trip.trip'),
+            model_name="citytour",
+            name="trip",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="trips_cityTours",
+                to="trip.trip",
+            ),
         ),
     ]

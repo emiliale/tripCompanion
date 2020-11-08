@@ -8,25 +8,31 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('place', '0001_initial'),
-        ('trip', '0001_initial'),
-        ('cityTour', '0001_initial'),
+        ("place", "0001_initial"),
+        ("trip", "0001_initial"),
+        ("cityTour", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='citytour',
-            name='trip',
-            field=models.ManyToManyField(blank=True, related_name='trips_cityTours', to='trip.Trip'),
+            model_name="citytour",
+            name="trip",
+            field=models.ManyToManyField(
+                blank=True, related_name="trips_cityTours", to="trip.Trip"
+            ),
         ),
         migrations.AlterField(
-            model_name='citytour',
-            name='places',
-            field=models.ManyToManyField(blank=True, related_name='places_cityTours', to='place.Place'),
+            model_name="citytour",
+            name="places",
+            field=models.ManyToManyField(
+                blank=True, related_name="places_cityTours", to="place.Place"
+            ),
         ),
         migrations.AlterField(
-            model_name='citytour',
-            name='users',
-            field=models.ManyToManyField(blank=True, related_name='users_cityTours', to=settings.AUTH_USER_MODEL),
+            model_name="citytour",
+            name="users",
+            field=models.ManyToManyField(
+                blank=True, related_name="users_cityTours", to=settings.AUTH_USER_MODEL
+            ),
         ),
     ]

@@ -62,12 +62,17 @@ class Trip extends React.Component {
         title: "Name",
         dataIndex: "name",
         key: "name",
-        render: (text, record) => <Button
-          type="link"
-          onClick={() => this.props.history.push("/city_tours/" + record.id + "/")}
-        > <a>{text}</a>
-        </Button>
-        ,
+        render: (text, record) => (
+          <Button
+            type="link"
+            onClick={() =>
+              this.props.history.push("/city_tours/" + record.id + "/")
+            }
+          >
+            {" "}
+            <a>{text}</a>
+          </Button>
+        ),
       },
       {
         title: "Date",
@@ -90,8 +95,12 @@ class Trip extends React.Component {
         render: (text, record) => (
           <Space size="middle">
             <Button
-              onClick={() => this.props.history.push("/city_tours/" + record.id + "/")}
-            > <a>Edit</a>
+              onClick={() =>
+                this.props.history.push("/city_tours/" + record.id + "/")
+              }
+            >
+              {" "}
+              <a>Edit</a>
             </Button>
             <Popconfirm
               title="Are you sure delete this tour?"
@@ -100,9 +109,10 @@ class Trip extends React.Component {
               okText="Yes"
               cancelText="No"
             >
-              <Button><a>Delete</a></Button>
+              <Button>
+                <a>Delete</a>
+              </Button>
             </Popconfirm>
-
           </Space>
         ),
       },
@@ -251,11 +261,9 @@ const mapStateToProps = (state, ownProps) => {
   const tripId = parseInt(ownProps.match.params.id);
   return {
     trip: state.trips.find((x) => x.id === tripId),
-    cityTours: state.cityTours.filter(
-      (tour) => {
-        return tour.trip ? tour.trip === tripId : false
-      }
-    ),
+    cityTours: state.cityTours.filter((tour) => {
+      return tour.trip ? tour.trip === tripId : false;
+    }),
   };
 };
 

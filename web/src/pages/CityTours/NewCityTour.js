@@ -1,14 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  Typography,
-  Row,
-  Col,
-  Button,
-  Layout,
-  Divider,
-  Image,
-} from "antd";
+import { Typography, Row, Col, Button, Layout, Divider, Image } from "antd";
 import { Table, Space } from "antd";
 import axios from "axios";
 import mapboxgl from "mapbox-gl";
@@ -40,7 +32,7 @@ class NewCityTour extends React.Component {
     openMap: false,
     image: {},
     name: "",
-    idx: "",
+    xid: "",
     description: "",
     placeCoordinates: [],
     routePlaces: [],
@@ -107,7 +99,7 @@ class NewCityTour extends React.Component {
 
       this.state.map.on("click", "places", (e) => {
         this.getDescription(e.features[0].properties.xid);
-        this.setState({ idx: e.features[0].properties.xid });
+        this.setState({ xid: e.features[0].properties.xid });
       });
 
       this.state.map.on("mouseenter", "places", () => {
@@ -163,7 +155,7 @@ class NewCityTour extends React.Component {
   }
 
   setCity(city) {
-    this.setState({ city: city })
+    this.setState({ city: city });
   }
 
   getDescription = (xid, isDeleted) => {
@@ -209,9 +201,9 @@ class NewCityTour extends React.Component {
     this.setState({ openMap: true });
   };
 
-  getRoute = (newCoords, add, idx) => {
+  getRoute = (newCoords, add, xid) => {
     let point = {
-      idx: this.state.idx,
+      xid: this.state.xid,
       name: this.state.name,
       lng: 0,
       lat: 0,
@@ -223,7 +215,7 @@ class NewCityTour extends React.Component {
     if (add) {
       newplacesTable.push(point);
     } else {
-      newplacesTable = newplacesTable.filter((place) => place.idx !== idx);
+      newplacesTable = newplacesTable.filter((place) => place.xid !== xid);
     }
     let coords = newCoords.join(";");
     let routeGeoJSON = turf.featureCollection();
@@ -260,7 +252,9 @@ class NewCityTour extends React.Component {
         });
 
         for (let i = 0; i < res.data.trips[0].legs.length; i++) {
-          newplacesTable[i].distance = Math.floor(res.data.trips[0].legs[i].distance);
+          newplacesTable[i].distance = Math.floor(
+            res.data.trips[0].legs[i].distance
+          );
           newplacesTable[i].duration = Math.floor(
             res.data.trips[0].legs[i].duration / 60
           );
@@ -287,22 +281,23 @@ class NewCityTour extends React.Component {
     let newRoutePlaces = this.state.routePlaces;
     newRoutePlaces.push(coords);
     this.setState({ routePlaces: newRoutePlaces });
-    this.getRoute(newRoutePlaces, true, this.state.idx);
+    this.getRoute(newRoutePlaces, true, this.state.xid);
   };
 
-  deletePlaceFromRoute = (idx) => {
+  deletePlaceFromRoute = (xid) => {
     let newRoutePlaces = this.state.routePlaces;
     let coords = this.state.placeCoordinates.join([","]);
     let index = newRoutePlaces.indexOf(coords);
     if (index > -1) {
       newRoutePlaces.splice(index, 1);
     }
-    idx
-      ? this.getRoute(newRoutePlaces, false, idx)
-      : this.getRoute(newRoutePlaces, false, this.state.idx);
+    xid
+      ? this.getRoute(newRoutePlaces, false, xid)
+      : this.getRoute(newRoutePlaces, false, this.state.xid);
   };
 
   render() {
+    console.log(this.state);
     const columns = [
       {
         title: "Place name",
@@ -327,7 +322,7 @@ class NewCityTour extends React.Component {
           <Space
             size="middle"
             onClick={() => {
-              this.getDescription(record.idx, true);
+              this.getDescription(record.xid, true);
             }}
           >
             <a>Delete</a>
@@ -412,11 +407,11 @@ class NewCityTour extends React.Component {
             city={this.state.city}
             distance={() => {
               let distance = 0;
-              this.state.placesTable.map(place => distance += place.distance)
-              return distance
-            }
-            }
-
+              this.state.placesTable.map(
+                (place) => (distance += place.distance)
+              );
+              return distance;
+            }}
           />
         ) : null}
       </div>

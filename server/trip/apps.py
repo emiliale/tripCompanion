@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class TripConfig(AppConfig):
-    name = 'trip'
+    name = "trip"

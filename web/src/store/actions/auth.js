@@ -2,7 +2,10 @@ import axios from "axios";
 import * as actionTypes from "./actionTypes";
 
 const env = process.env.NODE_ENV || "development";
-const serverUrl = env === "development" ? "http://127.0.0.1:8000" : "https://trip-companion-server.herokuapp.com";
+const serverUrl =
+  env === "development"
+    ? "http://127.0.0.1:8000"
+    : "https://trip-companion-server.herokuapp.com";
 
 export const authStart = () => {
   return {
@@ -43,8 +46,8 @@ export const checkAuthTimeout = (expirationTime) => {
 };
 
 export const authLogin = (username, password) => {
-  console.log(serverUrl)
-  console.log(env)
+  console.log(serverUrl);
+  console.log(env);
   return (dispatch) => {
     dispatch(authStart());
     axios
@@ -78,7 +81,7 @@ export const authLogin = (username, password) => {
 };
 
 export const authSignup = (username, email, password1, password2) => {
-  console.log(env)
+  console.log(env);
   return (dispatch) => {
     dispatch(authStart());
     axios
@@ -90,10 +93,10 @@ export const authSignup = (username, email, password1, password2) => {
       })
       .then((res) => {
         axios
-        .get(`${serverUrl}/administration/users/?username=${username}`)
-        .then((res) => {
-          localStorage.setItem("userId", res.data[0].id);
-        });
+          .get(`${serverUrl}/administration/users/?username=${username}`)
+          .then((res) => {
+            localStorage.setItem("userId", res.data[0].id);
+          });
         const token = res.data.key;
         const usrname = username;
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);

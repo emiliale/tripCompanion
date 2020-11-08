@@ -7,95 +7,98 @@ export const EDIT_TRIP = "EDIT_TRIP";
 export const REMOVE_TRIP = "REMOVE_TRIP";
 
 const env = process.env.NODE_ENV || "development";
-const serverUrl = env === "development" ? "http://127.0.0.1:8000" : "https://trip-companion-server.herokuapp.com";
+const serverUrl =
+  env === "development"
+    ? "http://127.0.0.1:8000"
+    : "https://trip-companion-server.herokuapp.com";
 
 export function receiveTrips(data) {
-    return {
-        type: RECEIVE_TRIPS,
-        trips: data,
-    };
+  return {
+    type: RECEIVE_TRIPS,
+    trips: data,
+  };
 }
 
 function addTrip(data) {
-    return {
-        type: ADD_TRIP,
-        trip: data,
-    };
+  return {
+    type: ADD_TRIP,
+    trip: data,
+  };
 }
 
 function editTrip(data) {
-    return {
-        type: EDIT_TRIP,
-        trip: data,
-    };
+  return {
+    type: EDIT_TRIP,
+    trip: data,
+  };
 }
 
 function removeTrip(id) {
-    return {
-        type: REMOVE_TRIP,
-        tripId: id,
-    };
+  return {
+    type: REMOVE_TRIP,
+    tripId: id,
+  };
 }
 
 export function getTrips(level) {
-    return (dispatch) => {
-        dispatch(requestData(level));
-        axios.get(`${serverUrl}/trip/trips/`).then(res => {
-            console.log(res)
-            if (res.status !== "error") dispatch(receiveTrips(res.data));
-            dispatch(finishRequest());
-        });
-    };
+  return (dispatch) => {
+    dispatch(requestData(level));
+    axios.get(`${serverUrl}/trip/trips/`).then((res) => {
+      console.log(res);
+      if (res.status !== "error") dispatch(receiveTrips(res.data));
+      dispatch(finishRequest());
+    });
+  };
 }
 
 export function newTrip(name, start_date, end_date, users) {
-    return (dispatch) => {
-        axios
-            .post(`${serverUrl}/trip/trips/`, {
-                name: name,
-                start_date: start_date,
-                end_date: end_date,
-                users: users,
-            })
-            .then((res) => {
-                dispatch(addTrip(res.data));
-                dispatch(finishRequest());
-            })
-            .catch((err) => {
-                console.log(err)
-            });
-    };
+  return (dispatch) => {
+    axios
+      .post(`${serverUrl}/trip/trips/`, {
+        name: name,
+        start_date: start_date,
+        end_date: end_date,
+        users: users,
+      })
+      .then((res) => {
+        dispatch(addTrip(res.data));
+        dispatch(finishRequest());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 }
 
 export function updateTrip(tripId, name, start_date, end_date, users) {
-    return (dispatch) => {
-        axios
-            .put(`${serverUrl}/trip/trips/` + tripId + "/", {
-                name: name,
-                start_date: start_date,
-                end_date: end_date,
-                users: users,
-            })
-            .then((res) => {
-                dispatch(editTrip(res.data));
-                dispatch(finishRequest());
-            })
-            .catch((err) => {
-                console.log(err)
-            });
-    };
+  return (dispatch) => {
+    axios
+      .put(`${serverUrl}/trip/trips/` + tripId + "/", {
+        name: name,
+        start_date: start_date,
+        end_date: end_date,
+        users: users,
+      })
+      .then((res) => {
+        dispatch(editTrip(res.data));
+        dispatch(finishRequest());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 }
 
 export function deleteTrip(tripId) {
-    return (dispatch) => {
-        axios
-            .delete(`${serverUrl}/trip/trips/` + tripId + "/")
-            .then((res) => {
-                dispatch(removeTrip(res.data));
-                dispatch(finishRequest());
-            })
-            .catch((err) => {
-                console.log(err)
-            });
-    };
+  return (dispatch) => {
+    axios
+      .delete(`${serverUrl}/trip/trips/` + tripId + "/")
+      .then((res) => {
+        dispatch(removeTrip(res.data));
+        dispatch(finishRequest());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 }

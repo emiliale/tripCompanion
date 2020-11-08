@@ -6,7 +6,7 @@ import PlacesAutocomplete, {
 import { Input } from "antd";
 
 function PlacesAutocompleteComponent(props) {
-  const [address, setAddress] = React.useState("");
+  const [address, setAddress] = React.useState(props.city ? props.city : "");
   const [isDisabled, setIsDisabled] = React.useState(false);
   const [coordinates, setCoordinates] = React.useState({
     lat: null,
@@ -20,7 +20,7 @@ function PlacesAutocompleteComponent(props) {
     setCoordinates(latLng);
     setIsDisabled(true);
     props.setCoordinates(latLng.lat, latLng.lng);
-    props.setCity(value)
+    props.setCity(value);
     props.openMap();
   };
 

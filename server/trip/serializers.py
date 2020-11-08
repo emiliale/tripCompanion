@@ -5,4 +5,4 @@ from trip.models import Trip
 class TripSerializer(serializers.ModelSerializer):
     class Meta:
         model = Trip
-        fields = '__all__'
+        fields = "__all__"

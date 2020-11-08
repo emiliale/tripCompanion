@@ -4,5 +4,5 @@ from place.api import App
 
 urlpatterns = [
     path("", include(get_router(App, "place").urls)),
-    *get_functionality_paths(App, "place")
+    *get_functionality_paths(App, "place"),
 ]

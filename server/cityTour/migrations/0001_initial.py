@@ -10,17 +10,41 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('place', '0001_initial'),
+        ("place", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='CityTour',
+            name="CityTour",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
-                ('places', models.ManyToManyField(blank=True, null=True, related_name='places_cityTours', to='place.Place')),
-                ('users', models.ManyToManyField(blank=True, null=True, related_name='users_cityTours', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                (
+                    "places",
+                    models.ManyToManyField(
+                        blank=True,
+                        null=True,
+                        related_name="places_cityTours",
+                        to="place.Place",
+                    ),
+                ),
+                (
+                    "users",
+                    models.ManyToManyField(
+                        blank=True,
+                        null=True,
+                        related_name="users_cityTours",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

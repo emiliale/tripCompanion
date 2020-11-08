@@ -7,18 +7,25 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Place',
+            name="Place",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('xid', models.CharField(max_length=255)),
-                ('name', models.CharField(max_length=255)),
-                ('point', models.CharField(max_length=255)),
-                ('description', models.TextField()),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("xid", models.CharField(max_length=255)),
+                ("name", models.CharField(max_length=255)),
+                ("point", models.CharField(max_length=255)),
+                ("description", models.TextField()),
             ],
         ),
     ]

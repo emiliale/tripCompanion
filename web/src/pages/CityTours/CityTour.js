@@ -19,6 +19,10 @@ import { Link } from "react-router-dom";
 import { getPlaces, addPlace } from "../../store/actions/places";
 import { getCityTours, newCityTour } from "../../store/actions/cityTours";
 import NewCityTourModal from "./components/NewCityTourModal";
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  getLatLng,
+} from "react-places-autocomplete";
 
 const { Header, Content, Footer } = Layout;
 const env = process.env.NODE_ENV || "development";
@@ -38,15 +42,15 @@ mapboxgl.accessToken =
 
 class CityTour extends React.Component {
   state = {
-    lng: 17.0369,
-    lat: 51.1075,
+    lng: 0,
+    lat: 0,
     zoom: 14,
     geojson: {},
     uploaded: false,
     openMap: false,
     image: {},
     name: "",
-    idx: "",
+    xid: "",
     description: "",
     placeCoordinates: [],
     routePlaces: [],
@@ -56,6 +60,8 @@ class CityTour extends React.Component {
     overallDistance: 0,
     openModal: false,
     city: "",
+    getCor: false,
+    getAtr: false,
   };
 
   componentDidMount() {
@@ -64,7 +70,13 @@ class CityTour extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!this.state.uploaded && this.state.openMap) {
+    if (this.props.tour !== prevProps.tour && !this.state.getCor) {
+      this.setState({ getCor: true });
+      this.getCityCoords();
+    }
+
+    if (!this.state.uploaded && this.state.openMap && !this.state.getAtr) {
+      this.setState({ getAtr: true });
       this.getAttractions();
     }
     if (
@@ -113,8 +125,8 @@ class CityTour extends React.Component {
       });
 
       this.state.map.on("click", "places", (e) => {
-        this.getDescription(e.features[0].properties.xid);
-        this.setState({ idx: e.features[0].properties.xid });
+        this.getDescription(e.features[0].properties.xid, false, false);
+        this.setState({ xid: e.features[0].properties.xid });
       });
 
       this.state.map.on("mouseenter", "places", () => {
@@ -165,15 +177,24 @@ class CityTour extends React.Component {
           },
           "waterway-label"
         );
+        this.getPlacesTable();
       });
     }
   }
 
   setCity(city) {
-    this.setState({ city: city })
+    this.setState({ city: city });
   }
 
-  getDescription = (xid, isDeleted) => {
+  async getCityCoords() {
+    const results = await geocodeByAddress(this.props.tour.city);
+    const latLng = await getLatLng(results[0]);
+    this.setCoordinates(latLng.lat, latLng.lng);
+    this.setCity(this.props.tour.city);
+    await this.openMap();
+  }
+
+  getDescription = (xid, isDeleted, isEdited) => {
     axios
       .get(
         `https://api.opentripmap.com/0.1/en/places/xid/${xid}?apikey=5ae2e3f221c38a28845f05b66dd041008f502f976c4cd76d927351d3`,
@@ -189,6 +210,7 @@ class CityTour extends React.Component {
           placeCoordinates: [res.data.point.lon, res.data.point.lat],
         });
         isDeleted ? this.deletePlaceFromRoute(xid) : console.log();
+        isEdited ? this.addToRoute(xid) : console.log();
       })
       .catch((err) => {
         console.log(err);
@@ -216,9 +238,9 @@ class CityTour extends React.Component {
     this.setState({ openMap: true });
   };
 
-  getRoute = (newCoords, add, idx) => {
+  getRoute = (newCoords, add, xid) => {
     let point = {
-      idx: this.state.idx,
+      xid: xid,
       name: this.state.name,
       lng: 0,
       lat: 0,
@@ -230,7 +252,7 @@ class CityTour extends React.Component {
     if (add) {
       newplacesTable.push(point);
     } else {
-      newplacesTable = newplacesTable.filter((place) => place.idx !== idx);
+      newplacesTable = newplacesTable.filter((place) => place.xid !== xid);
     }
     let coords = newCoords.join(";");
     let routeGeoJSON = turf.featureCollection();
@@ -267,7 +289,9 @@ class CityTour extends React.Component {
         });
 
         for (let i = 0; i < res.data.trips[0].legs.length; i++) {
-          newplacesTable[i].distance = Math.floor(res.data.trips[0].legs[i].distance);
+          newplacesTable[i].distance = Math.floor(
+            res.data.trips[0].legs[i].distance
+          );
           newplacesTable[i].duration = Math.floor(
             res.data.trips[0].legs[i].duration / 60
           );
@@ -289,28 +313,40 @@ class CityTour extends React.Component {
       });
   };
 
-  addToRoute = () => {
+  addToRoute = (xid) => {
     let coords = this.state.placeCoordinates.join([","]);
     let newRoutePlaces = this.state.routePlaces;
     newRoutePlaces.push(coords);
     this.setState({ routePlaces: newRoutePlaces });
-    this.getRoute(newRoutePlaces, true, this.state.idx);
+    xid
+      ? this.getRoute(newRoutePlaces, true, xid)
+      : this.getRoute(newRoutePlaces, true, this.state.xid);
   };
 
-  deletePlaceFromRoute = (idx) => {
+  deletePlaceFromRoute = (xid) => {
     let newRoutePlaces = this.state.routePlaces;
     let coords = this.state.placeCoordinates.join([","]);
+    console.log(coords);
+    console.log(newRoutePlaces);
     let index = newRoutePlaces.indexOf(coords);
     if (index > -1) {
       newRoutePlaces.splice(index, 1);
     }
-    idx
-      ? this.getRoute(newRoutePlaces, false, idx)
-      : this.getRoute(newRoutePlaces, false, this.state.idx);
+    console.log(newRoutePlaces);
+    xid
+      ? this.getRoute(newRoutePlaces, false, xid)
+      : this.getRoute(newRoutePlaces, false, this.state.xid);
+  };
+
+  getPlacesTable = () => {
+    let placesTable = this.props.places.filter(
+      (places) => this.props.tour.places.indexOf(places.id) !== -1
+    );
+    placesTable.map((place) => this.getDescription(place.xid, false, true));
   };
 
   render() {
-    console.log(this.props.tour)
+    console.log(this.state);
     const columns = [
       {
         title: "Place name",
@@ -335,7 +371,7 @@ class CityTour extends React.Component {
           <Space
             size="middle"
             onClick={() => {
-              this.getDescription(record.idx, true);
+              this.getDescription(record.xid, true, false);
             }}
           >
             <a>Delete</a>
@@ -346,21 +382,34 @@ class CityTour extends React.Component {
 
     return (
       <div style={{ paddingRight: "5%", paddingLeft: "5%" }} style={mapStyles}>
-        <Title>Zaplanuj trasę</Title>
+        <Title>Edytuj {this.props.tour ? this.props.tour.name : ""}</Title>
         <Divider />
-        <Button
-          style={{ float: "right", marginRight: "20px", marginBottom: "20px" }}
-          type="primary"
-          onClick={() => this.setState({ openModal: true })}
-        >
-          Save
-        </Button>
+        <Row gutter={16}>
+          <Col span={20}>
+            <div>
+              <Typography>
+                <b>{this.props.tour ? this.props.tour.city : ""}</b>
+              </Typography>
+            </div>
+          </Col>
+          <Col span={4}>
+            <div>
+              {" "}
+              <Button
+                style={{
+                  float: "right",
+                  marginRight: "20px",
+                  marginBottom: "20px",
+                }}
+                type="primary"
+                onClick={() => this.setState({ openModal: true })}
+              >
+                Save
+              </Button>
+            </div>
+          </Col>
+        </Row>
         <Divider />
-        <PlaceAutocompleteComponent
-          setCity={(city) => this.setCity(city)}
-          setCoordinates={(lat, lng) => this.setCoordinates(lat, lng)}
-          openMap={() => this.openMap()}
-        />
         <Row>
           <Col span={14}>
             {this.state.openMap ? (
@@ -413,18 +462,21 @@ class CityTour extends React.Component {
         ) : null}
         {this.state.openModal ? (
           <NewCityTourModal
+            id={this.props.tour ? this.props.tour.id : null}
+            name={this.props.tour ? this.props.tour.name : null}
             open={this.state.openModal}
             afterClose={() => this.setState({ openModal: false })}
             placesTable={this.state.placesTable}
-            trip={this.state.trip ? this.state.trip : null}
+            trip={this.props.tour ? this.props.tour.trip : null}
+            date={this.props.tour ? this.props.tour.date : null}
             city={this.state.city}
             distance={() => {
               let distance = 0;
-              this.state.placesTable.map(place => distance += place.distance)
-              return distance
-            }
-            }
-
+              this.state.placesTable.map(
+                (place) => (distance += place.distance)
+              );
+              return distance;
+            }}
           />
         ) : null}
       </div>

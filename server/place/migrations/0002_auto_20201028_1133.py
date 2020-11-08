@@ -6,41 +6,41 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('place', '0001_initial'),
+        ("place", "0001_initial"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='place',
-            name='description',
+            model_name="place",
+            name="description",
         ),
         migrations.RemoveField(
-            model_name='place',
-            name='point',
+            model_name="place",
+            name="point",
         ),
         migrations.AddField(
-            model_name='place',
-            name='distance',
+            model_name="place",
+            name="distance",
             field=models.FloatField(default=0),
         ),
         migrations.AddField(
-            model_name='place',
-            name='duration',
+            model_name="place",
+            name="duration",
             field=models.IntegerField(default=0),
         ),
         migrations.AddField(
-            model_name='place',
-            name='lat',
+            model_name="place",
+            name="lat",
             field=models.FloatField(default=0),
         ),
         migrations.AddField(
-            model_name='place',
-            name='lng',
+            model_name="place",
+            name="lng",
             field=models.FloatField(default=0),
         ),
         migrations.AddField(
-            model_name='place',
-            name='order',
+            model_name="place",
+            name="order",
             field=models.IntegerField(default=0),
         ),
     ]

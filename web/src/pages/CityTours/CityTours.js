@@ -2,20 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
-import {
-  Typography,
-  Divider,
-  Button,
-  Space,
-  Table,
-  DatePicker,
-} from "antd";
+import { Typography, Divider, Button, Space, Table, DatePicker } from "antd";
 import { Link } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
 import { getTrips, updateTrip, deleteTrip } from "../../store/actions/trips";
 import { getCityTours, deleteCityTour } from "../../store/actions/cityTours";
 import { Popconfirm, message } from "antd";
-
 
 const { Title, Paragraph } = Typography;
 const { RangePicker } = DatePicker;
@@ -26,7 +18,6 @@ const serverUrl =
     ? "http://127.0.0.1:8000"
     : "https://trip-companion-server.herokuapp.com";
 
-
 class CityTours extends React.Component {
   formRef = React.createRef();
 
@@ -35,18 +26,23 @@ class CityTours extends React.Component {
   }
 
   render() {
-    console.log(this.props.cityTours)
+    console.log(this.props.cityTours);
     const columns = [
       {
         title: "Name",
         dataIndex: "name",
         key: "name",
-        render: (text, record) => <Button
-          type="link"
-          onClick={() => this.props.history.push("/city_tours/" + record.id + "/")}
-        > <a>{text}</a>
-        </Button>
-        ,
+        render: (text, record) => (
+          <Button
+            type="link"
+            onClick={() =>
+              this.props.history.push("/city_tours/" + record.id + "/")
+            }
+          >
+            {" "}
+            <a>{text}</a>
+          </Button>
+        ),
       },
       {
         title: "Date",
@@ -69,8 +65,12 @@ class CityTours extends React.Component {
         render: (text, record) => (
           <Space size="middle">
             <Button
-              onClick={() => this.props.history.push("/city_tours/" + record.id + "/")}
-            > <a>Edit</a>
+              onClick={() =>
+                this.props.history.push("/city_tours/" + record.id + "/")
+              }
+            >
+              {" "}
+              <a>Edit</a>
             </Button>
             <Popconfirm
               title="Are you sure delete this tour?"
@@ -79,9 +79,10 @@ class CityTours extends React.Component {
               okText="Yes"
               cancelText="No"
             >
-              <Button><a>Delete</a></Button>
+              <Button>
+                <a>Delete</a>
+              </Button>
             </Popconfirm>
-
           </Space>
         ),
       },
@@ -102,9 +103,11 @@ class CityTours extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const userId = parseInt(localStorage.getItem("userId"))
+  const userId = parseInt(localStorage.getItem("userId"));
   return {
-    cityTours: state.cityTours.filter(tour => tour.users.indexOf(userId) !== -1),
+    cityTours: state.cityTours.filter(
+      (tour) => tour.users.indexOf(userId) !== -1
+    ),
   };
 };
 

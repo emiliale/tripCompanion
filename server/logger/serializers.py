@@ -42,7 +42,11 @@ class LogSerializer(serializers.ModelSerializer):
 
 
 def to_local_timezone_str(request, utc_dt, username=None):
-    return (to_local_timezone(request, utc_dt, username)).strftime("%Y-%m-%d %H:%M:%S") if utc_dt else None
+    return (
+        (to_local_timezone(request, utc_dt, username)).strftime("%Y-%m-%d %H:%M:%S")
+        if utc_dt
+        else None
+    )
 
 
 def to_local_timezone(request, utc_dt, username=None):

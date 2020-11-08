@@ -5,4 +5,4 @@ from cityTour.models import CityTour
 class CityTourSerializer(serializers.ModelSerializer):
     class Meta:
         model = CityTour
-        fields = '__all__'
+        fields = "__all__"
