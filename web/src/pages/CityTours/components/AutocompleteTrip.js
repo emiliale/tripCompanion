@@ -17,7 +17,6 @@ const serverUrl =
     : "https://trip-companion-server.herokuapp.com";
 
 const Complete = (props) => {
-  console.log(props.trips);
   const [value, setValue] = useState(props.trip ? props.trip.name : "");
   const [options, setOptions] = useState([]);
 

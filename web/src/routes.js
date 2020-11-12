@@ -7,7 +7,6 @@ import Signup from "./pages/User/Signup";
 import ChangePassword from "./pages/User/ChangePassword";
 import Functions from "./pages/Functions/Functions";
 import Trips from "./pages/Trips/Trips";
-import Map from "./pages/Map/Map";
 import CityTours from "./pages/CityTours/CityTours";
 import NewCityTour from "./pages/CityTours/NewCityTour";
 import CityTour from "./pages/CityTours/CityTour";
@@ -23,7 +22,6 @@ const BaseRouter = () => (
     <Route exact path="/functions/" component={Functions} />{" "}
     <Route exact path="/trips/" component={Trips} />{" "}
     <Route exact path="/trips/:id/" component={Trip} />{" "}
-    <Route exact path="/map/" component={Map} />{" "}
     <Route exact path="/city_tours/" component={CityTours} />{" "}
     <Route exact path="/city_tours/:id/" component={CityTour} />{" "}
     <Route exact path="/city_tours_new/" component={NewCityTour} />{" "}

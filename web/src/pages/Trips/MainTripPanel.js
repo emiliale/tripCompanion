@@ -1,6 +1,5 @@
 import React from "react";
 import { Typography, Row, Col, Button } from "antd";
-import { Link } from "react-router-dom";
 import NewTrip from "./components/NewTrip";
 
 const { Title } = Typography;

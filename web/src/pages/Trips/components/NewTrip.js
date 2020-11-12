@@ -1,17 +1,10 @@
 import React from "react";
-import axios from "axios";
 import { connect } from "react-redux";
 import { Modal, Form, Input, DatePicker } from "antd";
 import { newTrip } from "../../../store/actions/trips";
 import { format } from "date-fns";
 
 const { RangePicker } = DatePicker;
-
-const env = process.env.NODE_ENV || "development";
-const serverUrl =
-  env === "development"
-    ? "http://127.0.0.1:8000"
-    : "https://trip-companion-server.herokuapp.com";
 
 class _Modal extends React.Component {
   state = {
@@ -24,16 +17,6 @@ class _Modal extends React.Component {
     if (this.props.open !== prevProps.open) {
       this.setState({ visible: this.props.open });
     }
-  }
-
-  getUser(username) {
-    axios
-      .get(`${serverUrl}/administration/users/?username=${username}`)
-      .then((res) => {
-        res.data.map((user) => user.id);
-        console.log(res.data.map((user) => user.id));
-        return res.data;
-      });
   }
 
   onFinish = (values) => {

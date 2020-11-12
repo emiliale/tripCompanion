@@ -14,11 +14,13 @@ import {
 } from "antd";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import { PlusOutlined } from "@ant-design/icons";
+import { FastBackwardOutlined, PlusOutlined } from "@ant-design/icons";
 import { getTrips, updateTrip, deleteTrip } from "../../store/actions/trips";
 import { getCityTours, deleteCityTour } from "../../store/actions/cityTours";
+import { getUsers } from "../../store/actions/users";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Popconfirm } from "antd";
+import Users from "./components/Users";
 
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
@@ -57,7 +59,24 @@ class Trip extends React.Component {
   }
 
   render() {
-    const columns = [
+    const columnsUsers = [
+      {
+        title: "Username",
+        dataIndex: "username",
+        key: "username",
+      },
+      {
+        title: "First name",
+        dataIndex: "first_name",
+        key: "first_name",
+      },
+      {
+        title: "Last name",
+        dataIndex: "last_name",
+        key: "last_name",
+      },
+    ];
+    const columnsTours = [
       {
         title: "Name",
         dataIndex: "name",
@@ -251,7 +270,10 @@ class Trip extends React.Component {
             </Link>
           </Button>
         </Space>
-        <Table columns={columns} dataSource={this.props.cityTours} />
+        <Table columns={columnsTours} dataSource={this.props.cityTours} />
+        <Divider />
+        <Title level={2}>Users</Title>
+        <Users trip={this.props.trip} />
       </div>
     );
   }

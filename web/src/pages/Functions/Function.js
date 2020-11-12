@@ -5,7 +5,6 @@ const { Title, Paragraph } = Typography;
 
 class Function extends React.Component {
   render() {
-    console.log(this.props);
     return (
       <div>
         <Row align="middle" style={{ backgroundColor: "#fffceb" }}>

@@ -42,6 +42,8 @@ class NewCityTour extends React.Component {
     overallDistance: 0,
     openModal: false,
     city: "",
+    country: "",
+    continent: "",
   };
 
   componentDidMount() {
@@ -154,8 +156,8 @@ class NewCityTour extends React.Component {
     }
   }
 
-  setCity(city) {
-    this.setState({ city: city });
+  setCityInfo(city, country, continent) {
+    this.setState({ city: city, country: country, continent: continent });
   }
 
   getDescription = (xid, isDeleted) => {
@@ -297,7 +299,6 @@ class NewCityTour extends React.Component {
   };
 
   render() {
-    console.log(this.state);
     const columns = [
       {
         title: "Place name",
@@ -344,7 +345,9 @@ class NewCityTour extends React.Component {
         </Button>
         <Divider />
         <PlaceAutocompleteComponent
-          setCity={(city) => this.setCity(city)}
+          setCityInfo={(city, country, continent) =>
+            this.setCityInfo(city, country, continent)
+          }
           setCoordinates={(lat, lng) => this.setCoordinates(lat, lng)}
           openMap={() => this.openMap()}
         />
@@ -400,6 +403,8 @@ class NewCityTour extends React.Component {
         ) : null}
         {this.state.openModal ? (
           <NewCityTourModal
+            country={this.state.country}
+            continent={this.state.continent}
             open={this.state.openModal}
             afterClose={() => this.setState({ openModal: false })}
             placesTable={this.state.placesTable}

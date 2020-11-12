@@ -10,6 +10,8 @@ class CityTour(models.Model):
     city = models.CharField(max_length=255, default="")
     distance = models.FloatField(default=0)
     date = models.DateField(default=datetime.now)
+    country = models.CharField(max_length=255, default="")
+    continent = models.CharField(max_length=255, default="")
     trip = models.ForeignKey(
         Trip,
         related_name="trips_cityTours",

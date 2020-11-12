@@ -4,15 +4,14 @@ import { Link, withRouter } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
 import { connect } from "react-redux";
 import * as actions from "../store/actions/auth";
-import styles from "./layout.css";
+import "./layout.css";
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer } = Layout;
 
 class CustomLayout extends React.Component {
   render() {
-    console.log(this.props);
-    let isAuth = localStorage.getItem("token");
+    let isAuth = localStorage.getItem("userId");
     return (
       <Layout className="layout" style={{ backgroundColor: "#fffceb" }}>
         <Header style={{ backgroundColor: "#ffffff" }}>
@@ -42,7 +41,21 @@ class CustomLayout extends React.Component {
                 <Typography>Trip Companion</Typography>
               </Link>
             </Menu.Item>
-            {isAuth ? (
+            {!isAuth ? (
+              <>
+                <Menu.Item key="10">
+                  <Link to="/functions/">Funkcje</Link>
+                </Menu.Item>
+
+                <Menu.Item style={{ float: "right" }} key="11">
+                  <Link to="/login/">Zaloguj się</Link>
+                </Menu.Item>
+
+                <Menu.Item style={{ float: "right" }} key="12">
+                  <Link to="/signup/">Zarejestruj</Link>
+                </Menu.Item>
+              </>
+            ) : (
               <>
                 <Menu.Item key="3">
                   <Link to="/trips/">Podróże</Link>
@@ -51,9 +64,6 @@ class CustomLayout extends React.Component {
                   <Link to="/city_tours/">CityToury</Link>
                 </Menu.Item>
                 <Menu.Item key="5">
-                  <Link to="/map/">Mapa</Link>
-                </Menu.Item>
-                <Menu.Item key="6">
                   <Link to="/statistics/">Statystyki</Link>
                 </Menu.Item>
 
@@ -80,20 +90,6 @@ class CustomLayout extends React.Component {
                     Wyloguj
                   </Menu.Item>
                 </SubMenu>
-              </>
-            ) : (
-              <>
-                <Menu.Item key="10">
-                  <Link to="/functions/">Funkcje</Link>
-                </Menu.Item>
-
-                <Menu.Item style={{ float: "right" }} key="11">
-                  <Link to="/login/">Zaloguj się</Link>
-                </Menu.Item>
-
-                <Menu.Item style={{ float: "right" }} key="12">
-                  <Link to="/signup/">Zarejestruj</Link>
-                </Menu.Item>
               </>
             )}
           </Menu>

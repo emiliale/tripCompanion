@@ -68,6 +68,8 @@ class NewCityTourModal extends React.Component {
       this.state.city,
       this.state.distance,
       this.state.date,
+      this.props.country,
+      this.props.continent,
       this.state.trip ? this.state.trip.id : null,
       this.state.trip ? this.state.trip.users : users,
       this.state.places
@@ -92,6 +94,8 @@ class NewCityTourModal extends React.Component {
       this.state.city,
       this.state.distance,
       this.state.date,
+      this.props.country,
+      this.props.continent,
       this.state.trip ? this.state.trip.id : null,
       this.state.trip ? this.state.trip.users : users,
       this.state.places
@@ -187,7 +191,6 @@ class NewCityTourModal extends React.Component {
   };
 
   render = () => {
-    console.log(this.props.id);
     return (
       <Modal
         afterClose={this.props.afterClose}

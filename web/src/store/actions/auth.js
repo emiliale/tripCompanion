@@ -46,8 +46,6 @@ export const checkAuthTimeout = (expirationTime) => {
 };
 
 export const authLogin = (username, password) => {
-  console.log(serverUrl);
-  console.log(env);
   return (dispatch) => {
     dispatch(authStart());
     axios
@@ -56,10 +54,10 @@ export const authLogin = (username, password) => {
         password: password,
       })
       .then((res) => {
-        window.location.replace("/");
         axios
           .get(`${serverUrl}/administration/users/?username=${username}`)
           .then((res) => {
+            console.log("halo");
             localStorage.setItem("userId", res.data[0].id);
           });
         const token = res.data.key;
@@ -70,6 +68,9 @@ export const authLogin = (username, password) => {
         localStorage.setItem("expirationDate", expirationDate);
         dispatch(authSuccess(token));
         dispatch(checkAuthTimeout(3600));
+        setTimeout(function () {
+          window.location.replace("/");
+        }, 1000);
       })
       .catch((err) => {
         if (err === "Error: Request failed with status code 400") {
@@ -81,7 +82,6 @@ export const authLogin = (username, password) => {
 };
 
 export const authSignup = (username, email, password1, password2) => {
-  console.log(env);
   return (dispatch) => {
     dispatch(authStart());
     axios
@@ -105,6 +105,9 @@ export const authSignup = (username, email, password1, password2) => {
         localStorage.setItem("expirationDate", expirationDate);
         dispatch(authSuccess(token));
         dispatch(checkAuthTimeout(3600));
+        setTimeout(function () {
+          window.location.replace("/");
+        }, 1000);
       })
       .catch((err) => {
         dispatch(authFail(err));

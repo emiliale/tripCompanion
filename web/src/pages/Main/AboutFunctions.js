@@ -20,7 +20,7 @@ class AboutFunctions extends React.Component {
                   width={150}
                   height={105}
                   alt="logo"
-                  src="/img/map.png"
+                  src="/img/main (1).jpg"
                   size={"100%"}
                 />
                 <Title level={3}>Stwórz swój własny City Tour</Title>
@@ -34,7 +34,7 @@ class AboutFunctions extends React.Component {
                   width={150}
                   height={105}
                   alt="logo"
-                  src="/img/suitcase.png"
+                  src="/img/main (3).jpg"
                   size={"100%"}
                 />
                 <Title level={3}>Dziel podróże ze znajomymi</Title>
@@ -48,7 +48,7 @@ class AboutFunctions extends React.Component {
                   width={150}
                   height={105}
                   alt="logo"
-                  src="/img/wallet.png"
+                  src="/img/main (2).jpg"
                   size={"100%"}
                 />
                 <Title level={3}>Przechowuj historię swoich podóży</Title>

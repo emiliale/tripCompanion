@@ -26,7 +26,7 @@ function addTrip(data) {
   };
 }
 
-function editTrip(data) {
+export function editTrip(data) {
   return {
     type: EDIT_TRIP,
     trip: data,
@@ -44,7 +44,6 @@ export function getTrips(level) {
   return (dispatch) => {
     dispatch(requestData(level));
     axios.get(`${serverUrl}/trip/trips/`).then((res) => {
-      console.log(res);
       if (res.status !== "error") dispatch(receiveTrips(res.data));
       dispatch(finishRequest());
     });

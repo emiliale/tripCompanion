@@ -51,7 +51,17 @@ export function getCityTours(level) {
   };
 }
 
-export function newCityTour(name, city, distance, date, trip, users, places) {
+export function newCityTour(
+  name,
+  city,
+  distance,
+  date,
+  country,
+  continent,
+  trip,
+  users,
+  places
+) {
   return (dispatch) => {
     axios
       .post(`${serverUrl}/cityTour/cityTours/`, {
@@ -59,6 +69,8 @@ export function newCityTour(name, city, distance, date, trip, users, places) {
         city: city,
         distance: distance,
         date: date,
+        country: country,
+        continent: continent,
         trip: trip,
         users: users,
         places: places,
@@ -79,6 +91,8 @@ export function updateCityTour(
   city,
   distance,
   date,
+  country,
+  continent,
   trip,
   users,
   places
@@ -90,6 +104,8 @@ export function updateCityTour(
         city: city,
         distance: distance,
         date: date,
+        country: country,
+        continent: continent,
         trip: trip,
         users: users,
         places: places,

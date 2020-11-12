@@ -1,22 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import axios from "axios";
-import { Typography, Divider, Button, Space, Table, DatePicker } from "antd";
+import { Button, Space, Table } from "antd";
 import { Link } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
-import { getTrips, updateTrip, deleteTrip } from "../../store/actions/trips";
 import { getCityTours, deleteCityTour } from "../../store/actions/cityTours";
-import { Popconfirm, message } from "antd";
-
-const { Title, Paragraph } = Typography;
-const { RangePicker } = DatePicker;
-
-const env = process.env.NODE_ENV || "development";
-const serverUrl =
-  env === "development"
-    ? "http://127.0.0.1:8000"
-    : "https://trip-companion-server.herokuapp.com";
+import { Popconfirm } from "antd";
 
 class CityTours extends React.Component {
   formRef = React.createRef();
@@ -26,7 +15,6 @@ class CityTours extends React.Component {
   }
 
   render() {
-    console.log(this.props.cityTours);
     const columns = [
       {
         title: "Name",

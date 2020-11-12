@@ -25,6 +25,7 @@ import {
   REMOVE_PLACE,
   EDIT_PLACE,
 } from "../actions/places";
+import { RECEIVE_USERS } from "../actions/users";
 
 const initialState = {
   token: null,
@@ -122,7 +123,6 @@ function cityToursReducer(state = [], action) {
         cityTour.id === action.cityTour.id ? action.cityTour : cityTour
       );
     case REMOVE_CITY_TOUR:
-      console.log(action.cityTourId);
       return state.filter((cityTour) => cityTour.id !== action.cityTourId);
     default:
       return state;
@@ -146,12 +146,22 @@ function placesReducer(state = [], action) {
   }
 }
 
+function usersReducer(state = [], action) {
+  switch (action.type) {
+    case RECEIVE_USERS:
+      return action.users;
+    default:
+      return state;
+  }
+}
+
 const reducer = combineReducers({
   auth: authReducer,
   request: requestsReducer,
   trips: tripsReducer,
   cityTours: cityToursReducer,
   places: placesReducer,
+  users: usersReducer,
 });
 
 export default reducer;

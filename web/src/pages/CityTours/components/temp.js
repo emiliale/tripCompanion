@@ -119,7 +119,6 @@ class NewCityTourModal extends React.Component {
   };
 
   onFinish = (values) => {
-    console.log("save");
     const distance = this.props.distance();
     this.setState({
       name: values.name,
@@ -149,7 +148,6 @@ class NewCityTourModal extends React.Component {
   };
 
   render = () => {
-    console.log(this.props.tripObject[0] ? this.props.tripObject[0].name : "");
     return (
       <Modal
         afterClose={this.props.afterClose}
@@ -225,7 +223,6 @@ class NewCityTourModal extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(ownProps.trip);
   return {
     places: state.places,
     tripObject: state.trips.filter((trip) => trip.id === ownProps.trip),

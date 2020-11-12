@@ -1,35 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  Typography,
-  Row,
-  Col,
-  Button,
-  Layout,
-  Card,
-  Divider,
-  Image,
-} from "antd";
-import { Table, Tag, Space } from "antd";
+import { Typography, Row, Col, Button, Layout, Divider, Image } from "antd";
+import { Table, Space } from "antd";
 import axios from "axios";
 import mapboxgl from "mapbox-gl";
-import PlaceAutocompleteComponent from "./components/PlaceAutocompleteComponent";
 import * as turf from "@turf/helpers";
-import { Link } from "react-router-dom";
 import { getPlaces, addPlace } from "../../store/actions/places";
 import { getCityTours, newCityTour } from "../../store/actions/cityTours";
 import NewCityTourModal from "./components/NewCityTourModal";
-import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng,
-} from "react-places-autocomplete";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
-const { Header, Content, Footer } = Layout;
-const env = process.env.NODE_ENV || "development";
-const serverUrl =
-  env === "development"
-    ? "http://127.0.0.1:8000"
-    : "https://trip-companion-server.herokuapp.com";
+const { Content } = Layout;
+
 const { Title, Paragraph } = Typography;
 const mapStyles = {
   //position: "absolute",
@@ -274,8 +256,8 @@ class CityTour extends React.Component {
             i++
           ) {
             if (
-              place.lng == res.data.trips[0].geometry.coordinates[i][0] &&
-              place.lat == res.data.trips[0].geometry.coordinates[i][1]
+              place.lng === res.data.trips[0].geometry.coordinates[i][0] &&
+              place.lat === res.data.trips[0].geometry.coordinates[i][1]
             ) {
               order = i;
               break;
@@ -326,13 +308,10 @@ class CityTour extends React.Component {
   deletePlaceFromRoute = (xid) => {
     let newRoutePlaces = this.state.routePlaces;
     let coords = this.state.placeCoordinates.join([","]);
-    console.log(coords);
-    console.log(newRoutePlaces);
     let index = newRoutePlaces.indexOf(coords);
     if (index > -1) {
       newRoutePlaces.splice(index, 1);
     }
-    console.log(newRoutePlaces);
     xid
       ? this.getRoute(newRoutePlaces, false, xid)
       : this.getRoute(newRoutePlaces, false, this.state.xid);
@@ -346,7 +325,6 @@ class CityTour extends React.Component {
   };
 
   render() {
-    console.log(this.state);
     const columns = [
       {
         title: "Place name",
@@ -463,6 +441,8 @@ class CityTour extends React.Component {
         {this.state.openModal ? (
           <NewCityTourModal
             id={this.props.tour ? this.props.tour.id : null}
+            country={this.props.tour ? this.props.tour.country : null}
+            continent={this.props.tour ? this.props.tour.continent : null}
             name={this.props.tour ? this.props.tour.name : null}
             open={this.state.openModal}
             afterClose={() => this.setState({ openModal: false })}
