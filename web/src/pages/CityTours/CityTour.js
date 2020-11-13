@@ -9,6 +9,7 @@ import { getPlaces, addPlace } from "../../store/actions/places";
 import { getCityTours, newCityTour } from "../../store/actions/cityTours";
 import NewCityTourModal from "./components/NewCityTourModal";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import NoAccess from "../../components/NoAccess";
 
 const { Content } = Layout;
 
@@ -358,7 +359,7 @@ class CityTour extends React.Component {
       },
     ];
 
-    return (
+    return localStorage.getItem("userId") ? (
       <div style={{ paddingRight: "5%", paddingLeft: "5%" }} style={mapStyles}>
         <Title>Edytuj {this.props.tour ? this.props.tour.name : ""}</Title>
         <Divider />
@@ -460,6 +461,8 @@ class CityTour extends React.Component {
           />
         ) : null}
       </div>
+    ) : (
+      <NoAccess />
     );
   }
 }

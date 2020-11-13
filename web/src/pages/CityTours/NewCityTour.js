@@ -9,6 +9,7 @@ import * as turf from "@turf/helpers";
 import { getPlaces, addPlace } from "../../store/actions/places";
 import { newCityTour } from "../../store/actions/cityTours";
 import NewCityTourModal from "./components/NewCityTourModal";
+import NoAccess from "../../components/NoAccess";
 
 const { Content } = Layout;
 
@@ -332,7 +333,7 @@ class NewCityTour extends React.Component {
       },
     ];
 
-    return (
+    return localStorage.getItem("userId") ? (
       <div style={{ paddingRight: "5%", paddingLeft: "5%" }} style={mapStyles}>
         <Title>Zaplanuj trasę</Title>
         <Divider />
@@ -420,6 +421,8 @@ class NewCityTour extends React.Component {
           />
         ) : null}
       </div>
+    ) : (
+      <NoAccess />
     );
   }
 }

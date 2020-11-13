@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography, Row, Col, Button } from "antd";
-import NewTrip from "./components/NewTrip";
+import NewTrip from "./NewTrip";
 
 const { Title } = Typography;
 

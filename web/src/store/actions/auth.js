@@ -69,7 +69,7 @@ export const authLogin = (username, password) => {
         dispatch(authSuccess(token));
         dispatch(checkAuthTimeout(3600));
         setTimeout(function () {
-          window.location.replace("/");
+          window.location.replace("/trips/");
         }, 1000);
       })
       .catch((err) => {

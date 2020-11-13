@@ -16,6 +16,7 @@ import { getUsers } from "../../store/actions/users";
 import PieChart from "./PieChart";
 import LineChart from "./LineChart";
 import { format } from "date-fns";
+import { Spin } from "antd";
 
 import { Popconfirm, message } from "antd";
 
@@ -245,7 +246,10 @@ class AllStatistics extends React.Component {
         key: "number",
       },
     ];
-    return (
+
+    return this.props.isLoading ? (
+      <Spin />
+    ) : (
       <div>
         <Row align="middle" justify="space-around">
           <Col span={4}>
@@ -314,6 +318,7 @@ class AllStatistics extends React.Component {
             <Table
               dataSource={this.state.countriesRankingData}
               columns={columnsCountries}
+              loading={this.props.isLoading}
             />
             ;
           </Col>
@@ -321,6 +326,7 @@ class AllStatistics extends React.Component {
             <Table
               dataSource={this.state.continentsRankingData}
               columns={columnsContinents}
+              loading={this.props.isLoading}
             />
           </Col>
         </Row>
@@ -332,6 +338,7 @@ class AllStatistics extends React.Component {
 const mapStateToProps = (state) => {
   const userId = parseInt(localStorage.getItem("userId"));
   return {
+    isLoading: state.request.isLoading,
     cityTours: state.cityTours,
     trips: state.trips,
   };

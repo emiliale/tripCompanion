@@ -10,7 +10,6 @@ class Login extends React.Component {
   };
 
   onFinish = (values) => {
-    console.log("Received values of form: ", values);
     this.setState({ isLoading: true });
     this.props.onAuth(values.username, values.password);
   };

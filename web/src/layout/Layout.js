@@ -19,7 +19,7 @@ class CustomLayout extends React.Component {
           <Menu
             theme="light"
             mode="horizontal"
-            defaultSelectedKeys={["2"]}
+            defaultSelectedKeys={isAuth ? ["3"] : ["2"]}
             style={{
               lineHeight: "64px",
               backgroundColor: "#ffffff",

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
 import { getCityTours, deleteCityTour } from "../../store/actions/cityTours";
 import { Popconfirm } from "antd";
+import NoAccess from "../../components/NoAccess";
 
 class CityTours extends React.Component {
   formRef = React.createRef();
@@ -75,7 +76,7 @@ class CityTours extends React.Component {
         ),
       },
     ];
-    return (
+    return localStorage.getItem("userId") ? (
       <div>
         <Space style={{ marginBottom: 16 }}>
           <Button style={{ float: "right" }}>
@@ -84,8 +85,14 @@ class CityTours extends React.Component {
             </Link>
           </Button>
         </Space>
-        <Table columns={columns} dataSource={this.props.cityTours} />
+        <Table
+          columns={columns}
+          dataSource={this.props.cityTours}
+          loading={this.props.isLoading}
+        />
       </div>
+    ) : (
+      <NoAccess />
     );
   }
 }
@@ -93,6 +100,7 @@ class CityTours extends React.Component {
 const mapStateToProps = (state) => {
   const userId = parseInt(localStorage.getItem("userId"));
   return {
+    isLoading: state.request.isLoading,
     cityTours: state.cityTours.filter(
       (tour) => tour.users.indexOf(userId) !== -1
     ),

@@ -47,11 +47,13 @@ class AboutApp extends React.Component {
               nimi. Dodawaj notatki do atrakcji oraz dziel się tym wszytskim ze
               znajomymi!
             </Paragraph>
-            <Button style={{ backgroundColor: "#f5b642", marginRight: "5%" }}>
-              <Link to="/signup/" style={{ textDecoration: "none" }}>
-                Zarejestruj się
-              </Link>
-            </Button>
+            {localStorage.getItem("userId") ? null : (
+              <Button style={{ backgroundColor: "#f5b642", marginRight: "5%" }}>
+                <Link to="/signup/" style={{ textDecoration: "none" }}>
+                  Zarejestruj się
+                </Link>
+              </Button>
+            )}
             <Button>
               <Link to="/functions/" style={{ textDecoration: "none" }}>
                 Wiecej

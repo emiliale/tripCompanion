@@ -2,7 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { List, Card, Row, Col, Divider } from "antd";
-import { getTrips } from "../../store/actions/trips";
+import { getTrips } from "../../../store/actions/trips";
+import { Spin } from "antd";
 
 class OldTrips extends React.Component {
   state = {
@@ -30,7 +31,9 @@ class OldTrips extends React.Component {
 
   render() {
     console.log(this.props.trips);
-    return (
+    return this.props.isLoading ? (
+      <Spin />
+    ) : (
       <List
         itemLayout="horizontal"
         grid={{ gutter: 16, column: 4 }}
@@ -83,8 +86,10 @@ class OldTrips extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  const userId = parseInt(localStorage.getItem("userId"));
   return {
-    trips: state.trips,
+    isLoading: state.request.isLoading,
+    trips: state.trips.filter((trip) => trip.users.indexOf(userId) !== -1),
   };
 };
 

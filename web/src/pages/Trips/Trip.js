@@ -21,6 +21,7 @@ import { getUsers } from "../../store/actions/users";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Popconfirm } from "antd";
 import Users from "./components/Users";
+import NoAccess from "../../components/NoAccess";
 
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
@@ -136,7 +137,7 @@ class Trip extends React.Component {
         ),
       },
     ];
-    return (
+    return localStorage.getItem("userId") ? (
       <div style={{ paddingRight: "5%", paddingLeft: "5%" }}>
         <Title>{this.props.trip ? this.props.trip.name : "Podróż"}</Title>
         <Divider />
@@ -270,11 +271,17 @@ class Trip extends React.Component {
             </Link>
           </Button>
         </Space>
-        <Table columns={columnsTours} dataSource={this.props.cityTours} />
+        <Table
+          columns={columnsTours}
+          dataSource={this.props.cityTours}
+          loading={this.props.isLoading}
+        />
         <Divider />
         <Title level={2}>Users</Title>
         <Users trip={this.props.trip} />
       </div>
+    ) : (
+      <NoAccess />
     );
   }
 }
@@ -282,6 +289,7 @@ class Trip extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   const tripId = parseInt(ownProps.match.params.id);
   return {
+    isLoading: state.request.isLoading,
     trip: state.trips.find((x) => x.id === tripId),
     cityTours: state.cityTours.filter((tour) => {
       return tour.trip ? tour.trip === tripId : false;

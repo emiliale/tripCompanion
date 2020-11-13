@@ -33,7 +33,7 @@ class NewCityTourModal extends React.Component {
     places: [],
     placesOverall: 0,
     name: "",
-    trip: {},
+    trip: null,
     date: "",
     dsitance: 0,
     city: "",
@@ -63,6 +63,7 @@ class NewCityTourModal extends React.Component {
 
   saveCityTour = () => {
     let users = [parseInt(localStorage.getItem("userId"))];
+    console.log(users);
     this.props.newCityTour(
       this.state.name,
       this.state.city,
