@@ -12,6 +12,7 @@ const { Header, Content, Footer } = Layout;
 class CustomLayout extends React.Component {
   render() {
     let isAuth = localStorage.getItem("userId");
+    console.log(isAuth)
     return (
       <Layout className="layout" style={{ backgroundColor: "#fffceb" }}>
         <Header style={{ backgroundColor: "#ffffff" }}>
