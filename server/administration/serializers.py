@@ -27,7 +27,6 @@ class UserSerializer(serializers.ModelSerializer):
         )
 
     def create(self, validated_data):
-        validated_data.popitem()  # removing created_by argument
         user = super(UserSerializer, self).create(validated_data)
         user.set_password(validated_data["password"])
         user.save()

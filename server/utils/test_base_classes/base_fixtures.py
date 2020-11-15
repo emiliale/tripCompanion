@@ -34,4 +34,4 @@ def fixture_user_create_2(db):
 
 @pytest.fixture(name="user_created_3")
 def fixture_user_create_3(db):
-    return UserFactory.create(date_joined=timezone.now(), last_login=timezone.now())
+    return UserFactory.create(username="username", password="password")
