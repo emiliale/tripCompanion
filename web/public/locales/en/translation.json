@@ -72,5 +72,16 @@
   "notAllowed": {
     "error": "Permission Error",
     "noPermission": "You do not have permissions to see this page."
+  },
+  "menu":{
+    "statistics": "Statystics",
+    "functions": "Functions",
+    "cityTours": "City Tours",
+    "trips": "Trips",
+    "profile": "Profile",
+    "changePassword": "Change password",
+    "login": "Log in",
+    "logout": "Log out",
+    "signin": "Sign in"
   }
 }

@@ -72,5 +72,16 @@
   "notAllowed": {
     "error": "Błąd uprawnień",
     "noPermission": "Nie masz uprawnień, aby wyświetlić tę stronę."
+  },
+  "menu":{
+    "statistics": "Statystyki",
+    "functions": "Funkcje",
+    "cityTours": "Trasy",
+    "trips": "Podróże",
+    "profile": "Konto",
+    "changePassword": "Zmień hasło",
+    "login": "Zaloguj",
+    "logout": "Wyloguj",
+    "signin": "Zarejestruj się"
   }
 }
