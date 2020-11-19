@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as actionTypes from "./actionTypes";
+import { notification } from "antd";
 
 const env = process.env.NODE_ENV || "development";
 const serverUrl =
@@ -56,26 +57,20 @@ export const authLogin = (username, password) => {
       .then((res) => {
         axios
           .get(`${serverUrl}/administration/users/?username=${username}`)
-          .then((res) => {
-            console.log("halo");
-            localStorage.setItem("userId", res.data[0].id);
+          .then((response) => {
+            localStorage.setItem("userId", response.data[0].id);
+            const token = res.data.key;
+            const usrname = username;
+            const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+            localStorage.setItem("token", token);
+            localStorage.setItem("username", usrname);
+            localStorage.setItem("expirationDate", expirationDate);
+            dispatch(authSuccess(token));
+            dispatch(checkAuthTimeout(3600));
+            window.location.replace("/trips/");
           });
-        const token = res.data.key;
-        const usrname = username;
-        const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-        localStorage.setItem("token", token);
-        localStorage.setItem("username", usrname);
-        localStorage.setItem("expirationDate", expirationDate);
-        dispatch(authSuccess(token));
-        dispatch(checkAuthTimeout(3600));
-        setTimeout(function () {
-          window.location.replace("/trips/");
-        }, 1000);
       })
       .catch((err) => {
-        if (err === "Error: Request failed with status code 400") {
-          err.message = "Niepoprawny login lub hasło";
-        }
         dispatch(authFail(err));
       });
   };
@@ -131,18 +126,21 @@ export const authChangePassword = (newpassword, confirm, password) => {
         }
       )
       .then((res) => {
-        const token = res.data.key;
+        notification.open({
+          message: "Saved City Tour",
+          description: "Password has been changed successfully",
+          onClick: () => {
+            console.log("Notification Clicked!");
+          },
+        });
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-        localStorage.setItem("token", token);
         localStorage.setItem("expirationDate", expirationDate);
-        window.location.replace("/");
-        dispatch(authSuccess(token));
         dispatch(checkAuthTimeout(3600));
+        setTimeout(() => {
+          window.location.replace("/");
+        }, 1000);
       })
       .catch((err) => {
-        if (err === "Error: Request failed with status code 401") {
-          window.alert("Niepoprawne hasło");
-        }
         dispatch(authFail(err));
       });
   };

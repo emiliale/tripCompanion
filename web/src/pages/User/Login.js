@@ -1,33 +1,30 @@
 import React from "react";
-import { Form, Input, Button, Spin } from "antd";
+import { Form, Input, Button, Spin, Typography, Divider } from "antd";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/auth";
 import { LoadingOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 
 class Login extends React.Component {
-  state = {
-    isLoading: false,
-  };
 
   onFinish = (values) => {
-    this.setState({ isLoading: true });
     this.props.onAuth(values.username, values.password);
   };
 
   render() {
     let errorMessage = null;
     if (this.props.error) {
-      errorMessage = <p>{this.props.error.message}</p>;
+      errorMessage = this.props.error.message === "Request failed with status code 400" ? "Niepoprawny login lub hasło" : this.props.error.message
     }
-
     return (
       <div
         style={{ paddingRight: "30%", paddingLeft: "30%", paddingTop: "3%" }}
       >
-        {errorMessage}
-        {this.props.loading || this.state.isLoading ? (
+        <Typography>{errorMessage}</Typography>
+        <Divider/>
+        {this.props.loading ? (
           <Spin indicator={<LoadingOutlined />} />
         ) : (
+          
           <Form onFinish={this.onFinish} className="login-form">
             <Form.Item
               name="username"
@@ -68,8 +65,8 @@ class Login extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    loading: state.loading,
-    error: state.error,
+    loading: state.auth.loading,
+    error: state.auth.error,
   };
 };
 

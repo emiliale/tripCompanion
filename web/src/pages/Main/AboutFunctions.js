@@ -40,7 +40,7 @@ class AboutFunctions extends React.Component {
                 <Title level={3}>Dziel podróże ze znajomymi</Title>
                 <Paragraph>
                   Zaproś znajomych, z kótrymi podróżujesz i dziel się z nimi
-                  trasami oraz stworzonymi notatkami do nich.
+                  trasami.
                 </Paragraph>
               </Col>
               <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
@@ -53,8 +53,7 @@ class AboutFunctions extends React.Component {
                 />
                 <Title level={3}>Przechowuj historię swoich podóży</Title>
                 <Paragraph>
-                  Sprawdź na mapie, jakie miejsca udało Ci się odwiedić
-                  dotychcza oraz przyjrzyj się statystyką z Twoich wypraw.
+                  Przyjrzyj się statystyką ze Twoich wypraw i obserwuj zdobyte przez siebie kraje i kontynety.
                 </Paragraph>
               </Col>
             </Row>

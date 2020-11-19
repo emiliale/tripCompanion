@@ -1,6 +1,6 @@
 import axios from "axios";
 import { requestData, requestChange, finishRequest } from "./requests";
-
+import { notification } from "antd";
 export const RECEIVE_CITY_TOURS = "RECEIVE_CITY_TOURS";
 export const ADD_CITY_TOUR = "ADD_CITY_TOUR";
 export const EDIT_CITY_TOUR = "EDIT_CITY_TOUR";
@@ -78,6 +78,16 @@ export function newCityTour(
       .then((res) => {
         dispatch(addCityTour(res.data));
         dispatch(finishRequest());
+        notification.open({
+          message: "Saved City Tour",
+          description: "City Tour has been saved successfully",
+          onClick: () => {
+            console.log("Notification Clicked!");
+          },
+        });
+        setTimeout(function () {
+          window.location.replace("/city_tours");
+        }, 1000);
       })
       .catch((err) => {
         console.log(err);
@@ -113,6 +123,13 @@ export function updateCityTour(
       .then((res) => {
         dispatch(editCityTour(res.data));
         dispatch(finishRequest());
+        notification.open({
+          message: "Saved City Tour",
+          description: "City Tour has been saved successfully",
+          onClick: () => {
+            console.log("Notification Clicked!");
+          },
+        });
       })
       .catch((err) => {
         console.log(err);

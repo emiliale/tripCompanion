@@ -24,9 +24,7 @@ class Functions extends React.Component {
           img={"/img/5556.jpg"}
           title={"Dziel się podróżami ze znajomymi"}
           text={
-            "Dziel zaplanowane trasy z towarzyszami podróży, abyście mogli wspólnie decydowac o planach. \
-            Możesz również dodawać notatki do odwiedzonych \
-            miejsc. Jak chcesz pochwilić się gdzie jesteś, zamelduj się na Facebooku jednym kliknięciem!"
+            "Dziel zaplanowane trasy z towarzyszami podróży, abyście mogli wspólnie decydowac o planach. "
           }
         />
         <Divider />
@@ -34,7 +32,7 @@ class Functions extends React.Component {
           img={"/img/6595.jpg"}
           title={"Przechowuj historię swoich podróży"}
           text={
-            "Zobacz na mapie ile już miejsc udało Ci sie odwiedzić. Możesz równiez przyjrzeć się statystykom - \
+            "Zobacz ile już miejsc udało Ci sie odwiedzić. Przyjrzyj się statystykom - \
           Które kraje należą do najczęściej odwiedzanych? Czy odwiedziłeś juz wszystkie kontynenty? Który rok \
           był najobfitszy w podróże?"
           }

@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Typography, Divider } from "antd";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/auth";
 import { LockOutlined } from "@ant-design/icons";
@@ -7,12 +7,17 @@ import { LockOutlined } from "@ant-design/icons";
 class ChangePassword extends React.Component {
   onFinish = (values) => {
     this.props.onAuth(values.password, values.confirm, values.oldPassword);
-    this.props.history.push("/");
   };
 
   render() {
+    let errorMessage = null;
+    if (this.props.error) {
+      errorMessage = this.props.error.message === "Request failed with status code 400" ? "Niepoprawne hasło" : this.props.error.message
+    }
     return (
       <div style={{ paddingRight: "30%", paddingLeft: "30%" }}>
+        <Typography>{errorMessage}</Typography>
+        <Divider/>
         <Form onFinish={this.onFinish}>
           <Form.Item
             name="oldPassword"
@@ -100,8 +105,8 @@ class ChangePassword extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    loading: state.loading,
-    error: state.error,
+    loading: state.auth.loading,
+    error: state.auth.error,
   };
 };
 

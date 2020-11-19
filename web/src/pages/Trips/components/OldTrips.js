@@ -52,7 +52,6 @@ class OldTrips extends React.Component {
             }}
           >
             <Card hoverable title={item.title}>
-              <Divider style={{ marginTop: "1px" }} />
               <Row gutter={16}>
                 <Col span={10}>
                   <div>

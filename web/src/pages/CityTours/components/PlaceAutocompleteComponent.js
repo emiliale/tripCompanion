@@ -255,6 +255,7 @@ function PlacesAutocompleteComponent(props) {
 
   const handleSelect = async (value) => {
     const results = await geocodeByAddress(value);
+    console.log(results)
     const cityNameInfo = results[0].address_components.filter(
       (address) =>
         address.types.indexOf("locality") !== -1 &&
@@ -265,10 +266,10 @@ function PlacesAutocompleteComponent(props) {
         address.types.indexOf("country") !== -1 &&
         address.types.indexOf("political") !== -1
     );
-    const city = cityNameInfo[0].long_name;
-    const country = countryNameInfo[0].long_name;
-    const countryCode = countryNameInfo[0].short_name;
-    const continent = continents[countryCode];
+    const city = cityNameInfo[0] ? cityNameInfo[0].long_name : "";
+    const country = countryNameInfo[0] ? countryNameInfo[0].long_name : "";
+    const countryCode = countryNameInfo[0] ? countryNameInfo[0].short_name : "";
+    const continent = continents[countryCode] ? continents[countryCode] : "";
     const latLng = await getLatLng(results[0]);
     setAddress(value);
     setCoordinates(latLng);
