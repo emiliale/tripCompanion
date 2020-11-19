@@ -53,7 +53,8 @@ class AboutFunctions extends React.Component {
                 />
                 <Title level={3}>Przechowuj historię swoich podóży</Title>
                 <Paragraph>
-                  Przyjrzyj się statystyką ze Twoich wypraw i obserwuj zdobyte przez siebie kraje i kontynety.
+                  Przyjrzyj się statystyką ze Twoich wypraw i obserwuj zdobyte
+                  przez siebie kraje i kontynety.
                 </Paragraph>
               </Col>
             </Row>

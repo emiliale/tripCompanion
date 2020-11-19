@@ -5,7 +5,6 @@ import * as actions from "../../store/actions/auth";
 import { LoadingOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 
 class Login extends React.Component {
-
   onFinish = (values) => {
     this.props.onAuth(values.username, values.password);
   };
@@ -13,18 +12,20 @@ class Login extends React.Component {
   render() {
     let errorMessage = null;
     if (this.props.error) {
-      errorMessage = this.props.error.message === "Request failed with status code 400" ? "Niepoprawny login lub hasło" : this.props.error.message
+      errorMessage =
+        this.props.error.message === "Request failed with status code 400"
+          ? "Niepoprawny login lub hasło"
+          : this.props.error.message;
     }
     return (
       <div
         style={{ paddingRight: "30%", paddingLeft: "30%", paddingTop: "3%" }}
       >
         <Typography>{errorMessage}</Typography>
-        <Divider/>
+        <Divider />
         {this.props.loading ? (
           <Spin indicator={<LoadingOutlined />} />
         ) : (
-          
           <Form onFinish={this.onFinish} className="login-form">
             <Form.Item
               name="username"

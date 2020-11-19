@@ -30,7 +30,6 @@ class OldTrips extends React.Component {
   }
 
   render() {
-    console.log(this.props.trips);
     return this.props.isLoading ? (
       <Spin />
     ) : (

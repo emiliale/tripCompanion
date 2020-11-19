@@ -37,7 +37,6 @@ const Complete = (props) => {
   const onSelect = (data) => {
     const trip = props.trips.find((x) => x.name === data);
     props.setTrip(trip);
-    console.log("onSelect", trip);
   };
 
   return (

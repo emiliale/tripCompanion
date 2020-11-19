@@ -44,7 +44,6 @@ export function getPlaces(level) {
   return (dispatch) => {
     dispatch(requestData(level));
     axios.get(`${serverUrl}/place/places/`).then((res) => {
-      console.log(res);
       if (res.status !== "error") dispatch(receivePlaces(res.data));
       dispatch(finishRequest());
     });

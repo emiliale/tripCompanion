@@ -250,101 +250,96 @@ class Statistics extends React.Component {
     return this.props.isLoading ? (
       <Spin />
     ) : (
-        <div>
-
-          {this.props.trips.length === 0
-            ? (
-              <Title level={3}>
-                <InfoCircleOutlined /> You don't have any trips yet
-              </Title>
-            )
-            : (
-              <div>
-
-                <Row align="middle" justify="space-around">
-                  <Col span={4}>
-                    <PageHeader title={`Visited countries: `} />
-                  </Col>
-                  <Col span={20}>
-                    <PageHeader title={`${this.getNumberOfCountries()}`} />
-                  </Col>
-                </Row>
-                <Row align="middle" justify="space-around">
-                  <Col span={4}>
-                    <PageHeader title={`Visited continents: `} />
-                  </Col>
-                  <Col span={20}>
-                    <PageHeader title={`${this.getNumberOfContinents()}`} />
-                  </Col>
-                </Row>
-                <Row align="middle" justify="space-around">
-                  <Col span={4}>
-                    <PageHeader title={`Total distance: `} />
-                  </Col>
-                  <Col span={20}>
-                    <PageHeader title={`${this.getDistance() / 1000} km`} />
-                  </Col>
-                </Row>
-                <Divider />
-                <Row align="middle" justify="space-around">
-                  <Col span={6}></Col>
-                  <Col span={12}>
-                    <PageHeader
-                      title="Number of trips in each year"
-                      style={{ marginLeft: "30%" }}
-                    />
-                    <LineChart data={this.state.yearsChartData} />
-                  </Col>
-                  <Col span={6}></Col>
-                </Row>
-                <Divider />
-                <Row align="middle" justify="space-around">
-                  <Col span={12}>
-                    <PageHeader
-                      title="Number of visited countries"
-                      style={{ marginLeft: "33%" }}
-                    />
-                    <PieChart data={this.state.visitedCountriesData} />
-                  </Col>
-                  <Col span={12}>
-                    <PageHeader
-                      title="Number of visited continents"
-                      style={{ marginLeft: "33%" }}
-                    />
-                    <PieChart data={this.state.visitedConinentsData} />
-                  </Col>
-                </Row>
-                <Divider />
-                <Row align="middle" justify="space-around">
-                  <Col span={10}>
-                    <PageHeader title="Ranking of the most visited countries" />
-                  </Col>
-                  <Col span={10}>
-                    <PageHeader title="Ranking of the most visited continents" />
-                  </Col>
-                </Row>
-                <Row align="top" justify="space-around">
-                  <Col span={10}>
-                    <Table
-                      dataSource={this.state.countriesRankingData}
-                      columns={columnsCountries}
-                      loading={this.props.isLoading}
-                    />
-            ;
-          </Col>
-                  <Col span={10}>
-                    <Table
-                      dataSource={this.state.continentsRankingData}
-                      columns={columnsContinents}
-                      loading={this.props.isLoading}
-                    />
-                  </Col>
-                </Row>
-              </div>
-            )}
-        </div>
-
-      );
+      <div>
+        {this.props.trips.length === 0 ? (
+          <Title level={3}>
+            <InfoCircleOutlined /> You don't have any trips yet
+          </Title>
+        ) : (
+          <div>
+            <Row align="middle" justify="space-around">
+              <Col span={4}>
+                <PageHeader title={`Visited countries: `} />
+              </Col>
+              <Col span={20}>
+                <PageHeader title={`${this.getNumberOfCountries()}`} />
+              </Col>
+            </Row>
+            <Row align="middle" justify="space-around">
+              <Col span={4}>
+                <PageHeader title={`Visited continents: `} />
+              </Col>
+              <Col span={20}>
+                <PageHeader title={`${this.getNumberOfContinents()}`} />
+              </Col>
+            </Row>
+            <Row align="middle" justify="space-around">
+              <Col span={4}>
+                <PageHeader title={`Total distance: `} />
+              </Col>
+              <Col span={20}>
+                <PageHeader title={`${this.getDistance() / 1000} km`} />
+              </Col>
+            </Row>
+            <Divider />
+            <Row align="middle" justify="space-around">
+              <Col span={6}></Col>
+              <Col span={12}>
+                <PageHeader
+                  title="Number of trips in each year"
+                  style={{ marginLeft: "30%" }}
+                />
+                <LineChart data={this.state.yearsChartData} />
+              </Col>
+              <Col span={6}></Col>
+            </Row>
+            <Divider />
+            <Row align="middle" justify="space-around">
+              <Col span={12}>
+                <PageHeader
+                  title="Number of visited countries"
+                  style={{ marginLeft: "33%" }}
+                />
+                <PieChart data={this.state.visitedCountriesData} />
+              </Col>
+              <Col span={12}>
+                <PageHeader
+                  title="Number of visited continents"
+                  style={{ marginLeft: "33%" }}
+                />
+                <PieChart data={this.state.visitedConinentsData} />
+              </Col>
+            </Row>
+            <Divider />
+            <Row align="middle" justify="space-around">
+              <Col span={10}>
+                <PageHeader title="Ranking of the most visited countries" />
+              </Col>
+              <Col span={10}>
+                <PageHeader title="Ranking of the most visited continents" />
+              </Col>
+            </Row>
+            <Row align="top" justify="space-around">
+              <Col span={10}>
+                <Table
+                  dataSource={this.state.countriesRankingData}
+                  columns={columnsCountries}
+                  loading={this.props.isLoading}
+                />
+                ;
+              </Col>
+              <Col span={10}>
+                <Table
+                  dataSource={this.state.continentsRankingData}
+                  columns={columnsContinents}
+                  loading={this.props.isLoading}
+                />
+              </Col>
+            </Row>
+          </div>
+        )}
+      </div>
+    );
   }
 }
 

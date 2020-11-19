@@ -5,7 +5,7 @@ import registerServiceWorker from "./registerServiceWorker";
 import { createStore, compose, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-import './i18n';
+import "./i18n";
 
 import reducer from "./store/reducers/auth";
 

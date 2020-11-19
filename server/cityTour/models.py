@@ -8,7 +8,7 @@ import datetime
 class CityTour(models.Model):
     name = models.CharField(max_length=255)
     city = models.CharField(max_length=255, null=True, blank=True)
-    distance = models.FloatField(default=0,  null=True, blank=True)
+    distance = models.FloatField(default=0, null=True, blank=True)
     date = models.DateField(default=datetime.datetime.now().date())
     country = models.CharField(max_length=255, default="", null=True, blank=True)
     continent = models.CharField(max_length=255, default="", null=True, blank=True)

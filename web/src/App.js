@@ -1,7 +1,7 @@
 import React, { Component, Suspense } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { connect } from "react-redux";
-import { Spin } from 'antd';
+import { Spin } from "antd";
 import BaseRouter from "./routes";
 import "antd/dist/antd.css";
 import * as actions from "./store/actions/auth";
@@ -22,7 +22,7 @@ class App extends Component {
               <BaseRouter />
             </CustomLayout>
           </Router>
-          </ Suspense>
+        </Suspense>
       </div>
     );
   }
@@ -30,13 +30,13 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-            isAuthenticated: state.token !== null,
+    isAuthenticated: state.token !== null,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-            onTryAutoSignup: () => dispatch(actions.authCheckState()),
+    onTryAutoSignup: () => dispatch(actions.authCheckState()),
   };
 };
 

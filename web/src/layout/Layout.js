@@ -6,45 +6,44 @@ import { UserOutlined } from "@ant-design/icons";
 import { connect } from "react-redux";
 import * as actions from "../store/actions/auth";
 import "./layout.css";
-import i18next from 'i18next';
+import i18next from "i18next";
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer } = Layout;
 
 class CustomLayout extends React.Component {
-
   handleClick() {
-    const lang = localStorage.getItem("i18nextLng")
+    const lang = localStorage.getItem("i18nextLng");
     switch (lang) {
-      case 'pl':
-        i18next.changeLanguage('en')
+      case "pl":
+        i18next.changeLanguage("en");
         break;
-      case 'en':
-        i18next.changeLanguage('pl')
+      case "en":
+        i18next.changeLanguage("pl");
         break;
       default:
-        i18next.changeLanguage('en')
+        i18next.changeLanguage("en");
     }
   }
 
   langButton() {
-    const lang = localStorage.getItem("i18nextLng")
+    const lang = localStorage.getItem("i18nextLng");
     switch (lang) {
-      case 'pl':
-        return (<p>EN</p>)
+      case "pl":
+        return <p>EN</p>;
         break;
-      case 'en':
-        return (<p>PL</p>)
+      case "en":
+        return <p>PL</p>;
         break;
       default:
-        return (<p>PL</p>)
+        return <p>PL</p>;
     }
   }
 
   render() {
     let isAuth = localStorage.getItem("userId");
-    const { t } = this.props
-    console.log(isAuth)
+    const { t } = this.props;
+    console.log(isAuth);
     return (
       <Layout className="layout" style={{ backgroundColor: "#fffceb" }}>
         <Header style={{ backgroundColor: "#ffffff" }}>
@@ -74,10 +73,9 @@ class CustomLayout extends React.Component {
               </Link>
             </Menu.Item>
             <Menu.Item style={{ float: "right" }} key="13">
-              <Button
-                type="text"
-                onClick={() => this.handleClick()}
-              >{this.langButton()}</Button>
+              <Button type="text" onClick={() => this.handleClick()}>
+                {this.langButton()}
+              </Button>
             </Menu.Item>
             {!isAuth ? (
               <>
@@ -94,42 +92,44 @@ class CustomLayout extends React.Component {
                 </Menu.Item>
               </>
             ) : (
-                <>
-                  <Menu.Item key="3">
-                    <Link to="/trips/">{t("menu.trips")}</Link>
-                  </Menu.Item>
-                  <Menu.Item key="4">
-                    <Link to="/city_tours/">{t("menu.cityTours")}</Link>
-                  </Menu.Item>
-                  <Menu.Item key="5">
-                    <Link to="/statistics/">{t("menu.statistics")}</Link>
-                  </Menu.Item>
+              <>
+                <Menu.Item key="3">
+                  <Link to="/trips/">{t("menu.trips")}</Link>
+                </Menu.Item>
+                <Menu.Item key="4">
+                  <Link to="/city_tours/">{t("menu.cityTours")}</Link>
+                </Menu.Item>
+                <Menu.Item key="5">
+                  <Link to="/statistics/">{t("menu.statistics")}</Link>
+                </Menu.Item>
 
-                  <SubMenu
-                    style={{ float: "right" }}
-                    key="sub1"
-                    title={
-                      <span>
-                        <UserOutlined />
-                        {t("menu.profile")}
-                      </span>
-                    }
+                <SubMenu
+                  style={{ float: "right" }}
+                  key="sub1"
+                  title={
+                    <span>
+                      <UserOutlined />
+                      {t("menu.profile")}
+                    </span>
+                  }
+                >
+                  <Menu.Item key="7">
+                    <Link to="/change_password/">
+                      {t("menu.changePassword")}
+                    </Link>
+                  </Menu.Item>
+                  <Menu.Item
+                    key="9"
+                    onClick={() => {
+                      this.props.logout();
+                      this.forceUpdate();
+                    }}
                   >
-                    <Menu.Item key="7">
-                      <Link to="/change_password/">{t("menu.changePassword")}</Link>
-                    </Menu.Item>
-                    <Menu.Item
-                      key="9"
-                      onClick={() => {
-                        this.props.logout();
-                        this.forceUpdate();
-                      }}
-                    >
-                      {t("menu.logout")}
-                    </Menu.Item>
-                  </SubMenu>
-                </>
-              )}
+                    {t("menu.logout")}
+                  </Menu.Item>
+                </SubMenu>
+              </>
+            )}
           </Menu>
         </Header>
         <Content style={{ padding: "0 50px" }}>
@@ -153,4 +153,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withRouter(withTranslation()(connect(null, mapDispatchToProps)(CustomLayout)));
+export default withRouter(
+  withTranslation()(connect(null, mapDispatchToProps)(CustomLayout))
+);

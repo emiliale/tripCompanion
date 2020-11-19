@@ -6,7 +6,6 @@ class LineChart extends React.Component {
 
   componentDidUpdate(prevState, prevProps) {
     if (this.props.data.length !== 0) {
-      console.log(this.props.data);
       const myChartRef = this.chartRef.current.getContext("2d");
 
       new Chart(myChartRef, {

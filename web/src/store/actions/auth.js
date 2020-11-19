@@ -129,9 +129,6 @@ export const authChangePassword = (newpassword, confirm, password) => {
         notification.open({
           message: "Saved City Tour",
           description: "Password has been changed successfully",
-          onClick: () => {
-            console.log("Notification Clicked!");
-          },
         });
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
         localStorage.setItem("expirationDate", expirationDate);

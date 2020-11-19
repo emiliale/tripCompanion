@@ -38,18 +38,12 @@ class AddUser extends React.Component {
 
   onSelect = (data) => {
     const user = this.props.users.find((x) => x.username === data);
-    //this.props.setTrip(user);
     this.setState({ user: user.id });
-    console.log("onSelect", user);
   };
 
   onFinish = (values) => {
-    console.log(this.props.trip);
-    console.log(this.state.user);
-    console.log(this.props.trip.users);
     let users = this.props.trip.users;
     users.push(this.state.user);
-    console.log(users);
     this.props.updateTrip(
       this.props.trip.id,
       this.props.trip.name,

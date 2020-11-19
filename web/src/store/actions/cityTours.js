@@ -44,7 +44,6 @@ export function getCityTours(level) {
   return (dispatch) => {
     dispatch(requestData(level));
     axios.get(`${serverUrl}/cityTour/cityTours/`).then((res) => {
-      console.log(res);
       if (res.status !== "error") dispatch(receiveCityTours(res.data));
       dispatch(finishRequest());
     });
@@ -81,9 +80,6 @@ export function newCityTour(
         notification.open({
           message: "Saved City Tour",
           description: "City Tour has been saved successfully",
-          onClick: () => {
-            console.log("Notification Clicked!");
-          },
         });
         setTimeout(function () {
           window.location.replace("/city_tours");
@@ -126,9 +122,6 @@ export function updateCityTour(
         notification.open({
           message: "Saved City Tour",
           description: "City Tour has been saved successfully",
-          onClick: () => {
-            console.log("Notification Clicked!");
-          },
         });
       })
       .catch((err) => {

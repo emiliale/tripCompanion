@@ -63,7 +63,6 @@ class NewCityTourModal extends React.Component {
 
   saveCityTour = () => {
     let users = [parseInt(localStorage.getItem("userId"))];
-    console.log(users);
     this.props.newCityTour(
       this.state.name,
       this.state.city,
@@ -94,9 +93,6 @@ class NewCityTourModal extends React.Component {
     notification.open({
       message: "Saved City Tour",
       description: "City Tour has been saved successfully",
-      onClick: () => {
-        console.log("Notification Clicked!");
-      },
     });
   };
 

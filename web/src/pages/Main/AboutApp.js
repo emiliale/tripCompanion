@@ -44,8 +44,8 @@ class AboutApp extends React.Component {
             <Title>Zaplanuj podróż z Trip Companion!</Title>
             <Paragraph>
               Wybierz atrakcje, które chcesz odwiedzić i stwórz trasę pomiędzy
-              nimi. Dziel się ze wszytskim ze znajomymi. Motywacją do odkrywania świata będa
-              przedstawiane statystki z podróży!
+              nimi. Dziel się ze wszytskim ze znajomymi. Motywacją do odkrywania
+              świata będa przedstawiane statystki z podróży!
             </Paragraph>
             {localStorage.getItem("userId") ? null : (
               <Button style={{ backgroundColor: "#f5b642", marginRight: "5%" }}>

@@ -255,7 +255,6 @@ function PlacesAutocompleteComponent(props) {
 
   const handleSelect = async (value) => {
     const results = await geocodeByAddress(value);
-    console.log(results)
     const cityNameInfo = results[0].address_components.filter(
       (address) =>
         address.types.indexOf("locality") !== -1 &&

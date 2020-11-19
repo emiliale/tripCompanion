@@ -12,12 +12,15 @@ class ChangePassword extends React.Component {
   render() {
     let errorMessage = null;
     if (this.props.error) {
-      errorMessage = this.props.error.message === "Request failed with status code 400" ? "Niepoprawne hasło" : this.props.error.message
+      errorMessage =
+        this.props.error.message === "Request failed with status code 400"
+          ? "Niepoprawne hasło"
+          : this.props.error.message;
     }
     return (
       <div style={{ paddingRight: "30%", paddingLeft: "30%" }}>
         <Typography>{errorMessage}</Typography>
-        <Divider/>
+        <Divider />
         <Form onFinish={this.onFinish}>
           <Form.Item
             name="oldPassword"
