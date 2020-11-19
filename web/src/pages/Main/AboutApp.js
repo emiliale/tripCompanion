@@ -10,7 +10,7 @@ class AboutApp extends React.Component {
   render() {
     return (
       <div>
-        <MediaQuery minDeviceWidth={1224} device={{ deviceWidth: 1600 }}>
+        <MediaQuery minDeviceWidth={1224}>
           <Row align="middle">
             <Col span={12}>
               <Carousel autoplay>
