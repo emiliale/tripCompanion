@@ -65,7 +65,6 @@ class AboutApp extends React.Component {
             </Col>
           </Row>
         </MediaQuery>
-
       </div>
     );
   }
