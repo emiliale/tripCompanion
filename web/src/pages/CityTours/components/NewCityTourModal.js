@@ -90,10 +90,6 @@ class NewCityTourModal extends React.Component {
       this.state.trip ? this.state.trip.users : users,
       this.state.places
     );
-    notification.open({
-      message: "Saved City Tour",
-      description: "City Tour has been saved successfully",
-    });
   };
 
   savePlaces = () => {

@@ -251,7 +251,7 @@ class Statistics extends React.Component {
       <Spin />
     ) : (
       <div>
-        {this.props.trips.length === 0 ? (
+        {this.props.trips.length === 0 && !this.props.isLoading ? (
           <Title level={3}>
             <InfoCircleOutlined /> You don't have any trips yet
           </Title>
