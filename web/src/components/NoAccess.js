@@ -7,7 +7,7 @@ const { Title, Paragraph } = Typography;
 class NoAccess extends React.Component {
   render() {
     return (
-      <div style={{ paddingRight: "5%", paddingLeft: "5%" }}>
+      <div>
         <Title>
           <InfoCircleOutlined /> You have to login in to see this page
         </Title>

@@ -6,7 +6,7 @@ const { Title, Paragraph } = Typography;
 class AboutFunctions extends React.Component {
   render() {
     return (
-      <div style={{ paddingRight: "5%", paddingLeft: "5%" }}>
+      <div>
         <Row align="middle" style={{ backgroundColor: "#fffceb" }}>
           <Col span={24} style={{ textAlign: "center" }}>
             <Title>Planuj wygodnie i szybko</Title>

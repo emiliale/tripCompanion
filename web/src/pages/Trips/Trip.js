@@ -138,7 +138,7 @@ class Trip extends React.Component {
       },
     ];
     return localStorage.getItem("userId") ? (
-      <div style={{ paddingRight: "5%", paddingLeft: "5%" }}>
+      <div>
         <Title>{this.props.trip ? this.props.trip.name : "Podróż"}</Title>
         <Divider />
         <Row align="middle">

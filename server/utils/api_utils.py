@@ -1,6 +1,5 @@
 from rest_framework.routers import SimpleRouter
 from rest_framework.viewsets import ModelViewSet
-from logger.models import log
 from rest_framework.views import APIView
 from django.http.request import QueryDict
 from django.http import HttpResponse

@@ -7,7 +7,7 @@ const { Title } = Typography;
 class Functions extends React.Component {
   render() {
     return (
-      <div style={{ paddingRight: "5%", paddingLeft: "5%" }}>
+      <div>
         <Title style={{ textAlign: "center" }}>Co oferujemy?</Title>
         <Divider />
         <Function

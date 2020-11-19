@@ -334,7 +334,7 @@ class NewCityTour extends React.Component {
     ];
 
     return localStorage.getItem("userId") ? (
-      <div style={{ paddingRight: "5%", paddingLeft: "5%" }} style={mapStyles}>
+      <div style={mapStyles}>
         <Title>Zaplanuj trasę</Title>
         <Divider />
         <Button
