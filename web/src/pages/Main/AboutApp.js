@@ -1,7 +1,6 @@
 import React from "react";
 import { Typography, Row, Col, Button, Carousel } from "antd";
 import { Link } from "react-router-dom";
-import MediaQuery from 'react-responsive'
 
 const { Title, Paragraph } = Typography;
 
@@ -10,7 +9,6 @@ class AboutApp extends React.Component {
   render() {
     return (
       <div>
-        <MediaQuery minDeviceWidth={1224}>
           <Row align="middle">
             <Col span={12}>
               <Carousel autoplay>
@@ -64,7 +62,6 @@ class AboutApp extends React.Component {
               </Button>
             </Col>
           </Row>
-        </MediaQuery>
       </div>
     );
   }

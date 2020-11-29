@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "trip",
     "cityTour",
-    "logger",
     "administration",
     "place",
 ]

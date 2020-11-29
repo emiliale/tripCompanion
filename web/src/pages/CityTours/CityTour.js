@@ -203,7 +203,7 @@ class CityTour extends React.Component {
   getAttractions = () => {
     axios
       .get(
-        `https://api.opentripmap.com/0.1/en/places/radius?radius=3000&lon=${this.state.lng}&lat=${this.state.lat}&src_attr=osm&kinds=cultural%2Carchitecture&rate=3&format=geojson&limit=50000&apikey=5ae2e3f221c38a28845f05b66dd041008f502f976c4cd76d927351d3`
+        `https://api.opentripmap.com/0.1/en/places/radius?radius=5000&lon=${this.state.lng}&lat=${this.state.lat}&src_attr=osm&kinds=cultural%2Carchitecture&rate=3&format=geojson&limit=50000&apikey=5ae2e3f221c38a28845f05b66dd041008f502f976c4cd76d927351d3`
       )
       .then((res) => {
         this.setState({ geojson: res.data });

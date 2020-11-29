@@ -15,7 +15,7 @@ import {
 import moment from "moment";
 import { Link } from "react-router-dom";
 import { FastBackwardOutlined, PlusOutlined } from "@ant-design/icons";
-import { getTrips, updateTrip, deleteTrip } from "../../store/actions/trips";
+import { getTrips, newTrip, deleteTrip } from "../../store/actions/trips";
 import { getCityTours, deleteCityTour } from "../../store/actions/cityTours";
 import { getUsers } from "../../store/actions/users";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
@@ -291,18 +291,12 @@ const mapStateToProps = (state, ownProps) => {
   return {
     isLoading: state.request.isLoading,
     trip: state.trips.find((x) => x.id === tripId),
-    cityTours: state.cityTours.filter((tour) => {
-      return tour.trip ? tour.trip === tripId : false;
-    }),
   };
 };
 
 const mapDispatchToProps = {
   getTrips,
-  updateTrip,
-  deleteTrip,
-  getCityTours,
-  deleteCityTour,
+  newTrip,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Trip);
