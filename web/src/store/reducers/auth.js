@@ -20,6 +20,10 @@ import {
   EDIT_CITY_TOUR,
 } from "../actions/cityTours";
 import {
+  RECEIVE_CITY_TOUR_TEMPLATES,
+  CREATE_CITY_TOUR_FROM_TEMPLATE
+} from "../actions/cityToursTemplates";
+import {
   RECEIVE_PLACES,
   ADD_PLACE,
   REMOVE_PLACE,
@@ -129,6 +133,17 @@ function cityToursReducer(state = [], action) {
   }
 }
 
+function cityTourTemplateReducer(state = [], action) {
+  switch (action.type) {
+    case RECEIVE_CITY_TOUR_TEMPLATES:
+      return action.cityTourTemplates;
+    case CREATE_CITY_TOUR_FROM_TEMPLATE:
+      return [...state, action.cityTour];
+    default:
+      return state;
+  }
+}
+
 function placesReducer(state = [], action) {
   switch (action.type) {
     case RECEIVE_PLACES:
@@ -162,6 +177,7 @@ const reducer = combineReducers({
   cityTours: cityToursReducer,
   places: placesReducer,
   users: usersReducer,
+  cityTourTemplates: cityTourTemplateReducer,
 });
 
 export default reducer;

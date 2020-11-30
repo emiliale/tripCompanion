@@ -291,12 +291,15 @@ const mapStateToProps = (state, ownProps) => {
   return {
     isLoading: state.request.isLoading,
     trip: state.trips.find((x) => x.id === tripId),
+    cityTours: state.cityTours.filter(
+      (tour) => tour.trip == tripId),
   };
 };
 
 const mapDispatchToProps = {
   getTrips,
   newTrip,
+  getCityTours,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Trip);

@@ -12,6 +12,7 @@ import NewCityTour from "./pages/CityTours/NewCityTour";
 import CityTour from "./pages/CityTours/CityTour";
 import Trip from "./pages/Trips/Trip";
 import Statistics from "./pages/Statistics/Statistics";
+import CityTourTemplate from "./pages/CityTours/CityTourTemplate"
 
 const BaseRouter = () => (
   <div>
@@ -24,6 +25,7 @@ const BaseRouter = () => (
     <Route exact path="/trips/:id/" component={Trip} />{" "}
     <Route exact path="/city_tours/" component={CityTours} />{" "}
     <Route exact path="/city_tours/:id/" component={CityTour} />{" "}
+    <Route exact path="/city_tours/template/:id" component={CityTourTemplate} />{" "}
     <Route exact path="/city_tours_new/" component={NewCityTour} />{" "}
     <Route exact path="/statistics/" component={Statistics} />{" "}
   </div>

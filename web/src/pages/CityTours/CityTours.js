@@ -1,12 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Button, Space, Table } from "antd";
+import { Button, Divider, Space, Table, Typography} from "antd";
 import { Link } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
 import { getCityTours, deleteCityTour } from "../../store/actions/cityTours";
 import { Popconfirm } from "antd";
 import NoAccess from "../../components/NoAccess";
+import CityToursTemplates from "./components/CityToursTemplates";
+
+const { Title } = Typography;
 
 class CityTours extends React.Component {
   formRef = React.createRef();
@@ -78,6 +81,10 @@ class CityTours extends React.Component {
     ];
     return localStorage.getItem("userId") ? (
       <div>
+        <Title style={{ textAlign: "center" }}>Proponowane trasy</Title>
+        <CityToursTemplates/>
+        <Divider/>
+        <Title style={{ textAlign: "center" }}>Twoje trasy</Title>
         <Space style={{ marginBottom: 16 }}>
           <Button style={{ float: "right" }}>
             <Link to="/city_tours_new/" style={{ textDecoration: "none" }}>

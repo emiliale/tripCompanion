@@ -21,3 +21,14 @@ class CityTour(models.Model):
     )
     users = models.ManyToManyField(User, related_name="users_cityTours", blank=True)
     places = models.ManyToManyField(Place, related_name="places_cityTours", blank=True)
+
+
+class CityTourTemplate(models.Model):
+    name = models.CharField(max_length=255)
+    city = models.CharField(max_length=255, null=True, blank=True)
+    distance = models.FloatField(default=0, null=True, blank=True)
+    country = models.CharField(max_length=255, default="", null=True, blank=True)
+    continent = models.CharField(max_length=255, default="", null=True, blank=True)
+    places = models.ManyToManyField(
+        Place, related_name="places_cityToursTemplates", blank=True
+    )
