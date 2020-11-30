@@ -320,7 +320,6 @@ class AllStatistics extends React.Component {
               columns={columnsCountries}
               loading={this.props.isLoading}
             />
-            ;
           </Col>
           <Col span={10}>
             <Table

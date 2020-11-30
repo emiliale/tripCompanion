@@ -101,7 +101,7 @@ export const authSignup = (username, email, password1, password2) => {
         dispatch(authSuccess(token));
         dispatch(checkAuthTimeout(3600));
         setTimeout(function () {
-          window.location.replace("/");
+          window.location.replace("/trips/");
         }, 1000);
       })
       .catch((err) => {
@@ -127,7 +127,7 @@ export const authChangePassword = (newpassword, confirm, password) => {
       )
       .then((res) => {
         notification.open({
-          message: "Saved City Tour",
+          message: "Saved New Password",
           description: "Password has been changed successfully",
         });
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);

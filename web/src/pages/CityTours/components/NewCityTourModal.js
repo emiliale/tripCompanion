@@ -43,11 +43,15 @@ class NewCityTourModal extends React.Component {
   formRef = React.createRef();
 
   componentDidUpdate(prevProps, prevState) {
+    console.log(this.state.places.length)
+    console.log(this.state.placesOverall)
+
     if (
       this.state.places.length === this.state.placesOverall &&
       this.state.places.length !== 0 &&
       !this.state.send
     ) {
+      console.log("spełniło warunek")
       this.setState({ send: true });
       this.props.id ? this.updateCityTour() : this.saveCityTour();
     }
@@ -93,6 +97,7 @@ class NewCityTourModal extends React.Component {
   };
 
   savePlaces = () => {
+    console.log("save place")
     let distance = 0;
     let places = [];
     let placeId = null;
@@ -144,7 +149,8 @@ class NewCityTourModal extends React.Component {
   };
 
   onFinish = (values) => {
-    this.setState({ send: false });
+    this.setState({ send: false })
+    console.log("click")
     const distance = this.props.distance();
     this.setState({
       name: values.name,
