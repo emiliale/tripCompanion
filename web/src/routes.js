@@ -12,7 +12,7 @@ import NewCityTour from "./pages/CityTours/NewCityTour";
 import CityTour from "./pages/CityTours/CityTour";
 import Trip from "./pages/Trips/Trip";
 import Statistics from "./pages/Statistics/Statistics";
-import CityTourTemplate from "./pages/CityTours/CityTourTemplate"
+import CityTourTemplate from "./pages/CityTours/CityTourTemplate";
 
 const BaseRouter = () => (
   <div>

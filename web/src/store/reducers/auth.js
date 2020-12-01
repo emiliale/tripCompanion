@@ -21,7 +21,7 @@ import {
 } from "../actions/cityTours";
 import {
   RECEIVE_CITY_TOUR_TEMPLATES,
-  CREATE_CITY_TOUR_FROM_TEMPLATE
+  CREATE_CITY_TOUR_FROM_TEMPLATE,
 } from "../actions/cityToursTemplates";
 import {
   RECEIVE_PLACES,

@@ -3,7 +3,13 @@ import { Form, Input, Button, Spin } from "antd";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import * as actions from "../../store/actions/auth";
-import { LoadingOutlined, UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
+import {
+  LoadingOutlined,
+  UserOutlined,
+  MailOutlined,
+  LockOutlined,
+} from "@ant-design/icons";
+import { withTranslation } from "react-i18next";
 
 const FormItem = Form.Item;
 
@@ -14,17 +20,18 @@ class RegistrationForm extends React.Component {
   };
 
   onFinish = (values) => {
-    this.setState({disabled: true})
+    this.setState({ disabled: true });
     this.props.onAuth(
       values.userName,
       values.email,
       values.password,
       values.confirm
     );
-    this.setState({disabled: false})
+    this.setState({ disabled: false });
   };
 
   render() {
+    const { t } = this.props;
     return (
       <div
         style={{ paddingRight: "30%", paddingLeft: "30%", paddingTop: "3%" }}
@@ -32,97 +39,102 @@ class RegistrationForm extends React.Component {
         {this.props.loading ? (
           <Spin indicator={<LoadingOutlined />} />
         ) : (
-            <div>
-              <Form onFinish={this.onFinish}>
-                <FormItem
-                  name="userName"
-                  rules={[{ required: true, message: "Please input your username!" }]}
-                >
-                  <Input prefix={<UserOutlined />} placeholder="Username" />
-                </FormItem>
-                <Form.Item
-                  name="email"
-                  rules={[
-                    {
-                      type: "email",
-                      message: "The input is not valid E-mail!",
-                    },
-                    {
-                      required: true,
-                      message: "Please input your E-mail!",
-                    },
-                  ]}
-                >
-                  <Input prefix={<MailOutlined />} placeholder="Email" />
-                </Form.Item>
+          <div>
+            <Form onFinish={this.onFinish}>
+              <FormItem
+                name="userName"
+                rules={[{ required: true, message: t("user.inputUsername") }]}
+              >
+                <Input
+                  prefix={<UserOutlined />}
+                  placeholder={t("user.username")}
+                />
+              </FormItem>
+              <Form.Item
+                name="email"
+                rules={[
+                  {
+                    type: "email",
+                    message: t("user.validateEmail"),
+                  },
+                  {
+                    required: true,
+                    message: t("user.inputEmail"),
+                  },
+                ]}
+              >
+                <Input
+                  prefix={<MailOutlined />}
+                  placeholder={t("user.email")}
+                />
+              </Form.Item>
 
-                <Form.Item
-                  name="password"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your password!",
+              <Form.Item
+                name="password"
+                rules={[
+                  {
+                    required: true,
+                    message: t("user.inputPassword"),
+                  },
+                  () => ({
+                    validator(rule, value) {
+                      if (!value || value.length >= 6) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(t("user.passwordValidate"));
                     },
-                    () => ({
-                      validator(rule, value) {
-                        if (!value || value.length >= 6) {
-                          return Promise.resolve();
-                        }
-                        return Promise.reject(
-                          "Password must be a minimum of 6 characters!"
-                        );
-                      },
-                    }),
-                  ]}
-                  hasFeedback
-                >
-                  <Input.Password prefix={<LockOutlined />} placeholder="Password" />
-                </Form.Item>
-                <Form.Item
-                  name="confirm"
-                  dependencies={["password"]}
-                  hasFeedback
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please confirm your password!",
-                    },
-                    ({ getFieldValue }) => ({
-                      validator(rule, value) {
-                        if (!value || getFieldValue("password") === value) {
-                          return Promise.resolve();
-                        }
+                  }),
+                ]}
+                hasFeedback
+              >
+                <Input.Password
+                  prefix={<LockOutlined />}
+                  placeholder={t("user.password")}
+                />
+              </Form.Item>
+              <Form.Item
+                name="confirm"
+                dependencies={["password"]}
+                hasFeedback
+                rules={[
+                  {
+                    required: true,
+                    message: t("user.confirmPassword"),
+                  },
+                  ({ getFieldValue }) => ({
+                    validator(rule, value) {
+                      if (!value || getFieldValue("password") === value) {
+                        return Promise.resolve();
+                      }
 
-                        return Promise.reject(
-                          "The two passwords that you entered do not match!"
-                        );
-                      },
-                    }),
-                  ]}
+                      return Promise.reject(t("user.passwordMatch"));
+                    },
+                  }),
+                ]}
+              >
+                <Input.Password
+                  prefix={<LockOutlined />}
+                  placeholder={t("user.cofirmPasswordPlaceholder")}
+                />
+              </Form.Item>
+              <FormItem>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{ marginRight: "10px" }}
+                  disabled={this.props.loading || this.state.disabled}
                 >
-                  <Input.Password
-                    prefix={<LockOutlined />}
-                    placeholder="Confirm password"
-                  />
-                </Form.Item>
-                <FormItem>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    style={{ marginRight: "10px" }}
-                    disabled={this.props.loading || this.state.disabled}
-                  >
-                    Signup
-            </Button>
-            Or
-            <NavLink style={{ marginRight: "10px" }} to="/login/">
-                    {" "}
-              login
-            </NavLink>
-                </FormItem>
-              </Form>
-            </div>
-          )}
+                  {t("menu.signin")}
+                </Button>
+                {t("user.or")}
+                <NavLink style={{ marginRight: "10px" }} to="/login/">
+                  {" "}
+                  {t("menu.login")}
+                </NavLink>
+              </FormItem>
+            </Form>
+          </div>
+        )}
       </div>
     );
   }
@@ -142,4 +154,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegistrationForm);
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(RegistrationForm)
+);

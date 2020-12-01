@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Typography, Row, Col, Button, Layout, Divider, Image } from "antd";
-import { Table, Space } from "antd";
+import { Table } from "antd";
 import axios from "axios";
 import mapboxgl from "mapbox-gl";
 import * as turf from "@turf/helpers";
@@ -11,6 +11,7 @@ import { getCityTourTemplates } from "../../store/actions/cityToursTemplates";
 import AddToTripModal from "./components/AddToTripModal";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import NoAccess from "../../components/NoAccess";
+import { withTranslation } from "react-i18next";
 
 const { Content } = Layout;
 
@@ -328,23 +329,24 @@ class CityTour extends React.Component {
   };
 
   render() {
+    const { t } = this.props;
     const columns = [
       {
-        title: "Place name",
+        title: t("tour.placeName"),
         dataIndex: "name",
         key: "name",
         render: (text) => <a>{text}</a>,
       },
       {
-        title: "Distance [meters]",
+        title: t("tour.distanceMeters"),
         dataIndex: "distance",
         key: "distance",
       },
       {
-        title: "Duration [minutes]",
+        title: t("tour.durationMinutes"),
         dataIndex: "duration",
         key: "duration",
-      }
+      },
     ];
 
     return localStorage.getItem("userId") ? (
@@ -371,7 +373,7 @@ class CityTour extends React.Component {
                 type="primary"
                 onClick={() => this.setState({ openModal: true })}
               >
-                Add to your trip
+                {t("tour.addToTrip")}
               </Button>
             </div>
           </Col>
@@ -381,8 +383,8 @@ class CityTour extends React.Component {
           <Col span={14}>
             {this.state.openMap ? (
               <div>
-                Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom:{" "}
-                {this.state.zoom}
+                {t("tour.longitude")} {this.state.lng} | {t("tour.latitiude")}{" "}
+                {this.state.lat} | Zoom: {this.state.zoom}
                 <Content style={{ padding: "0 50px", height: "800px" }}>
                   <div
                     ref={(el) => (this.mapContainer = el)}
@@ -462,4 +464,6 @@ const mapDispatchToProps = {
   getCityTourTemplates,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CityTour);
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(CityTour)
+);

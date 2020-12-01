@@ -10,6 +10,7 @@ import { getCityTours, newCityTour } from "../../store/actions/cityTours";
 import NewCityTourModal from "./components/NewCityTourModal";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import NoAccess from "../../components/NoAccess";
+import { withTranslation } from "react-i18next";
 
 const { Content } = Layout;
 
@@ -326,25 +327,26 @@ class CityTour extends React.Component {
   };
 
   render() {
+    const { t } = this.props;
     const columns = [
       {
-        title: "Place name",
+        title: t("tour.placeName"),
         dataIndex: "name",
         key: "name",
         render: (text) => <a>{text}</a>,
       },
       {
-        title: "Distance [meters]",
+        title: t("tour.distanceMeters"),
         dataIndex: "distance",
         key: "distance",
       },
       {
-        title: "Duration [minutes]",
+        title: t("tour.durationMinutes"),
         dataIndex: "duration",
         key: "duration",
       },
       {
-        title: "Action",
+        title: t("tour.action"),
         key: "action",
         render: (text, record) => (
           <Space
@@ -353,7 +355,7 @@ class CityTour extends React.Component {
               this.getDescription(record.xid, true, false);
             }}
           >
-            <a>Delete</a>
+            <a>{t("buttons.delete")}</a>
           </Space>
         ),
       },
@@ -361,7 +363,9 @@ class CityTour extends React.Component {
 
     return localStorage.getItem("userId") ? (
       <div style={{ paddingRight: "5%", paddingLeft: "5%" }} style={mapStyles}>
-        <Title>Edytuj {this.props.tour ? this.props.tour.name : ""}</Title>
+        <Title>
+          {t("actions.edit")} {this.props.tour ? this.props.tour.name : ""}
+        </Title>
         <Divider />
         <Row gutter={16}>
           <Col span={20}>
@@ -383,7 +387,7 @@ class CityTour extends React.Component {
                 type="primary"
                 onClick={() => this.setState({ openModal: true })}
               >
-                Save
+                {t("buttons.save")}
               </Button>
             </div>
           </Col>
@@ -393,8 +397,8 @@ class CityTour extends React.Component {
           <Col span={14}>
             {this.state.openMap ? (
               <div>
-                Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom:{" "}
-                {this.state.zoom}
+                {t("tour.longitude")} {this.state.lng} | {t("tour.latitiude")}{" "}
+                {this.state.lat} | Zoom: {this.state.zoom}
                 <Content style={{ padding: "0 50px", height: "800px" }}>
                   <div
                     ref={(el) => (this.mapContainer = el)}
@@ -424,11 +428,13 @@ class CityTour extends React.Component {
                 <Divider />
                 <Row>
                   <Col span={3}>
-                    <Button onClick={() => this.addToRoute()}>Add</Button>
+                    <Button onClick={() => this.addToRoute()}>
+                      {t("actions.add")}
+                    </Button>
                   </Col>
                   <Col span={21}>
                     <Button onClick={() => this.deletePlaceFromRoute(null)}>
-                      DELETE
+                      {t("buttons.delete")}
                     </Button>
                   </Col>
                 </Row>
@@ -482,4 +488,6 @@ const mapDispatchToProps = {
   newCityTour,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CityTour);
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(CityTour)
+);

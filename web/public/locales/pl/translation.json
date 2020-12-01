@@ -73,7 +73,7 @@
     "error": "Błąd uprawnień",
     "noPermission": "Nie masz uprawnień, aby wyświetlić tę stronę."
   },
-  "menu":{
+  "menu": {
     "statistics": "Statystyki",
     "functions": "Funkcje",
     "cityTours": "Trasy",
@@ -83,5 +83,94 @@
     "login": "Zaloguj",
     "logout": "Wyloguj",
     "signin": "Zarejestruj się"
+  },
+  "functions": {
+    "offer": "Co oferujemy?",
+    "createTour": "Stwórz swóje własne trasy po mieście",
+    "createTourDescription": "Wykorzystaj swój wyjazd jak najlepeij! Stwórz trasy po mieście na poszczególne dni podróży, aby w efektywny sposób odwiedzić wszystkie najważniejsze atrakcje. Zobacz trasę, którą musisz pokonać i już więcej nie obawiaj się, że się zgubisz.",
+    "shareWithFriends": "Dziel się podróżami ze znajomymi",
+    "shareWithFriendsDescription": "Dziel zaplanowane trasy z towarzyszami podróży, abyście mogli wspólnie decydowac o planach.",
+    "history": "Przechowuj historię swoich podróży",
+    "historyDescription": "Zobacz ile już miejsc udało Ci sie odwiedzić. Przyjrzyj się statystykom - Które kraje należą do najczęściej odwiedzanych? Czy odwiedziłeś juz wszystkie kontynenty? Który rok był najobfitszy w podróże?"
+  },
+  "main": {
+    "planTrip": "Zaplanuj podróż z Trip Companion!",
+    "mainDescription": " Wybierz atrakcje, które chcesz odwiedzić i stwórz trasę pomiędzy nimi. Dziel się ze wszytskim ze znajomymi. Motywacją do odkrywania świata będa przedstawiane statystki z podróży!",
+    "more": "Więcej",
+    "plan": "Planuj wygodnie i szybko",
+    "planDescription": "Dzięki Trip Companion planowanie podróży przestanie być ciężkim zadaniem i stanie się przyjemnością",
+    "createTourShortDescription": "Wybierz atrakcje, które chcesz odwiedzić w poszczególnych dniach podróży i zobacz trasę, którą musisz pokonać.",
+    "shareWithFriendsShortDescription": "Zaproś znajomych, z którymi podróżujesz i dziel się z nimi trasami.",
+    "historyShortDescription": "Przyjrzyj się statystyką ze swoich wypraw i obserwuj zdobyte przez siebie kraje i kontynety."
+  },
+  "tour": {
+    "save": "Zapisz trasę",
+    "city": "Miasto ",
+    "distance": "Dystans: ",
+    "placeName": "Nazwa miejsca",
+    "distanceMeters": "Dystans [metry]",
+    "durationMinutes": "Czas trwania [minuty]",
+    "action": "Akcje",
+    "longitude": "Długość geograficzna:",
+    "latitiude": "Szerokość geograficzna: ",
+    "planTour": "Zaplanują swoją trasę",
+    "addToTrip": "Dodaj do swojej podróży",
+    "suggested": "Proponowane trasy",
+    "yourTours": "Twoje trasy",
+    "savedTour": "Zapisano trasę",
+    "tourSuccess": "Trasa została zapisana poprawanie"
+  },
+  "trip": {
+    "trip": "Podróż ",
+    "inputTrip": "Uzupełnij podróż!",
+    "inputName": "Uzupełnij nazwę!",
+    "inputDate": "Uzupełnij datę!",
+    "yourTrips": "Twoje podróże",
+    "username": "Nazwa użytkownika",
+    "planTrip": "Zaplanuj kolejną podróż!",
+    "newTrip": "Nowa podróż",
+    "start": "Start:",
+    "end": "Koniec:",
+    "deleteConfirm": "Czy na pewno chcesz uzunąć tego użytkownika z podróży?"
+  },
+  "statistics": {
+    "yourStatistics": "Twoje statystyki",
+    "allStatistics": "Statystyki wszystkich użytkowników",
+    "place": "Miejsce",
+    "country": "Kraj",
+    "continent": "Kontynent",
+    "visits": "Odwiedziny",
+    "visitsCountries": "Odwiedzone kraje: ",
+    "visitsContinents": "Odwiedzone kontynenty: ",
+    "totalDistance": "Sumaryczny dystans: ",
+    "numberOfTrips": "Liczba podróży w poszczególnych latach",
+    "numberOfCountries": "Liczba odwiedzonych krajów",
+    "numberOfContinents": "Liczba odwiedzonych kontynentów",
+    "rankingCountries": "Ranking najczęściej odwiedzanych krajów",
+    "rankingContinents": "Ranking najczęściel odwiedzanych kontynentów",
+    "noTrips": "Nie masz jeszcze żadnych podróży"
+  },
+  "user": {
+    "wrongLogin": "Zły login lub hasło",
+    "inputUsername": "Uzupełnij nazwę użytkownika!",
+    "inputPassword": "Uzupełnij hasło!",
+    "username": "Nazwa użytkownika",
+    "password": "Hasło",
+    "wrongPassword": "Wrong password",
+    "inputCurrentPassword": "Uzupełnij aktualne hasło!",
+    "inputNewPassword": "Uzupełnij nowe hasło!",
+    "passwordValidate": "Hasło musi mieć minimum 6 znaków!",
+    "newPassword": "Nowe hasło",
+    "currentPassword": "Aktualne hasło",
+    "confirmPassword": "Potwierdź hasło!",
+    "passwordMatch": "Hasła nie są ze sobą zgodne!",
+    "cofirmPasswordPlaceholder": "Potwierdź hasło",
+    "changePassword": "Zmień hasło",
+    "email": "Email",
+    "inputEmail": "Uzupełnij E-mail!",
+    "validateEmail": "E-mail ma nieporpawny format!",
+    "or": "lub",
+    "savedPassword": "Zapisano nowe hasło",
+    "changedPassword": "Hasło zostało zmienione poprawniey"
   }
 }

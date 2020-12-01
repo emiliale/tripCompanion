@@ -1,13 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Button, Divider, Space, Table, Typography} from "antd";
+import { Button, Divider, Space, Table, Typography } from "antd";
 import { Link } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
 import { getCityTours, deleteCityTour } from "../../store/actions/cityTours";
 import { Popconfirm } from "antd";
 import NoAccess from "../../components/NoAccess";
 import CityToursTemplates from "./components/CityToursTemplates";
+import { withTranslation } from "react-i18next";
 
 const { Title } = Typography;
 
@@ -19,9 +20,10 @@ class CityTours extends React.Component {
   }
 
   render() {
+    const { t } = this.props;
     const columns = [
       {
-        title: "Name",
+        title: t("common.name"),
         dataIndex: "name",
         key: "name",
         render: (text, record) => (
@@ -37,22 +39,22 @@ class CityTours extends React.Component {
         ),
       },
       {
-        title: "Date",
+        title: t("common.date"),
         dataIndex: "date",
         key: "date",
       },
       {
-        title: "City",
+        title: t("tour.city"),
         dataIndex: "city",
         key: "city",
       },
       {
-        title: "Distance",
+        title: t("tour.distanceMeters"),
         dataIndex: "distance",
         key: "distance",
       },
       {
-        title: "Action",
+        title: t("tour.action"),
         key: "action",
         render: (text, record) => (
           <Space size="middle">
@@ -62,7 +64,7 @@ class CityTours extends React.Component {
               }
             >
               {" "}
-              <a>Edit</a>
+              <a>{t("actions.edit")}</a>
             </Button>
             <Popconfirm
               title="Are you sure delete this tour?"
@@ -72,7 +74,7 @@ class CityTours extends React.Component {
               cancelText="No"
             >
               <Button>
-                <a>Delete</a>
+                <a>{t("buttons.delete")}</a>
               </Button>
             </Popconfirm>
           </Space>
@@ -81,10 +83,10 @@ class CityTours extends React.Component {
     ];
     return localStorage.getItem("userId") ? (
       <div>
-        <Title style={{ textAlign: "center" }}>Proponowane trasy</Title>
-        <CityToursTemplates/>
-        <Divider/>
-        <Title style={{ textAlign: "center" }}>Twoje trasy</Title>
+        <Title style={{ textAlign: "center" }}>{t("tour.suggested")}</Title>
+        <CityToursTemplates />
+        <Divider />
+        <Title style={{ textAlign: "center" }}>{t("tour.yourTours")}</Title>
         <Space style={{ marginBottom: 16 }}>
           <Button style={{ float: "right" }}>
             <Link to="/city_tours_new/" style={{ textDecoration: "none" }}>
@@ -120,5 +122,5 @@ const mapDispatchToProps = {
 };
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(CityTours)
+  withTranslation()(connect(mapStateToProps, mapDispatchToProps)(CityTours))
 );

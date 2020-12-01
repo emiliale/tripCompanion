@@ -2,7 +2,7 @@ import React from "react";
 import { Divider } from "antd";
 import AboutApp from "./AboutApp";
 import AboutFunctions from "./AboutFunctions";
-import MediaQuery from 'react-responsive';
+import MediaQuery from "react-responsive";
 import MainMobile from "./MainMobile";
 
 class Main extends React.Component {

@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { List, Card, Row, Col, Divider } from "antd";
+import { List, Card, Row, Col } from "antd";
 import { getTrips } from "../../../store/actions/trips";
 import { Spin } from "antd";
+import { withTranslation } from "react-i18next";
 
 class OldTrips extends React.Component {
   state = {
@@ -30,6 +31,7 @@ class OldTrips extends React.Component {
   }
 
   render() {
+    const { t } = this.props;
     return this.props.isLoading ? (
       <Spin />
     ) : (
@@ -55,7 +57,7 @@ class OldTrips extends React.Component {
                 <Col span={10}>
                   <div>
                     <p>
-                      <b>Start:</b>
+                      <b>{t("trip.start")}</b>
                     </p>
                   </div>
                 </Col>
@@ -67,7 +69,7 @@ class OldTrips extends React.Component {
                 <Col span={10}>
                   <div>
                     <p>
-                      <b>End:</b>
+                      <b>{t("trip.end")}</b>
                     </p>
                   </div>
                 </Col>
@@ -96,5 +98,5 @@ const mapDispatchToProps = {
 };
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(OldTrips)
+  withTranslation()(connect(mapStateToProps, mapDispatchToProps)(OldTrips))
 );

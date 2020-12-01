@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Modal, Form, Input, DatePicker } from "antd";
 import { newTrip } from "../../../store/actions/trips";
 import { format } from "date-fns";
+import { withTranslation } from "react-i18next";
 
 const { RangePicker } = DatePicker;
 
@@ -48,6 +49,7 @@ class _Modal extends React.Component {
   };
 
   render = () => {
+    const { t } = this.props;
     return (
       <Modal
         afterClose={this.props.afterClose}
@@ -67,13 +69,13 @@ class _Modal extends React.Component {
         >
           <Form.Item
             name="name"
-            rules={[{ required: true, message: "Please input name!" }]}
+            rules={[{ required: true, message: t("trip.inputName") }]}
           >
-            <Input placeholder="Name" />
+            <Input placeholder={t("common.name")} />
           </Form.Item>
           <Form.Item
             name="date"
-            rules={[{ required: true, message: "Please input date!" }]}
+            rules={[{ required: true, message: t("trip.inputDate") }]}
           >
             <RangePicker />
           </Form.Item>
@@ -89,4 +91,6 @@ const mapDispatchToProps = {
   newTrip,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(_Modal);
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(_Modal)
+);

@@ -1,6 +1,7 @@
 import React from "react";
 import { Typography, Row, Col, Button } from "antd";
 import NewTrip from "./NewTrip";
+import { withTranslation } from "react-i18next";
 
 const { Title } = Typography;
 
@@ -10,6 +11,7 @@ class MainTripPanel extends React.Component {
   };
 
   render() {
+    const { t } = this.props;
     return (
       <div>
         <Row align="middle">
@@ -23,12 +25,12 @@ class MainTripPanel extends React.Component {
             />
           </Col>
           <Col span={12} style={{ textAlign: "center" }}>
-            <Title>Zaplanuj kolejną podróż!</Title>
+            <Title>{t("trip.planTrip")}</Title>
             <Button
               style={{ backgroundColor: "#f5b642", marginRight: "5%" }}
               onClick={() => this.setState({ modalOpen: true })}
             >
-              Nowa podróż
+              {t("trip.newTrip")}
             </Button>
           </Col>
         </Row>
@@ -41,4 +43,4 @@ class MainTripPanel extends React.Component {
   }
 }
 
-export default MainTripPanel;
+export default withTranslation()(MainTripPanel);

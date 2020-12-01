@@ -142,7 +142,12 @@ class CustomLayout extends React.Component {
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
-          <p>Images sources: <a href="https://www.freepik.com/vectors/school">School vector created by pch.vector - www.freepik.com</a></p>
+          <p>
+            Images sources:{" "}
+            <a href="https://www.freepik.com/vectors/school">
+              School vector created by pch.vector - www.freepik.com
+            </a>
+          </p>
         </Footer>
       </Layout>
     );

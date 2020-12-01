@@ -11,7 +11,7 @@ class App:
     cityToursTemplates = setSerializer(CityTourTemplate, CityTourTemplateSerializer)
 
     def create_cityTour_from_template(
-            self, name, date, trip, users, template, request=None, serialized=False
+        self, name, date, trip, users, template, request=None, serialized=False
     ):
         if trip and date and users and template:
             users_list = []

@@ -8,6 +8,7 @@ import { DeleteOutlined, UserOutlined, PlusOutlined } from "@ant-design/icons";
 import AddUser from "./AddUser";
 import axios from "axios";
 import { Popconfirm } from "antd";
+import { withTranslation } from "react-i18next";
 const { Meta } = Card;
 
 const env = process.env.NODE_ENV || "development";
@@ -70,6 +71,7 @@ class Users extends React.Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <div>
         <Button
@@ -94,11 +96,11 @@ class Users extends React.Component {
               <Card
                 actions={[
                   <Popconfirm
-                    title="Are you sure delete this user from the trip?"
+                    title={t("trip.deleteConfirm")}
                     onConfirm={() => this.deleteUser(item.id)}
                     onCancel={() => console.log("cancel")}
-                    okText="Yes"
-                    cancelText="No"
+                    okText={t("common.yes")}
+                    cancelText={t("common.no")}
                   >
                     <DeleteOutlined key="delete" />
                   </Popconfirm>,
@@ -133,4 +135,6 @@ const mapDispatchToProps = {
   editTrip,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Users));
+export default withRouter(
+  withTranslation()(connect(mapStateToProps, mapDispatchToProps)(Users))
+);

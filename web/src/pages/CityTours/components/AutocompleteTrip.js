@@ -2,19 +2,13 @@ import React, { useState, useEffect } from "react";
 import { AutoComplete } from "antd";
 import { getTrips } from "../../../store/actions/trips";
 import { connect } from "react-redux";
-import axios from "axios";
+import { withTranslation } from "react-i18next";
 
 const mockVal = (str, repeat = 1) => {
   return {
     value: str.repeat(repeat),
   };
 };
-
-const env = process.env.NODE_ENV || "development";
-const serverUrl =
-  env === "development"
-    ? "http://127.0.0.1:8000"
-    : "https://trip-companion-server.herokuapp.com";
 
 const Complete = (props) => {
   const [value, setValue] = useState(props.trip ? props.trip.name : "");
@@ -48,7 +42,7 @@ const Complete = (props) => {
         }}
         onSelect={onSelect}
         onSearch={onSearch}
-        placeholder="Trip"
+        placeholder={props.t("trip.trip")}
       />
     </>
   );
@@ -64,4 +58,6 @@ const mapDispatchToProps = {
   getTrips,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Complete);
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(Complete)
+);

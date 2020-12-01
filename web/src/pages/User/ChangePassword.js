@@ -3,6 +3,7 @@ import { Form, Input, Button, Typography, Divider } from "antd";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/auth";
 import { LockOutlined } from "@ant-design/icons";
+import { withTranslation } from "react-i18next";
 
 class ChangePassword extends React.Component {
   onFinish = (values) => {
@@ -10,11 +11,12 @@ class ChangePassword extends React.Component {
   };
 
   render() {
+    const { t } = this.props;
     let errorMessage = null;
     if (this.props.error) {
       errorMessage =
         this.props.error.message === "Request failed with status code 400"
-          ? "Niepoprawne hasło"
+          ? t("user.wrongPassword")
           : this.props.error.message;
     }
     return (
@@ -27,13 +29,13 @@ class ChangePassword extends React.Component {
             rules={[
               {
                 required: true,
-                message: "Please input your current password!",
+                message: t("user.inputCurrentPassword"),
               },
             ]}
           >
             <Input.Password
               prefix={<LockOutlined />}
-              placeholder="Current password"
+              placeholder={t("user.currentPassword")}
             />
           </Form.Item>
 
@@ -42,16 +44,14 @@ class ChangePassword extends React.Component {
             rules={[
               {
                 required: true,
-                message: "Please input your new password!",
+                message: t("user.inputNewPassword"),
               },
               () => ({
                 validator(rule, value) {
                   if (!value || value.length >= 6) {
                     return Promise.resolve();
                   }
-                  return Promise.reject(
-                    "Password must be a minimum of 6 characters!"
-                  );
+                  return Promise.reject(t("user.passwordValidate"));
                 },
               }),
             ]}
@@ -59,7 +59,7 @@ class ChangePassword extends React.Component {
           >
             <Input.Password
               prefix={<LockOutlined />}
-              placeholder="New password"
+              placeholder={t("user.newPassword")}
             />
           </Form.Item>
 
@@ -70,7 +70,7 @@ class ChangePassword extends React.Component {
             rules={[
               {
                 required: true,
-                message: "Please confirm your password!",
+                message: t("user.confirmPassword"),
               },
               ({ getFieldValue }) => ({
                 validator(rule, value) {
@@ -78,16 +78,14 @@ class ChangePassword extends React.Component {
                     return Promise.resolve();
                   }
 
-                  return Promise.reject(
-                    "The two passwords that you entered do not match!"
-                  );
+                  return Promise.reject(t("user.passwordMatch"));
                 },
               }),
             ]}
           >
             <Input.Password
               prefix={<LockOutlined />}
-              placeholder="Confirm password"
+              placeholder={t("user.cofirmPasswordPlaceholder")}
             />
           </Form.Item>
 
@@ -97,7 +95,7 @@ class ChangePassword extends React.Component {
               htmlType="submit"
               style={{ marginRight: "10px" }}
             >
-              Change password
+              {t("user.changePassword")}
             </Button>
           </Form.Item>
         </Form>
@@ -122,4 +120,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChangePassword);
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(ChangePassword)
+);

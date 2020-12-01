@@ -14,14 +14,14 @@ import {
 } from "antd";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import { FastBackwardOutlined, PlusOutlined } from "@ant-design/icons";
-import { getTrips, newTrip, deleteTrip } from "../../store/actions/trips";
-import { getCityTours, deleteCityTour } from "../../store/actions/cityTours";
-import { getUsers } from "../../store/actions/users";
+import { PlusOutlined } from "@ant-design/icons";
+import { getTrips, newTrip } from "../../store/actions/trips";
+import { getCityTours } from "../../store/actions/cityTours";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Popconfirm } from "antd";
 import Users from "./components/Users";
 import NoAccess from "../../components/NoAccess";
+import { withTranslation } from "react-i18next";
 
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
@@ -60,23 +60,7 @@ class Trip extends React.Component {
   }
 
   render() {
-    const columnsUsers = [
-      {
-        title: "Username",
-        dataIndex: "username",
-        key: "username",
-      },
-      {
-        title: "First name",
-        dataIndex: "first_name",
-        key: "first_name",
-      },
-      {
-        title: "Last name",
-        dataIndex: "last_name",
-        key: "last_name",
-      },
-    ];
+    const { t } = this.props;
     const columnsTours = [
       {
         title: "Name",
@@ -291,8 +275,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     isLoading: state.request.isLoading,
     trip: state.trips.find((x) => x.id === tripId),
-    cityTours: state.cityTours.filter(
-      (tour) => tour.trip == tripId),
+    cityTours: state.cityTours.filter((tour) => tour.trip == tripId),
   };
 };
 
@@ -302,4 +285,6 @@ const mapDispatchToProps = {
   getCityTours,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Trip);
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(Trip)
+);

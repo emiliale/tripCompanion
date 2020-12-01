@@ -1,18 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import {
-  Modal,
-  Form,
-  Input,
-  DatePicker,
-  Row,
-  Col,
-  Button,
-  notification,
-} from "antd";
-import { FormInstance } from "antd/lib/form";
-import { newTrip } from "../../../store/actions/trips";
+import { Modal, Form, Input, DatePicker, Row, Col, Button } from "antd";
 import { format } from "date-fns";
 import { getPlaces, addPlace } from "../../../store/actions/places";
 import { newCityTour, updateCityTour } from "../../../store/actions/cityTours";
@@ -20,6 +9,7 @@ import { getTrips } from "../../../store/actions/trips";
 import AutocompleteTrip from "./AutocompleteTrip";
 import moment from "moment";
 import { EditOutlined } from "@ant-design/icons";
+import { withTranslation } from "react-i18next";
 
 const env = process.env.NODE_ENV || "development";
 const serverUrl =
@@ -43,15 +33,15 @@ class NewCityTourModal extends React.Component {
   formRef = React.createRef();
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.state.places.length)
-    console.log(this.state.placesOverall)
+    console.log(this.state.places.length);
+    console.log(this.state.placesOverall);
 
     if (
       this.state.places.length === this.state.placesOverall &&
       this.state.places.length !== 0 &&
       !this.state.send
     ) {
-      console.log("spełniło warunek")
+      console.log("spełniło warunek");
       this.setState({ send: true });
       this.props.id ? this.updateCityTour() : this.saveCityTour();
     }
@@ -97,7 +87,7 @@ class NewCityTourModal extends React.Component {
   };
 
   savePlaces = () => {
-    console.log("save place")
+    console.log("save place");
     let distance = 0;
     let places = [];
     let placeId = null;
@@ -149,8 +139,8 @@ class NewCityTourModal extends React.Component {
   };
 
   onFinish = (values) => {
-    this.setState({ send: false })
-    console.log("click")
+    this.setState({ send: false });
+    console.log("click");
     const distance = this.props.distance();
     this.setState({
       name: values.name,
@@ -180,10 +170,11 @@ class NewCityTourModal extends React.Component {
   };
 
   render = () => {
+    const { t } = this.props;
     return (
       <Modal
         afterClose={this.props.afterClose}
-        title="Save City Tour"
+        title={t("tour.save")}
         visible={this.state.visible}
         okButtonProps={{
           form: "category-editor-form",
@@ -206,7 +197,7 @@ class NewCityTourModal extends React.Component {
               <Col span={3}>
                 <div>
                   <p>
-                    <b>Trip:</b>
+                    <b>{t("trip.trip")}:</b>
                   </p>
                 </div>
               </Col>
@@ -232,7 +223,7 @@ class NewCityTourModal extends React.Component {
           ) : (
             <div style={{ marginBottom: "25px" }}>
               <AutocompleteTrip
-                rules={[{ required: true, message: "Please input trip!" }]}
+                rules={[{ required: true, message: t("trip.inputTrip") }]}
                 setTrip={(trip) => this.setTrip(trip)}
               />
               <br />
@@ -240,13 +231,13 @@ class NewCityTourModal extends React.Component {
           )}
           <Form.Item
             name="name"
-            rules={[{ required: true, message: "Please input name!" }]}
+            rules={[{ required: true, message: t("trip.inputName") }]}
           >
-            <Input placeholder="Name" />
+            <Input placeholder={t("common.name")} />
           </Form.Item>
           <Form.Item
             name="date"
-            rules={[{ required: true, message: "Please input date!" }]}
+            rules={[{ required: true, message: t("trip.inputDate") }]}
           >
             <DatePicker />
           </Form.Item>
@@ -271,4 +262,6 @@ const mapDispatchToProps = {
   updateCityTour,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewCityTourModal);
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(NewCityTourModal)
+);

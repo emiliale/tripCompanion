@@ -3,6 +3,7 @@ import { Form, Input, Button, Spin, Typography, Divider } from "antd";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/auth";
 import { LoadingOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
+import { withTranslation } from "react-i18next";
 
 class Login extends React.Component {
   onFinish = (values) => {
@@ -10,11 +11,12 @@ class Login extends React.Component {
   };
 
   render() {
+    const { t } = this.props;
     let errorMessage = null;
     if (this.props.error) {
       errorMessage =
         this.props.error.message === "Request failed with status code 400"
-          ? "Niepoprawny login lub hasło"
+          ? t("user.wrongLogin")
           : this.props.error.message;
     }
     return (
@@ -29,23 +31,22 @@ class Login extends React.Component {
           <Form onFinish={this.onFinish} className="login-form">
             <Form.Item
               name="username"
-              rules={[
-                { required: true, message: "Please input your username!" },
-              ]}
+              rules={[{ required: true, message: t("user.inputUsername") }]}
             >
               <Input
                 prefix={<UserOutlined />}
-                placeholder="Nazwa użytkownika"
+                placeholder={t("user.username")}
               />
             </Form.Item>
 
             <Form.Item
               name="password"
-              rules={[
-                { required: true, message: "Please input your password!" },
-              ]}
+              rules={[{ required: true, message: t("user.inputPassword") }]}
             >
-              <Input.Password prefix={<LockOutlined />} placeholder="Hasło" />
+              <Input.Password
+                prefix={<LockOutlined />}
+                placeholder={t("user.password")}
+              />
             </Form.Item>
 
             <Form.Item>
@@ -54,7 +55,7 @@ class Login extends React.Component {
                 htmlType="submit"
                 style={{ marginRight: "10px" }}
               >
-                Zaloguj
+                {t("user.login")}
               </Button>
             </Form.Item>
           </Form>
@@ -78,4 +79,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(Login)
+);

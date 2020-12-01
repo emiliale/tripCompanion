@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import { List, Card, Row, Col, Divider } from "antd";
 import { getCityTourTemplates } from "../../../store/actions/cityToursTemplates";
 import { Spin } from "antd";
+import { withTranslation } from "react-i18next";
 
 class CityToursTemplates extends React.Component {
   state = {
@@ -30,6 +31,7 @@ class CityToursTemplates extends React.Component {
   }
 
   render() {
+    const { t } = this.props;
     return this.props.isLoading ? (
       <Spin />
     ) : (
@@ -47,7 +49,7 @@ class CityToursTemplates extends React.Component {
         renderItem={(item) => (
           <List.Item
             onClick={() => {
-                this.props.history.push("/city_tours/template/" + item.id + "/")
+              this.props.history.push("/city_tours/template/" + item.id + "/");
             }}
           >
             <Card hoverable title={item.title}>
@@ -55,7 +57,7 @@ class CityToursTemplates extends React.Component {
                 <Col span={10}>
                   <div>
                     <p>
-                      <b>City:</b>
+                      <b>{t("tour.city")}</b>
                     </p>
                   </div>
                 </Col>
@@ -67,7 +69,7 @@ class CityToursTemplates extends React.Component {
                 <Col span={10}>
                   <div>
                     <p>
-                      <b>Distance:</b>
+                      <b>{t("tour.distance")}</b>
                     </p>
                   </div>
                 </Col>
@@ -96,5 +98,7 @@ const mapDispatchToProps = {
 };
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(CityToursTemplates)
+  withTranslation()(
+    connect(mapStateToProps, mapDispatchToProps)(CityToursTemplates)
+  )
 );

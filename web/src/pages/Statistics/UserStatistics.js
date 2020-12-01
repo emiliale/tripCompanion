@@ -1,15 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import {
-  Typography,
-  Divider,
-  Table,
-  DatePicker,
-  Row,
-  Col,
-  PageHeader,
-} from "antd";
+import { Typography, Divider, Table, Row, Col, PageHeader } from "antd";
 import { getTrips } from "../../store/actions/trips";
 import { getCityTours } from "../../store/actions/cityTours";
 import { getUsers } from "../../store/actions/users";
@@ -18,17 +10,9 @@ import LineChart from "./LineChart";
 import { format } from "date-fns";
 import { Spin } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
+import { withTranslation } from "react-i18next";
 
-import { Popconfirm, message } from "antd";
-
-const { Title, Paragraph } = Typography;
-const { RangePicker } = DatePicker;
-
-const env = process.env.NODE_ENV || "development";
-const serverUrl =
-  env === "development"
-    ? "http://127.0.0.1:8000"
-    : "https://trip-companion-server.herokuapp.com";
+const { Title } = Typography;
 
 const NUMBER_OF_COUNTRIES = 195;
 const NUMBER_OF_CONTINENTS = 7;
@@ -212,19 +196,20 @@ class Statistics extends React.Component {
   }
 
   render() {
+    const { t } = this.props;
     const columnsCountries = [
       {
-        title: "Place",
+        title: t("statistics.place"),
         dataIndex: "key",
         key: "key",
       },
       {
-        title: "Country",
+        title: t("statistics.country"),
         dataIndex: "country",
         key: "country",
       },
       {
-        title: "Visits",
+        title: t("statistics.visits"),
         dataIndex: "number",
         key: "number",
       },
@@ -232,34 +217,35 @@ class Statistics extends React.Component {
 
     const columnsContinents = [
       {
-        title: "Place",
+        title: t("statistics.place"),
         dataIndex: "key",
         key: "key",
       },
       {
-        title: "Continent",
+        title: t("statistics.continent"),
         dataIndex: "continent",
         key: "continent",
       },
       {
-        title: "Visits",
+        title: t("statistics.visits"),
         dataIndex: "number",
         key: "number",
       },
     ];
+
     return this.props.isLoading ? (
       <Spin />
     ) : (
       <div>
         {this.props.trips.length === 0 && !this.props.isLoading ? (
           <Title level={3}>
-            <InfoCircleOutlined /> You don't have any trips yet
+            <InfoCircleOutlined /> {t("statistics.noTrips")}
           </Title>
         ) : (
           <div>
             <Row align="middle" justify="space-around">
               <Col span={4}>
-                <PageHeader title={`Visited countries: `} />
+                <PageHeader title={t("statistics.visitsCountries")} />
               </Col>
               <Col span={20}>
                 <PageHeader title={`${this.getNumberOfCountries()}`} />
@@ -267,7 +253,7 @@ class Statistics extends React.Component {
             </Row>
             <Row align="middle" justify="space-around">
               <Col span={4}>
-                <PageHeader title={`Visited continents: `} />
+                <PageHeader title={t("statistics.visitsContinents")} />
               </Col>
               <Col span={20}>
                 <PageHeader title={`${this.getNumberOfContinents()}`} />
@@ -275,7 +261,7 @@ class Statistics extends React.Component {
             </Row>
             <Row align="middle" justify="space-around">
               <Col span={4}>
-                <PageHeader title={`Total distance: `} />
+                <PageHeader title={t("statistics.totalDistance")} />
               </Col>
               <Col span={20}>
                 <PageHeader title={`${this.getDistance() / 1000} km`} />
@@ -286,7 +272,7 @@ class Statistics extends React.Component {
               <Col span={6}></Col>
               <Col span={12}>
                 <PageHeader
-                  title="Number of trips in each year"
+                  title={t("statistics.numberOfTrips")}
                   style={{ marginLeft: "30%" }}
                 />
                 <LineChart data={this.state.yearsChartData} />
@@ -297,14 +283,14 @@ class Statistics extends React.Component {
             <Row align="middle" justify="space-around">
               <Col span={12}>
                 <PageHeader
-                  title="Number of visited countries"
+                  title={t("statistics.numberOfCountries")}
                   style={{ marginLeft: "33%" }}
                 />
                 <PieChart data={this.state.visitedCountriesData} />
               </Col>
               <Col span={12}>
                 <PageHeader
-                  title="Number of visited continents"
+                  title={t("statistics.numberOfContinents")}
                   style={{ marginLeft: "33%" }}
                 />
                 <PieChart data={this.state.visitedConinentsData} />
@@ -313,10 +299,10 @@ class Statistics extends React.Component {
             <Divider />
             <Row align="middle" justify="space-around">
               <Col span={10}>
-                <PageHeader title="Ranking of the most visited countries" />
+                <PageHeader title={t("statistics.rankingCountries")} />
               </Col>
               <Col span={10}>
-                <PageHeader title="Ranking of the most visited continents" />
+                <PageHeader title={t("statistics.rankingContinents")} />
               </Col>
             </Row>
             <Row align="top" justify="space-around">
@@ -361,5 +347,5 @@ const mapDispatchToProps = {
 };
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Statistics)
+  withTranslation()(connect(mapStateToProps, mapDispatchToProps)(Statistics))
 );

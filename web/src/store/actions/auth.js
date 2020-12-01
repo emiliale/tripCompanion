@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as actionTypes from "./actionTypes";
 import { notification } from "antd";
+import i18n from "../../i18n";
 
 const env = process.env.NODE_ENV || "development";
 const serverUrl =
@@ -127,8 +128,8 @@ export const authChangePassword = (newpassword, confirm, password) => {
       )
       .then((res) => {
         notification.open({
-          message: "Saved New Password",
-          description: "Password has been changed successfully",
+          message: i18n.t("tour.savedPassword"),
+          description: i18n.t("tour.changedPassword"),
         });
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
         localStorage.setItem("expirationDate", expirationDate);

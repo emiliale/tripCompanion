@@ -1,19 +1,18 @@
 import React from "react";
 import { Typography, Row, Col } from "antd";
+import { withTranslation } from "react-i18next";
 
 const { Title, Paragraph } = Typography;
 
 class AboutFunctions extends React.Component {
   render() {
+    const { t } = this.props;
     return (
       <div>
         <Row align="middle" style={{ backgroundColor: "#fffceb" }}>
           <Col span={24} style={{ textAlign: "center" }}>
-            <Title>Planuj wygodnie i szybko</Title>
-            <Paragraph>
-              Dzięki Trip Comanion planowanie podróży przestanie być ciężkim
-              zadaniem i stanie się przyjemnością
-            </Paragraph>
+            <Title>{t("main.planTrip")}</Title>
+            <Paragraph>{t("main.mainDescription")}</Paragraph>
             <Row>
               <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
                 <img
@@ -23,11 +22,8 @@ class AboutFunctions extends React.Component {
                   src="/img/main (1).jpg"
                   size={"100%"}
                 />
-                <Title level={3}>Stwórz swój własny City Tour</Title>
-                <Paragraph>
-                  Wybierz atrakcje, które chcesz odwiedzić w poszczególnych
-                  dniach podróży i zobacz trasę, którą musisz pokonać.
-                </Paragraph>
+                <Title level={3}>{t("functions.createTour")}</Title>
+                <Paragraph>{t("main.createTourShortDescription")}</Paragraph>
               </Col>
               <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
                 <img
@@ -37,10 +33,9 @@ class AboutFunctions extends React.Component {
                   src="/img/main (3).jpg"
                   size={"100%"}
                 />
-                <Title level={3}>Dziel podróże ze znajomymi</Title>
+                <Title level={3}>{t("functions.shareWithFriends")}</Title>
                 <Paragraph>
-                  Zaproś znajomych, z kótrymi podróżujesz i dziel się z nimi
-                  trasami.
+                  {t("main.shareWithFriendsShortDescription")}
                 </Paragraph>
               </Col>
               <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
@@ -51,11 +46,8 @@ class AboutFunctions extends React.Component {
                   src="/img/main (2).jpg"
                   size={"100%"}
                 />
-                <Title level={3}>Przechowuj historię swoich podóży</Title>
-                <Paragraph>
-                  Przyjrzyj się statystyką ze Twoich wypraw i obserwuj zdobyte
-                  przez siebie kraje i kontynety.
-                </Paragraph>
+                <Title level={3}>{t("functions.history")}</Title>
+                <Paragraph>{t("main.historyShortDescription")}</Paragraph>
               </Col>
             </Row>
           </Col>
@@ -65,4 +57,4 @@ class AboutFunctions extends React.Component {
   }
 }
 
-export default AboutFunctions;
+export default withTranslation()(AboutFunctions);

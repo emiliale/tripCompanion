@@ -1,12 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Modal, Form, Input, DatePicker, AutoComplete } from "antd";
+import { Modal, Form, AutoComplete } from "antd";
 import { updateTrip } from "../../../store/actions/trips";
 import { getUsers } from "../../../store/actions/users";
-
-import { format } from "date-fns";
-
-const { RangePicker } = DatePicker;
+import { withTranslation } from "react-i18next";
 
 class AddUser extends React.Component {
   state = {
@@ -72,6 +69,7 @@ class AddUser extends React.Component {
   };
 
   render = () => {
+    const { t } = this.props;
     return (
       <Modal
         afterClose={this.props.afterClose}
@@ -96,14 +94,8 @@ class AddUser extends React.Component {
             }}
             onSelect={this.onSelect}
             onSearch={this.onSearch}
-            placeholder="Username"
+            placeholder={t("trip.username")}
           />
-          {/* <Form.Item
-                        name="name"
-                        rules={[{ required: true, message: "Please input name!" }]}
-                    >
-                        <Input placeholder="Name" />
-                    </Form.Item> */}
         </Form>
       </Modal>
     );
@@ -121,4 +113,6 @@ const mapDispatchToProps = {
   updateTrip,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddUser);
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(AddUser)
+);

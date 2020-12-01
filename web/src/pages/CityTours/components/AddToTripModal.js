@@ -1,15 +1,8 @@
 import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import {
-  Modal,
-  Form,
-  Input,
-  DatePicker,
-  Row,
-  Col,
-  Button,
-} from "antd";
+import { withTranslation } from "react-i18next";
+import { Modal, Form, Input, DatePicker, Row, Col, Button } from "antd";
 import { format } from "date-fns";
 import { createCityTourFromTemplate } from "../../../store/actions/cityToursTemplates";
 import { getTrips } from "../../../store/actions/trips";
@@ -76,7 +69,7 @@ class AddToTripModal extends React.Component {
       date: format(values.date._d, "yyyy-MM-dd"),
       distance: this.props.template.distance,
       city: this.props.city,
-      template: this.props.template
+      template: this.props.template,
     });
     this.createCityTour();
     this.setState({
@@ -100,10 +93,11 @@ class AddToTripModal extends React.Component {
   };
 
   render = () => {
+    const { t } = this.props;
     return (
       <Modal
         afterClose={this.props.afterClose}
-        title="Save City Tour"
+        title={t("tour.save")}
         visible={this.state.visible}
         okButtonProps={{
           form: "category-editor-form",
@@ -126,7 +120,7 @@ class AddToTripModal extends React.Component {
               <Col span={3}>
                 <div>
                   <p>
-                    <b>Trip:</b>
+                    <b>{t("trip.trip")}</b>
                   </p>
                 </div>
               </Col>
@@ -152,7 +146,7 @@ class AddToTripModal extends React.Component {
           ) : (
             <div style={{ marginBottom: "25px" }}>
               <AutocompleteTrip
-                rules={[{ required: true, message: "Please input trip!" }]}
+                rules={[{ required: true, message: t("trip.inputTrip") }]}
                 setTrip={(trip) => this.setTrip(trip)}
               />
               <br />
@@ -160,13 +154,13 @@ class AddToTripModal extends React.Component {
           )}
           <Form.Item
             name="name"
-            rules={[{ required: true, message: "Please input name!" }]}
+            rules={[{ required: true, message: t("trip.inputName") }]}
           >
-            <Input placeholder="Name" />
+            <Input placeholder={t("common.name")} />
           </Form.Item>
           <Form.Item
             name="date"
-            rules={[{ required: true, message: "Please input date!" }]}
+            rules={[{ required: true, message: t("trip.inputDate") }]}
           >
             <DatePicker />
           </Form.Item>
@@ -188,4 +182,6 @@ const mapDispatchToProps = {
   createCityTourFromTemplate,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddToTripModal);
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(AddToTripModal)
+);

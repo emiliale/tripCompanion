@@ -73,7 +73,7 @@
     "error": "Permission Error",
     "noPermission": "You do not have permissions to see this page."
   },
-  "menu":{
+  "menu": {
     "statistics": "Statystics",
     "functions": "Functions",
     "cityTours": "City Tours",
@@ -83,5 +83,94 @@
     "login": "Log in",
     "logout": "Log out",
     "signin": "Sign in"
+  },
+  "tour": {
+    "save": "Save city tour",
+    "city": "City ",
+    "distance": "Distance: ",
+    "placeName": "Place name",
+    "distanceMeters": "Distance [meters]",
+    "durationMinutes": "Duration [minutes]",
+    "action": "Action",
+    "longitude": "Longitude:",
+    "latitiude": "Latatiude: ",
+    "planTour": "Plan your tour",
+    "addToTrip": "Add to your trip",
+    "suggested": "Suggested tours",
+    "yourTours": "Your tours",
+    "savedTour": "Saved city tour",
+    "tourSuccess": "City tour has been saved successfully"
+  },
+  "trip": {
+    "trip": "Trip ",
+    "inputTrip": "Plese input trip!",
+    "inputName": "Plese input name!",
+    "inputDate": "Plese input date!",
+    "yourTrips": "Your trips",
+    "username": "Username",
+    "planTrip": "Plan your next trip!",
+    "newTrip": "New trip",
+    "start": "Start:",
+    "end": "End:",
+    "deleteConfirm": "Are you sure delete this user from the trip?"
+  },
+  "functions": {
+    "offer": "What we offer?",
+    "createTour": "Create your own city tour",
+    "createTourDescription": "Make the best of your trip! Create city tours for each day of travel to visit all major attractions efficiently. See the route you have to travel and no longer be afraid of getting los",
+    "shareWithFriends": "Share your trips with your firends",
+    "shareWithFriendsDescription": "Share planned routes with your travel companions so you can decide on plans together.",
+    "history": "Store the history of your travels",
+    "historyDescription": "See how many places you have already visited. Take a look at the statistics - Which countries are the most visited? Have you already visited all the continents? Which year was the most popular for travel?"
+  },
+  "main": {
+    "planTrip": "Plan your trip with Trip Companion!",
+    "mainDescription": "Choose the attractions you want to visit and create a route between them. Share it with your friends. Travel statistics will be the motivation to discover the world!",
+    "more": "More",
+    "plan": "Plan easily and quickly",
+    "planDescription": "Thanks to Trip Companion, planning a trip will stop being a difficult task and will become a pleasure",
+    "createTourShortDescription": "Select the attractions you want to visit on each day of the trip and see the route you need to travel.",
+    "shareWithFriendsShortDescription": "Invite friends you travel with and share your routes with them.",
+    "historyShortDescription": "Take a look at the statistics of your expeditions and observe the countries and continents you visited."
+  },
+  "statistics": {
+    "yourStatistics": "Your statistics",
+    "allStatistics": "All users statistics",
+    "place": "Place",
+    "country": "Country",
+    "continent": "Continent",
+    "visits": "Visits",
+    "visitsCountries": "Visited countries: ",
+    "visitsContinents": "Visited continents: ",
+    "totalDistance": "Total distance: ",
+    "numberOfTrips": "Number of trips in each year",
+    "numberOfCountries": "Number of visited countries",
+    "numberOfContinents": "Number of visited continents",
+    "rankingCountries": "Ranking of the most visited countries",
+    "rankingContinents": "Ranking of the most visited continents",
+    "noTrips": "You don't have any trips yet"
+  },
+  "user": {
+    "wrongLogin": "Wrong login or password",
+    "inputUsername": "Please input your username!",
+    "inputPassword": "Please input your password!",
+    "username": "Username",
+    "password": "Password",
+    "wrongPassword": "Wrong password",
+    "inputCurrentPassword": "Please input your current password!",
+    "inputNewPassword": "Please input your new password!",
+    "passwordValidate": "Password must be a minimum of 6 characters!",
+    "newPassword": "New password",
+    "currentPassword": "Current password",
+    "confirmPassword": "Please confirm your password!",
+    "passwordMatch": "The two passwords that you entered do not match!",
+    "cofirmPasswordPlaceholder": "Confirm password",
+    "changePassword": "Change password",
+    "email": "Email",
+    "inputEmail": "Please input your E-mail!",
+    "validateEmail": "The input is not valid E-mail!",
+    "or": "or",
+    "savedPassword": "Saved New Password",
+    "changedPassword": "Password has been changed successfully"
   }
 }

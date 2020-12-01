@@ -4,32 +4,25 @@ import { Tabs } from "antd";
 import UserStatistics from "./UserStatistics";
 import AllUsersStatistics from "./AllUsersStatistics";
 import NoAccess from "../../components/NoAccess";
+import { withTranslation } from "react-i18next";
 
-import {
-  Typography,
-  Divider,
-  Table,
-  DatePicker,
-  Row,
-  Col,
-  PageHeader,
-} from "antd";
-const { Title, Paragraph } = Typography;
+import { Typography } from "antd";
+const { Title } = Typography;
 
 const { TabPane } = Tabs;
 
 function callback(key) {
   console.log(key);
 }
-const Statistics = () =>
+const Statistics = (props) =>
   localStorage.getItem("userId") ? (
     <div>
-      <Title>Statistics</Title>
+      <Title>{props.t("menu.statistics")}</Title>
       <Tabs defaultActiveKey="1" onChange={callback}>
-        <TabPane tab="Yours statistics" key="1">
+        <TabPane tab={props.t("statistics.yourStatistics")} key="1">
           <UserStatistics />
         </TabPane>
-        <TabPane tab="All users statistics" key="2">
+        <TabPane tab={props.t("statistics.allStatistics")} key="2">
           <AllUsersStatistics />
         </TabPane>
       </Tabs>
@@ -38,4 +31,4 @@ const Statistics = () =>
     <NoAccess />
   );
 
-export default Statistics;
+export default withTranslation()(Statistics);
