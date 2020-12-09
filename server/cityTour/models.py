@@ -19,7 +19,6 @@ class CityTour(models.Model):
         null=True,
         blank=True,
     )
-    users = models.ManyToManyField(User, related_name="users_cityTours", blank=True)
     places = models.ManyToManyField(Place, related_name="places_cityTours", blank=True)
 
 
