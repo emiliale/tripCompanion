@@ -13,15 +13,10 @@ class App:
     def create_cityTour_from_template(
         self, name, date, trip, users, template, request=None, serialized=False
     ):
-        if trip and date and users and template:
-            users_list = []
-            places_list = []
+        if all([trip, date, users, template]):
 
-            for user in users:
-                users_list.append(User.objects.get(id=user))
-
-            for place in template["places"]:
-                places_list.append(Place.objects.get(id=place))
+            users_list = User.objects.filter(id__in=users)
+            places_list = Place.objects.filter(id__in=template["places"])
 
             try:
                 cityTour_instance = CityTour.objects.create(
@@ -37,6 +32,6 @@ class App:
                 cityTour_instance.places.set(places_list)
 
                 return CityTourSerializer(cityTour_instance).data
-            except:
-                raise Exception("Wrong data")
-        raise RuntimeError
+            except Exception as e:
+                raise Exception("Exception occurred: {}".format(e))
+        raise ValueError
