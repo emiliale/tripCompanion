@@ -16,7 +16,7 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
 import { getTrips, newTrip, deleteTrip } from "../../store/actions/trips";
-import { getCityTours } from "../../store/actions/cityTours";
+import { getCityTours, deleteCityTour } from "../../store/actions/cityTours";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Popconfirm } from "antd";
 import Users from "./components/Users";
@@ -283,7 +283,7 @@ const mapDispatchToProps = {
   getTrips,
   newTrip,
   getCityTours,
-  deleteTrip
+  deleteCityTour,
 };
 
 export default withTranslation()(
