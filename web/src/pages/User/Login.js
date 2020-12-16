@@ -55,7 +55,7 @@ class Login extends React.Component {
                 htmlType="submit"
                 style={{ marginRight: "10px" }}
               >
-                {t("user.login")}
+                {t("menu.login")}
               </Button>
             </Form.Item>
           </Form>

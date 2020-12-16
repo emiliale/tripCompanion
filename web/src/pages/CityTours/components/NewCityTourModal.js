@@ -194,7 +194,7 @@ class NewCityTourModal extends React.Component {
         >
           {this.props.trip && !this.state.editable ? (
             <Row gutter={16} style={{ marginBottom: "25px" }}>
-              <Col span={3}>
+              <Col span={4}>
                 <div>
                   <p>
                     <b>{t("trip.trip")}:</b>
@@ -202,7 +202,7 @@ class NewCityTourModal extends React.Component {
                 </div>
               </Col>
 
-              <Col span={5}>
+              <Col span={4}>
                 <div>
                   {this.props.tripObject[0]
                     ? this.props.tripObject[0].name
